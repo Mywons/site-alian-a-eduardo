@@ -1,0 +1,2284 @@
+/* =============================================================
+   ALIANÇA — folha de estilo única
+   Clean e caro: branco, cinza-neve, tinta quase preta e um único
+   laranja de ação. Sem fotografia: a tipografia carrega a página e
+   cada produto aparece como um mockup desenhado (seção 18).
+   ============================================================= */
+
+/* ---------- 1. Tokens ---------- */
+
+:root {
+  /* ---------------------------------------------------------------
+     Branco quente como chão, preto quente no texto, e o laranja vivo
+     da marca como gesto — o mesmo #ba3100 de sempre.
+
+     O que mudou em relação à primeira versão clara do site é que o
+     DEGRADÊ virou parte do sistema, e não enfeite de manchete: ele
+     aparece no botão, na faixa das dúvidas, no poço de cada peça e no
+     chão da capa. Em todos, a regra é a mesma — a rampa anda dentro
+     de uma família só de matiz, e a parada mais clara dela é onde o
+     contraste foi fechado, porque é ali que ele reprovaria.
+     --------------------------------------------------------------- */
+
+  --chao:    oklch(0.99 0.004 75);   /* documento        #fdfbf9 */
+  --chao-2:  oklch(0.967 0.009 68);  /* seções, cards    #f8f3ee */
+  --fundo:   oklch(0.938 0.014 66);  /* poço, hover      #f1e9e1 */
+  --linha:   oklch(0.895 0.014 68);
+
+  /* Preto quente: nunca #000, sempre com um fio do laranja dentro. */
+  --tinta:   oklch(0.22 0.012 50);   /* 16,9:1 no chão · 14,4:1 no pior */
+  --suave:   oklch(0.48 0.016 50);   /*  6,4:1 no chão ·  5,5:1 no pior */
+
+  /* O gesto: botão, link, olho, foco. Um laranja só, como sempre foi.
+     Ele é declarado além do gamut sRGB de propósito — o recorte do
+     navegador é o que entrega o tom saturado (#ba3100); o equivalente
+     "correto" dentro do gamut sai apagado. */
+  --acao:       oklch(0.52 0.19 45);   /* 5,8:1 no chão */
+  --acao-clara: oklch(0.56 0.19 50);   /* topo da rampa: branco a 4,9:1 */
+  --acao-funda: oklch(0.455 0.185 41); /* pé da rampa                   */
+  --acao-tenue: oklch(0.965 0.032 62);
+
+  /* O degradê do gesto. Sempre este, para o botão da capa e o do
+     catálogo não serem dois laranjas diferentes. */
+  --rampa-acao: linear-gradient(158deg, var(--acao-clara) 0%, var(--acao-funda) 100%);
+
+  /* A faixa forte: o único bloco onde o laranja é superfície. */
+  --forte: linear-gradient(152deg, oklch(0.56 0.19 50) 0%, oklch(0.47 0.185 42) 100%);
+  --forte-tinta: oklch(0.995 0.002 80);  /* branco, 4,9:1 na parada mais clara */
+
+  /* ---------------------------------------------------------------
+     Chãos por categoria. A cor diz de que família é o produto antes
+     de você ler o nome. Croma baixo de propósito: quem sinaliza ação
+     é o laranja, e esses aqui são só chão.
+     --------------------------------------------------------------- */
+  --areia:   oklch(0.955 0.03 62);    /* iPhone     */
+  --bruma:   oklch(0.955 0.026 238);  /* iPad       */
+  --musgo:   oklch(0.955 0.028 158);  /* Áudio      */
+  --argila:  oklch(0.955 0.032 20);   /* Watch      */
+  --linho:   oklch(0.955 0.024 92);   /* Acessórios */
+  --grafite: oklch(0.955 0.026 268);  /* Mac        */
+
+  /* ---------------------------------------------------------------
+     As caixas dos destaques usam a versão SATURADA da mesma família.
+     São seis blocos só, aparecendo uma vez na página — é onde a cor
+     pode pesar sem cansar. Os chãos pálidos acima continuam servindo
+     às seções inteiras e às pílulas do trilho, que se repetem.
+
+     Cada caixa carrega dois tons próprios: `--olho` para o rótulo e
+     `--sub` para o texto miúdo. O secundário cinza do resto do site
+     reprova aqui (4,1:1 no pior caso), então dentro da caixa ele
+     escurece e ganha o matiz da própria família.
+     --------------------------------------------------------------- */
+  --areia-viva:   oklch(0.875 0.085 62);
+  --bruma-viva:   oklch(0.875 0.07 238);
+  --musgo-vivo:   oklch(0.875 0.115 158);
+  --argila-viva:  oklch(0.875 0.067 20);
+  --linho-vivo:   oklch(0.875 0.115 95);
+  --grafite-vivo: oklch(0.875 0.061 272);
+  --laranja-vivo: oklch(0.885 0.11 58);
+
+  /* A noite: o único chão escuro do site, na faixa do Instagram.
+     Social é outro lugar, e parecer outro lugar ajuda a pessoa a
+     entender para onde ela vai ao clicar. */
+  --noite:   oklch(0.235 0.022 45);
+
+  /* O verde do WhatsApp. Não é cor da loja: é o rótulo de um
+     aplicativo, como o ícone. Sobre branco fecha sozinho: ícone
+     branco a 3,6:1 e a bolha a 3,3:1 do chão. */
+  --zap: oklch(0.60 0.16 148);
+
+  /* O poço da peça também é degradê: puxa um fio da cor do próprio
+     produto no topo e assenta no chão neutro embaixo. */
+  --poco:    oklch(0.938 0.014 66);
+
+  /* Papel bom não tem sombra pesada. */
+  --aro:       inset 0 0 0 1px oklch(0.22 0.012 50 / 0.06);
+  --aro-forte: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.1);
+  --sombra-sm: 0 1px 2px oklch(0.3 0.02 50 / 0.06);
+  --sombra:    0 10px 30px -14px oklch(0.3 0.02 50 / 0.26);
+
+  --sans: 'Switzer', 'Switzer-fallback', -apple-system, BlinkMacSystemFont,
+          'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Manchetes: a SF Pro de verdade quando a pessoa está num aparelho
+     Apple — que é a maioria de quem compra aqui. A Apple não licencia
+     a SF Pro para servir na web, então ela não pode ser baixada; o que
+     dá para fazer é pedi-la ao sistema primeiro. Quem não a tem cai na
+     Switzer, escolhida justamente por ser a mais próxima dela em
+     proporção e desenho — a manchete muda de arquivo, não de voz. */
+  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+             'Switzer', 'Switzer-fallback', 'Helvetica Neue', Arial, sans-serif;
+
+  --t-hero:  clamp(2.75rem, 6.4vw, 5.5rem);
+  --t-xl:    clamp(2rem, 4vw, 3.25rem);
+  --t-lg:    clamp(1.5rem, 2.6vw, 2.1rem);
+  --t-md:    clamp(1.15rem, 1.6vw, 1.375rem);
+  --t-body:  1.0625rem;
+  --t-sm:    0.9375rem;
+  --t-xs:    0.8125rem;
+  --t-olho:  0.75rem;
+
+  /* Ritmo */
+  --s1: 4px;   --s2: 8px;   --s3: 12px;  --s4: 16px;
+  --s5: 24px;  --s6: 32px;  --s7: 48px;  --s8: 72px;
+  --s9: 112px; --s10: 160px;
+
+  --gutter:  clamp(22px, 5vw, 48px);
+  --section: clamp(72px, 10vw, 152px);
+  --shell:   1120px;
+  --shell-larga: 1320px;
+  --nav:     52px;
+
+  /* Movimento discreto */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --tap: 130ms;
+  --hover: 220ms;
+  --reveal: 620ms;
+
+  --r-sm: 10px;
+  --r:    16px;
+  --r-lg: 22px;
+
+  color-scheme: light;
+}
+
+@font-face {
+  font-family: 'Switzer-fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 98%;
+  ascent-override: 96%;
+  descent-override: 24%;
+}
+
+/* ---------- 2. Base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  /* Reservado desde sempre: sem isso a página inteira salta 15px para
+     o lado quando a sacola trava a rolagem. */
+  scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav) + 24px);
+}
+
+body {
+  margin: 0;
+  background: var(--chao);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: var(--t-body);
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+  overflow-x: hidden;
+}
+
+/* Números de preço nunca dançam de largura entre um card e outro. */
+.card-preco, .linha-preco, .produto-preco, .capa-preco, .barra-compra .v {
+  font-variant-numeric: tabular-nums;
+}
+
+button { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+
+:focus-visible {
+  outline: 2px solid var(--acao);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
+::selection { background: var(--acao-tenue); color: var(--tinta); }
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.shell--larga { max-width: var(--shell-larga); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+.skip {
+  position: absolute; top: -100px; left: var(--gutter); z-index: 300;
+  background: var(--tinta); color: var(--chao);
+  padding: 12px 20px; border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-weight: 600;
+}
+.skip:focus { top: 0; }
+
+/* ---------- 3. Tipografia ---------- */
+
+h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -0.025em; }
+
+.t-hero {
+  font-family: var(--display);
+  font-size: var(--t-hero);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+  text-wrap: balance;
+}
+.t-xl {
+  font-family: var(--display);
+  font-size: var(--t-xl);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+  text-wrap: balance;
+}
+.t-lg {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: 1.14;
+  letter-spacing: -0.026em;
+}
+
+.olho {
+  font-size: var(--t-olho);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--acao);
+  margin: 0;
+}
+
+.sub {
+  font-size: clamp(1.1rem, 1.9vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  color: var(--suave);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.miudo { font-size: var(--t-sm); color: var(--suave); margin: 0; letter-spacing: -0.005em; }
+
+/* Abaixo de 14px o tracking negativo do corpo cola as letras. Sobe. */
+.capa-fatos dd, .contagem, .rodape, .migalhas, .compra-nota, .mockup-nota,
+.card-preco small, .linha-preco small { letter-spacing: 0.005em; }
+
+p { margin: 0; max-width: 62ch; }
+
+/* ---------- 4. Botões e links ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 980px;
+  /* A rampa do gesto: um degradê curto dentro do próprio laranja.
+     O contraste foi fechado na parada MAIS CLARA dela — 4,9:1 com o
+     texto branco — porque é ali que ele reprovaria. */
+  background: var(--rampa-acao);
+  color: var(--forte-tinta);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: transform var(--tap) var(--ease),
+              background-color var(--hover) var(--ease),
+              opacity var(--hover) var(--ease);
+}
+.btn:hover { opacity: 0.88; }
+.btn:active { transform: scale(0.97); }
+
+.btn--vazio {
+  background: none;
+  color: var(--tinta);
+  border: 1px solid var(--linha);
+}
+.btn--vazio:hover { background: var(--chao-2); opacity: 1; }
+
+.btn--tinta { background: var(--tinta); color: var(--chao); }
+.btn--grande { min-height: 54px; padding: 0 28px; font-size: 1.0625rem; }
+.btn--largo { width: 100%; }
+/* Na linha do catálogo o botão divide espaço com o preço: menor, e com
+   o alvo de toque garantido pelo padding invisível do ::after. */
+.btn--peq { min-height: 38px; padding: 0 16px; font-size: var(--t-xs); }
+.btn--peq::after { content: ''; position: absolute; inset: -4px -2px; }
+.btn { position: relative; }
+.btn svg { flex: none; }
+
+/* Link com seta, o gesto da Apple */
+.seta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--acao);
+  font-size: var(--t-sm);
+  font-weight: 500;
+}
+.seta::after {
+  content: '›';
+  font-size: 1.15em;
+  line-height: 0.9;
+  transition: transform var(--hover) var(--ease);
+}
+.seta--clara { color: var(--forte-tinta); }
+.seta:hover { text-decoration: underline; text-underline-offset: 3px; }
+.seta:hover::after { transform: translateX(3px); }
+
+/* ---------- 5. Navegação ---------- */
+
+.nav-topo {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 200;
+  background: color-mix(in oklab, var(--chao-2) 76%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid color-mix(in oklab, var(--tinta) 8%, transparent);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  min-height: var(--nav);
+  gap: var(--s5);
+}
+
+/* O monograma: o "A" da Aliança reduzido à sua estrutura — o vértice
+   e os dois blocos da base, separados pela fenda do logo original.
+   Plano, de uma cor só, e legível a 16px como a 160px. */
+.marca {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.marca .simbolo {
+  width: 15px;
+  height: auto;
+  fill: var(--acao);
+  flex: none;
+  transition: transform var(--hover) var(--ease);
+}
+.marca:hover .simbolo { transform: translateY(-1px); }
+
+/* "One" não é uma segunda marca nem uma segunda cor: é o mesmo nome
+   um peso abaixo. Contraste de peso resolve, e a paleta não cresce. */
+.marca-nome { display: inline-flex; align-items: baseline; gap: 5px; }
+.marca-sub { font-weight: 500; letter-spacing: 0; color: var(--suave); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 30px);
+  margin-inline: auto;
+  font-size: var(--t-xs);
+  font-weight: 400;
+}
+.nav-links a {
+  color: var(--tinta);
+  opacity: 0.82;
+  transition: opacity var(--hover) var(--ease);
+  white-space: nowrap;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-links a[aria-current='page'] { font-weight: 600; opacity: 1; }
+
+/* Atendimento não é uma categoria de produto como as outras: é para
+   onde vai quem ainda não decidiu comprar, e é o destino mais
+   importante do menu para quem chega desconfiado. Ganha corpo de
+   pílula em vez de mais uma cor. */
+.nav-destaque {
+  padding: 6px 13px;
+  margin-inline: -2px;
+  border-radius: 980px;
+  background: color-mix(in oklab, var(--tinta) 7%, transparent);
+  opacity: 1;
+  font-weight: 500;
+  transition: background-color var(--hover) var(--ease);
+}
+.nav-destaque:hover { background: color-mix(in oklab, var(--tinta) 12%, transparent); }
+
+.nav-wa {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  color: var(--acao);
+  transition: opacity var(--hover) var(--ease);
+}
+.nav-wa:hover { opacity: 0.75; }
+
+/* O botão dentro da lista serve só ao menu de celular */
+.nav-links .btn { display: none; }
+
+.nav-toggle {
+  display: none;
+  width: 44px; height: 44px;
+  align-items: center; justify-content: center;
+  background: transparent; border: 0; cursor: pointer;
+}
+.nav-toggle span { display: block; width: 17px; height: 1.5px; background: var(--tinta); position: relative; transition: background-color var(--hover) var(--ease); }
+.nav-toggle span::before, .nav-toggle span::after {
+  content: ''; position: absolute; left: 0; width: 17px; height: 1.5px; background: var(--tinta);
+  transition: transform var(--hover) var(--ease);
+}
+.nav-toggle span::before { top: -5px; }
+.nav-toggle span::after { top: 5px; }
+.nav-toggle[aria-expanded='true'] span { background: transparent; }
+.nav-toggle[aria-expanded='true'] span::before { transform: translateY(5px) rotate(45deg); }
+.nav-toggle[aria-expanded='true'] span::after { transform: translateY(-5px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  /* No toque, alvo confortável vale mais que compacidade */
+  .chip, .busca input { min-height: 44px; }
+  .nav-toggle { display: inline-flex; }
+  /* No celular o link do topo perde a palavra e vira só o ícone: o
+     alvo continua com 44px e o WhatsApp continua a um toque mesmo
+     com o menu fechado. */
+  .nav-wa {
+    margin-left: auto;
+    width: 44px; height: 44px;
+    justify-content: center;
+    gap: 0;
+    border-radius: 50%;
+  }
+  .nav-wa:hover { background: color-mix(in oklab, var(--tinta) 7%, transparent); opacity: 1; }
+  .nav-wa .txt { display: none; }
+  .nav-wa svg { width: 20px; height: 20px; }
+  .nav-links {
+    position: fixed;
+    inset: var(--nav) 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: var(--s5) var(--gutter) var(--s7);
+    background: var(--chao);
+    border-bottom: 1px solid var(--linha);
+    box-shadow: var(--sombra);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity var(--hover) var(--ease), transform var(--hover) var(--ease);
+    max-height: calc(100dvh - var(--nav));
+    overflow-y: auto;
+  }
+  .nav-links[data-open='true'] { opacity: 1; transform: none; pointer-events: auto; }
+  .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--linha); opacity: 1; }
+  .nav-links .btn {
+    margin-top: var(--s5);
+    font-size: var(--t-sm);
+    border-bottom: 0;
+    padding: 0 22px;
+  }
+}
+
+/* ---------- 6. Capa ----------
+   Composição assimétrica: o argumento à esquerda, o aparelho à
+   direita sobre uma cunha quente. A cunha é a única superfície do
+   site que puxa o laranja para além do gesto — e ela é chão, nunca
+   texto, nunca botão. */
+
+.capa {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--chao-2) 0%, var(--chao) 82%);
+  padding: calc(var(--nav) + clamp(44px, 6vw, 88px)) 0 clamp(56px, 7vw, 96px);
+}
+
+/* A cunha: um corte diagonal que sai do topo direito e desce até
+   passar da base. Vive atrás de tudo e não empurra nada. */
+.capa-cunha {
+  position: absolute;
+  inset: 0 -10% -1px 34%;
+  z-index: -1;
+  clip-path: polygon(28% 0, 100% 0, 100% 100%, 0 100%);
+  background:
+    radial-gradient(78% 62% at 76% 26%,
+      oklch(0.945 0.055 58) 0%,
+      oklch(0.965 0.032 62) 58%,
+      var(--acao-tenue) 100%);
+}
+
+.capa-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+  gap: clamp(20px, 3vw, 56px);
+  align-items: center;
+}
+
+.capa-txt { max-width: 30ch; }
+
+/* -- O selo --
+   Sem pílula, sem borda, sem vidro: uma pílula com contorno aqui seria
+   uma moldura em volta de três palavras. O que carrega a linha é o
+   próprio lacre desenhado e o tracking aberto do caixa-alta. */
+.selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: var(--s5);
+  font-size: var(--t-olho);
+  font-weight: 600;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  color: var(--acao);
+}
+.selo-marca { width: 16px; height: 16px; flex: none; }
+
+.capa h1 {
+  font-family: var(--display);
+  font-size: var(--t-hero);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.042em;
+  margin: 0 0 var(--s5);
+  text-wrap: balance;
+}
+
+/* O fecho em degradê, dentro da própria família do laranja: do tom de
+   ação ao tom quente, sem sair para outra cor. A `color` fica declarada
+   antes como piso — se o navegador não recortar o fundo no texto, ele
+   continua laranja sólido e legível.
+
+   Vale para a manchete da capa e para o fecho do título dos destaques:
+   são os dois lugares onde o nome da loja fecha a frase. */
+.capa h1 em, .rampa {
+  font-style: normal;
+  color: var(--acao);
+  background: linear-gradient(100deg,
+    oklch(0.50 0.19 42) 0%,
+    oklch(0.545 0.19 48) 46%,
+    oklch(0.585 0.18 54) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* A manchete quebra em três linhas, e "sem dúvida." pode cair
+     partido entre duas. Com `clone`, cada pedaço recebe o degradê
+     inteiro; sem isso, um deles fica com o meio da rampa e a palavra
+     sai de uma cor chapada diferente da outra. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .capa h1 em, .rampa { background: none; -webkit-text-fill-color: currentColor; }
+}
+
+/* Onde a rampa aparece fora da capa, o tipo também é o de manchete. */
+.rampa { font-family: var(--display); }
+
+/* A mesma ideia invertida, para as manchetes sobre chão saturado: do
+   branco puro a um branco quente, nunca saindo para outra cor. A
+   parada mais escura foi fechada em 4,9:1 sobre o laranja — o mínimo
+   para texto grande é 3:1, então sobra folga inclusive no fim da rampa. */
+.rampa-branca {
+  font-style: normal;
+  font-family: var(--display);
+  color: var(--forte-tinta);
+  background: linear-gradient(100deg,
+    oklch(0.995 0.002 80) 0%,
+    oklch(0.972 0.014 74) 52%,
+    oklch(0.945 0.026 68) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .rampa-branca { background: none; -webkit-text-fill-color: currentColor; }
+}
+
+.capa .sub { margin: 0 0 var(--s6); max-width: 40ch; }
+
+.capa-acoes {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s3) var(--s6);
+}
+
+/* O sinal de atendimento vem logo abaixo do botão, não no topo da
+   página: ele responde "tem alguém aí agora?", e essa pergunta só
+   aparece no instante em que a pessoa cogita tocar. */
+.capa .estado { margin-top: var(--s4); }
+
+/* Três garantias em linha, tipografia pura */
+.capa-fatos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--s4) var(--s5);
+  margin: clamp(36px, 4.5vw, 60px) 0 0;
+  padding-top: var(--s5);
+  border-top: 1px solid var(--linha);
+}
+.capa-fatos dt { font-size: var(--t-sm); font-weight: 600; margin-bottom: 2px; }
+.capa-fatos dd { margin: 0; font-size: var(--t-xs); color: var(--suave); }
+
+/* -- A foto --
+   Recortada em alpha, sem chão falso. A sombra é drop-shadow, então
+   ela segue a silhueta dos três aparelhos em vez de virar retângulo. */
+/* A cena com perspectiva existe só na página do produto: a capa é
+   uma composição parada, e movimento nela competiria com a manchete. */
+.cena3d { perspective: 1400px; perspective-origin: 50% 45%; }
+
+.capa-foto {
+  position: relative;
+  margin: 0;
+  justify-self: center;
+
+  /* O aparelho é o assunto da primeira tela: ele pode passar da
+     coluna e encostar na borda do contêiner. */
+  width: min(660px, 108%);
+}
+.capa-foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* A sombra da foto escurece em vez de acinzentar: sobre terracota,
+     sombra cinza vira sujeira. */
+  filter: drop-shadow(0 30px 38px oklch(0.40 0.05 48 / 0.22));
+}
+
+/* A etiqueta que ancora a foto num produto de verdade. */
+.capa-etiqueta {
+  position: absolute;
+  right: -2%;
+  bottom: 8%;
+  border-radius: var(--r);
+  background: color-mix(in oklab, var(--chao) 88%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  backdrop-filter: saturate(180%) blur(18px);
+  box-shadow: 0 18px 40px -20px oklch(0.32 0.03 50 / 0.34), var(--aro);
+  transition: transform var(--hover) var(--ease);
+}
+.capa-etiqueta a { display: block; padding: 12px 18px; }
+.capa-etiqueta span {
+  display: block;
+  font-size: var(--t-olho);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--acao);
+  margin-bottom: 3px;
+}
+.capa-etiqueta b { font-size: var(--t-sm); font-weight: 600; letter-spacing: -0.02em; }
+.capa-etiqueta:hover { transform: translateY(-2px); }
+
+/* -- A seta que desce --
+   Existe porque a capa ocupa a tela inteira e não sobra borda de
+   conteúdo aparecendo por baixo para avisar que há mais. */
+.capa-desce {
+  display: grid;
+  place-items: center;
+  width: 42px; height: 42px;
+  margin: clamp(32px, 4vw, 56px) auto 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--suave);
+  transition: transform var(--hover) var(--ease), background-color var(--hover) var(--ease),
+              color var(--hover) var(--ease);
+}
+.capa-desce:hover {
+  transform: translateY(3px);
+  background: color-mix(in oklab, var(--tinta) 6%, transparent);
+  color: var(--tinta);
+}
+
+@media (max-width: 900px) {
+  .capa { padding-top: calc(var(--nav) + clamp(36px, 8vw, 64px)); }
+  .capa-grade { grid-template-columns: 1fr; gap: clamp(28px, 6vw, 48px); }
+  .capa-txt { max-width: 26ch; }
+  .capa .sub { max-width: 42ch; }
+  /* No celular a cunha vira um chão atrás da foto, não uma diagonal
+     cortando o texto ao meio. */
+  .capa-cunha {
+    inset: 42% -20% -1px -20%;
+    clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+  }
+  .capa-foto { width: min(480px, 92%); }
+  .capa-etiqueta { right: -4%; bottom: 4%; }
+}
+
+@media (max-width: 520px) {
+  .capa-txt { max-width: none; }
+  .capa-etiqueta a { padding: 10px 14px; }
+}
+
+/* ---------- 7. Trilho de categorias ---------- */
+
+.trilho { padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--linha); }
+.trilho-lista {
+  display: flex;
+  gap: var(--s2);
+  overflow-x: auto;
+  scrollbar-width: none;
+  justify-content: center;
+}
+.trilho-lista::-webkit-scrollbar { display: none; }
+.trilho-lista a {
+  flex: none;
+  padding: 9px 18px;
+  border-radius: 980px;
+  background: var(--chao-2);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease);
+}
+.trilho-lista a:hover { background: var(--fundo); }
+
+@media (max-width: 700px) { .trilho-lista { justify-content: flex-start; } }
+
+/* ---------- 8. Cabeçalho de seção ---------- */
+
+section { position: relative; }
+
+.sec-topo {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s5);
+  flex-wrap: wrap;
+  margin-bottom: var(--s7);
+}
+.sec-topo h2 { max-width: 20ch; }
+.sec-topo .miudo { max-width: 42ch; }
+
+/* ---------- 9. Cards de produto ---------- */
+
+.destaques { padding: var(--section) 0 clamp(40px, 6vw, 72px); }
+
+.grade-destaques {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: clamp(12px, 1.3vw, 18px);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3vw, 44px);
+  border-radius: var(--r-lg);
+  background: var(--chao-2);
+  transition: transform var(--hover) var(--ease), background-color var(--hover) var(--ease);
+}
+.card:hover { transform: translateY(-3px); background: var(--fundo); }
+
+.card--laranja  { background: var(--laranja-vivo);  --olho: oklch(0.45 0.16 45);  --sub: oklch(0.44 0.045 45); }
+.card--laranja:hover  { background: oklch(0.845 0.12 58); }
+
+/* Dentro de uma caixa viva, o rótulo e o miúdo usam o tom da própria
+   família. Fora dela, caem no laranja e no cinza de sempre. */
+.card .olho { margin-bottom: var(--s3); color: var(--olho, var(--acao)); }
+
+/* Sem a frase de venda, o nome cresce e o preço vira o segundo
+   volume da composição. Dois pesos, dois tamanhos, nada entre eles. */
+.card-nome {
+  font-size: clamp(1.6rem, 2.4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.032em;
+  margin: 0;
+  text-wrap: balance;
+}
+.card--peq .card-nome { font-size: clamp(1.35rem, 1.8vw, 1.7rem); }
+
+.card-preco {
+  margin-top: auto;
+  padding-top: var(--s6);
+  font-size: 1.45rem;
+  font-weight: 600;
+  letter-spacing: -0.028em;
+}
+.card--peq .card-preco { font-size: 1.25rem; }
+.card-preco small {
+  display: block;
+  font-size: var(--t-xs);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--sub, var(--suave));
+  margin-top: 2px;
+}
+
+/* Uma ação só. O card inteiro já é o link para os detalhes, então um
+   segundo botão dizendo "Detalhes" só repetia o que o clique já faz. */
+.card-acoes {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  margin-top: var(--s5);
+}
+.card-link::before { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+
+.card--largo  { grid-column: span 4; min-height: clamp(280px, 26vw, 360px); }
+.card--alto   { grid-column: span 2; min-height: clamp(280px, 26vw, 360px); }
+.card--terco  { grid-column: span 2; min-height: clamp(250px, 22vw, 320px); }
+
+@media (max-width: 900px) {
+  .grade-destaques { grid-template-columns: repeat(2, 1fr); }
+  .card--largo, .card--alto, .card--terco { grid-column: span 2; min-height: 0; }
+}
+
+/* ---------- 10. Catálogo ---------- */
+
+.catalogo { padding: var(--section) 0; border-top: 1px solid var(--linha); }
+
+.filtros {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  margin-bottom: var(--s6);
+}
+
+.chips { display: flex; gap: var(--s2); overflow-x: auto; scrollbar-width: none; margin-right: auto; }
+.chips::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex: none;
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 980px;
+  border: 1px solid transparent;
+  background: var(--chao-2);
+  color: var(--tinta);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform var(--tap) var(--ease),
+              background-color var(--hover) var(--ease),
+              color var(--hover) var(--ease);
+}
+.chip:hover { background: var(--fundo); }
+.chip:active { transform: scale(0.96); }
+.chip[aria-pressed='true'] { background: var(--tinta); color: var(--chao); }
+
+.busca { position: relative; flex: 1 1 200px; max-width: 280px; }
+.busca input {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 14px 0 38px;
+  border-radius: 980px;
+  border: 1px solid var(--linha);
+  background: var(--chao);
+  color: var(--tinta);
+  font: inherit;
+  font-size: var(--t-sm);
+  transition: border-color var(--hover) var(--ease);
+}
+.busca input::placeholder { color: var(--suave); }
+.busca input:focus { border-color: var(--acao); outline: none; }
+.busca svg {
+  position: absolute; left: 14px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--suave);
+  pointer-events: none;
+}
+
+/* Lista do catálogo: linhas, não cards. Densa, legível, cara. */
+.lista {
+  display: grid;
+  border-top: 1px solid var(--linha);
+}
+
+.linha {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--s5);
+  padding: clamp(16px, 2vw, 24px) var(--s4);
+  border-bottom: 1px solid var(--linha);
+  transition: background-color var(--hover) var(--ease);
+}
+.linha:hover { background: var(--chao-2); }
+
+.linha-txt { min-width: 0; }
+.linha .olho { margin-bottom: 3px; }
+.linha-nome {
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+.linha-preco { text-align: right; white-space: nowrap; }
+.linha-preco b { display: block; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.02em; }
+.linha-preco small { font-size: var(--t-xs); color: var(--suave); }
+
+.linha-acoes { position: relative; z-index: 2; display: flex; align-items: center; gap: var(--s4); }
+/* O botão só ganha cor quando a linha recebe o cursor: parado, a lista
+   é uma lista de nomes e preços, não um mural de botões laranja. */
+@media (hover: hover) {
+  .linha-acoes .btn {
+    background: transparent;
+    color: var(--acao);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--acao) 34%, transparent);
+    transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease),
+                box-shadow var(--hover) var(--ease), transform var(--tap) var(--ease);
+  }
+  .linha:hover .linha-acoes .btn,
+  .linha-acoes .btn:focus-visible {
+    background: var(--acao);
+    color: var(--tinta);
+    box-shadow: none;
+  }
+}
+.linha-link::before { content: ''; position: absolute; inset: 0; z-index: 1; }
+
+@media (max-width: 760px) {
+  .linha { grid-template-columns: auto minmax(0, 1fr); row-gap: var(--s4); }
+  .linha-preco { grid-column: 2; text-align: left; }
+  .linha-acoes { grid-column: 1 / -1; justify-content: space-between; }
+}
+
+.vazio {
+  padding: clamp(48px, 8vw, 96px) var(--s5);
+  text-align: center;
+  border-bottom: 1px solid var(--linha);
+}
+.vazio h3 { font-size: var(--t-md); margin-bottom: 8px; }
+.vazio p { color: var(--suave); margin: 0 auto var(--s5); }
+
+.contagem { margin-top: var(--s5); font-size: var(--t-xs); color: var(--suave); }
+
+/* Carregar mais: fica dentro da lista, no lugar da próxima linha, e
+   diz quantos já apareceram. Rolar no escuro sem saber quanto falta é
+   o que faz a pessoa desistir no meio. */
+.mais {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  padding: var(--s7) var(--s4) var(--s5);
+}
+.mais-conta { font-size: var(--t-xs); color: var(--suave); font-variant-numeric: tabular-nums; }
+
+/* ---------- 11. Faixa de compromissos ---------- */
+
+/* A faixa de compromissos fecha a página num chão quente, e não no
+   mesmo cinza-neve de todo o resto: depois do laranja e do grafite,
+   voltar ao neve puro aqui faria a última seção sumir.
+   Medido: tinta 14,3:1 · suave 5,2:1 · laranja 5,2:1 neste chão. */
+.compromissos { background: var(--areia); padding: var(--section) 0; }
+.compromissos h2 { text-align: center; margin-bottom: var(--s7); max-width: 20ch; margin-inline: auto; }
+
+.compromissos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(24px, 4vw, 56px);
+}
+.compromissos-grade div { text-align: center; }
+.compromissos-grade .n {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--acao);
+  line-height: 1;
+  margin-bottom: var(--s3);
+}
+.compromissos-grade h3 { font-size: var(--t-md); margin-bottom: 6px; }
+.compromissos-grade p { font-size: var(--t-sm); color: var(--suave); margin-inline: auto; max-width: 32ch; }
+
+.compromissos-cta { text-align: center; margin-top: var(--s8); }
+
+/* ---------- 12. Rodapé ---------- */
+
+.rodape {
+  padding: var(--s7) 0 var(--s6);
+  font-size: var(--t-xs);
+  color: var(--suave);
+  border-top: 1px solid var(--linha);
+}
+
+/* O monograma abre o rodapé: a última coisa da página é a marca,
+   do tamanho de uma assinatura, não de um letreiro. */
+.rodape-marca {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s4);
+  padding-bottom: var(--s6);
+  margin-bottom: var(--s6);
+  border-bottom: 1px solid var(--linha);
+}
+.rodape-marca .simbolo { width: 26px; height: auto; fill: var(--acao); flex: none; }
+.rodape-marca p { max-width: 42ch; font-size: var(--t-xs); }
+
+.rodape-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s6) var(--s5);
+  padding-bottom: var(--s6);
+  border-bottom: 1px solid var(--linha);
+}
+.rodape h4 { font-size: var(--t-xs); font-weight: 600; color: var(--tinta); margin-bottom: var(--s3); }
+.rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.rodape a { transition: color var(--hover) var(--ease); }
+.rodape a:hover { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; }
+
+.rodape-fim {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  padding-top: var(--s5);
+}
+.rodape-fim p { max-width: 68ch; }
+
+/* ---------- 13. Os dois botões do rodapé ----------
+   Carrinho à direita, onde o polegar da mão dominante cai; WhatsApp
+   à esquerda, longe dele. São ações diferentes e não podem dividir
+   o mesmo canto: errar o toque aqui manda a pessoa para fora do site.
+
+   O verde do WhatsApp não é cor da marca: é o rótulo do canal, do
+   mesmo jeito que o ícone. Por isso ele pode existir sem quebrar a
+   regra do laranja único. */
+
+.wa, .fab-sacola {
+  position: fixed;
+  bottom: clamp(14px, 3vw, 26px);
+  z-index: 150;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 320ms var(--ease), box-shadow var(--hover) var(--ease);
+}
+
+.wa {
+  left: clamp(14px, 3vw, 26px);
+  background: var(--zap);
+  color: oklch(0.995 0.002 80);
+  box-shadow: 0 10px 26px -10px oklch(0.52 0.15 150 / 0.55),
+              0 2px 6px -3px oklch(0.3 0.02 150 / 0.26);
+}
+.wa svg { width: 30px; height: 30px; }
+.wa:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -12px oklch(0.52 0.15 150 / 0.6),
+              0 2px 6px -3px oklch(0.3 0.02 150 / 0.28);
+}
+.wa:active { transform: scale(0.94); }
+
+/* -- O carrinho --
+   Tinta com ícone branco, sempre. O botão não muda de cor para dizer
+   que tem item dentro: quem diz isso é o número, e um só sinal basta. */
+.fab-sacola {
+  right: clamp(14px, 3vw, 26px);
+  background: var(--tinta);
+  color: var(--chao);
+  box-shadow: 0 12px 28px -12px oklch(0.24 0.014 50 / 0.5);
+}
+.fab-sacola:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px -14px oklch(0.24 0.014 50 / 0.55);
+}
+.fab-sacola:active { transform: scale(0.94); }
+
+/* A janela por onde o carrinho passa. Sem ela o ícone sairia voando
+   por cima da página em vez de sumir na borda do botão. */
+.fab-icone {
+  display: grid;
+  place-items: center;
+  width: 28px; height: 28px;
+  overflow: hidden;
+}
+.fab-icone svg { width: 25px; height: 25px; display: block; }
+
+/* O carrinho sai de cena pela direita e volta entrando pela esquerda,
+   como se tivesse dado a volta. A saída acelera (ele está indo
+   embora) e a entrada desacelera (ele está chegando e parando) —
+   duas curvas, porque é um gesto só com dois momentos. */
+@keyframes rolar {
+  0%   { transform: translateX(0); opacity: 1;
+         animation-timing-function: cubic-bezier(0.5, 0, 0.85, 0.3); }
+  42%  { transform: translateX(30px); opacity: 0; }
+  43%  { transform: translateX(-30px); opacity: 0;
+         animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+  100% { transform: translateX(0); opacity: 1; }
+}
+.fab-sacola:hover .fab-icone svg { animation: rolar 680ms both; }
+
+.fab-sacola-n {
+  position: absolute;
+  top: -2px; right: -2px;
+  min-width: 21px; height: 21px;
+  padding: 0 6px;
+  display: grid; place-items: center;
+  border-radius: 980px;
+  background: var(--acao);
+  color: var(--tinta);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0 0 2.5px var(--tinta);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity var(--hover) var(--ease), transform 360ms var(--ease);
+}
+.fab-sacola:not([data-itens='0']) .fab-sacola-n { opacity: 1; transform: none; }
+
+/* ---------- 14. Página de produto ---------- */
+
+.produto { padding: calc(var(--nav) + clamp(28px, 4vw, 52px)) 0 var(--section); }
+
+.migalhas {
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  font-size: var(--t-xs); color: var(--suave); margin-bottom: var(--s7);
+}
+.migalhas a:hover { color: var(--tinta); }
+.migalhas span { opacity: 0.45; }
+
+.produto-capa { text-align: center; padding-bottom: var(--s8); border-bottom: 1px solid var(--linha); }
+.produto-capa .olho { margin-bottom: var(--s3); }
+.produto-nome {
+  font-family: var(--display);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  margin: 0 0 var(--s4);
+}
+.produto-resumo { color: var(--suave); margin: 0 auto; max-width: 52ch; font-size: var(--t-md); line-height: 1.5; }
+
+.produto-preco { margin-top: var(--s6); }
+.produto-preco b { font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 600; letter-spacing: -0.03em; }
+.produto-preco span { display: block; font-size: var(--t-sm); color: var(--suave); margin-top: 4px; }
+
+/* A âncora contra o varejo oficial. Só aparece quando o preço oficial
+   está preenchido no data.js — nenhuma comparação é inventada. */
+.ancora {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s3);
+  flex-wrap: wrap;
+  margin-top: var(--s4);
+  font-size: var(--t-sm);
+}
+.ancora-de { color: var(--suave); text-decoration: line-through; text-decoration-thickness: 1px; }
+.ancora-eco {
+  padding: 4px 11px;
+  border-radius: 980px;
+  background: var(--acao-tenue);
+  color: var(--acao);
+  font-weight: 600;
+}
+
+.produto-corpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: clamp(32px, 6vw, 80px);
+  align-items: start;
+  padding-top: var(--s8);
+}
+
+.escolhas { position: sticky; top: calc(var(--nav) + 24px); }
+
+.opcao { margin-bottom: var(--s6); }
+.opcao-topo { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s3); margin-bottom: var(--s3); }
+.opcao-topo h3 { font-size: var(--t-sm); }
+.opcao-topo .escolhido { font-size: var(--t-sm); color: var(--suave); }
+.opcao-lista { display: grid; gap: var(--s2); }
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: 1px solid var(--linha);
+  background: var(--chao-2);
+  color: var(--tinta);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: transform var(--tap) var(--ease),
+              border-color var(--hover) var(--ease),
+              box-shadow var(--hover) var(--ease);
+}
+.opt:hover { border-color: var(--suave); }
+.opt:active { transform: scale(0.985); }
+.opt[aria-pressed='true'] {
+  border-color: var(--acao);
+  box-shadow: 0 0 0 1px var(--acao);
+}
+.opt .swatch {
+  width: 15px; height: 15px; border-radius: 50%;
+  flex: none;
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.2);
+}
+
+.compra { display: grid; gap: var(--s3); margin-top: var(--s7); }
+.compra-nota { display: flex; align-items: flex-start; gap: 8px; font-size: var(--t-xs); color: var(--suave); }
+.compra-nota svg { flex: none; margin-top: 3px; }
+
+.garantias {
+  list-style: none;
+  margin: var(--s4) 0 0;
+  padding: var(--s4) 0 0;
+  border-top: 1px solid var(--linha);
+  display: grid;
+  gap: 9px;
+}
+.garantias li {
+  position: relative;
+  padding-left: 21px;
+  font-size: var(--t-xs);
+  color: var(--suave);
+  letter-spacing: 0.005em;
+}
+.garantias li::before {
+  content: '';
+  position: absolute;
+  left: 1px; top: 0.34em;
+  width: 11px; height: 6px;
+  border-left: 1.8px solid var(--acao);
+  border-bottom: 1.8px solid var(--acao);
+  transform: rotate(-45deg);
+}
+
+.troca { margin-top: var(--s4); font-size: var(--t-sm); }
+
+.specs-titulo { font-size: var(--t-lg); margin-bottom: var(--s5); }
+.specs { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--linha); }
+.specs li {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.45fr) 1fr;
+  gap: var(--s4);
+  padding: 15px var(--s2);
+  border-bottom: 1px solid var(--linha);
+  font-size: var(--t-sm);
+}
+.specs .k { color: var(--suave); }
+.specs .v { font-weight: 500; }
+
+.relacionados { padding-top: var(--section); }
+
+@media (max-width: 900px) {
+  .produto-corpo { grid-template-columns: 1fr; padding-top: var(--s7); }
+  .escolhas { position: static; order: -1; }
+}
+
+.barra-compra {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 140;
+  display: none;
+  align-items: center;
+  gap: var(--s4);
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in oklab, var(--chao) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--linha);
+  transform: translateY(100%);
+  transition: transform 340ms var(--ease);
+}
+.barra-compra[data-visible='true'] { transform: none; }
+.barra-compra .k { font-size: var(--t-xs); color: var(--suave); }
+.barra-compra .v { font-size: 1rem; font-weight: 600; letter-spacing: -0.02em; }
+.barra-compra .btn { margin-left: auto; }
+
+@media (max-width: 900px) {
+  .barra-compra { display: flex; }
+  .wa, .fab-sacola { transition: bottom 340ms var(--ease), transform 320ms var(--ease); }
+  body:has(.barra-compra[data-visible='true']) .wa,
+  body:has(.barra-compra[data-visible='true']) .fab-sacola {
+    bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ---------- 15. Página de atendimento ----------
+   A pergunta que traz a pessoa aqui é sempre a mesma: "isso é uma
+   loja de verdade?". A página responde na ordem em que a dúvida
+   aparece — tem alguém agora, onde fica, o que vem junto, como paga. */
+
+.atendimento {
+  background: linear-gradient(180deg, var(--chao-2) 0%, var(--chao) 100%);
+  padding: calc(var(--nav) + clamp(56px, 8vw, 104px)) 0 clamp(48px, 7vw, 88px);
+}
+.atendimento h1 { max-width: 14ch; margin-bottom: var(--s5); }
+.atendimento .sub { max-width: 46ch; margin-bottom: var(--s7); }
+
+.atend-acao {
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  flex-wrap: wrap;
+}
+
+/* -- O sinal de aberto/fechado --
+   Calculado no relógio do visitante a partir de CONFIG.horarios.
+   Verde e cinza aqui são estado, não decoração: por isso vêm
+   acompanhados de texto, e não só da bolinha. */
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  color: var(--suave);
+}
+.estado-luz {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--suave);
+  flex: none;
+}
+.estado[data-aberta='true'] { color: var(--tinta); }
+.estado[data-aberta='true'] .estado-luz {
+  background: var(--zap);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--zap) 22%, transparent);
+}
+
+/* -- A loja -- */
+
+.loja { padding: clamp(48px, 7vw, 92px) 0; }
+
+.loja-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(32px, 6vw, 88px);
+  align-items: start;
+}
+.loja-texto h2 { margin-bottom: var(--s5); max-width: 18ch; }
+.loja-texto p { color: var(--suave); max-width: 54ch; }
+.loja-texto p + p { margin-top: var(--s4); }
+
+.loja-dados {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-top: 1px solid var(--linha);
+}
+.loja-dados > div {
+  display: grid;
+  grid-template-columns: minmax(88px, 0.4fr) 1fr;
+  gap: var(--s4);
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--linha);
+}
+.loja-dados dt { font-size: var(--t-sm); font-weight: 600; }
+.loja-dados dd { margin: 0; font-size: var(--t-sm); color: var(--suave); }
+
+@media (max-width: 860px) {
+  .loja-grade { grid-template-columns: 1fr; }
+}
+
+/* -- O que vai junto -- */
+
+.inclui {
+  background: var(--chao-2);
+  padding: var(--section) 0;
+}
+
+.inclui-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(24px, 3.5vw, 48px);
+  margin: 0;
+}
+.inclui-grade > div { padding-top: var(--s4); border-top: 1px solid var(--linha); }
+.inclui-grade dt { font-size: var(--t-md); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 6px; }
+.inclui-grade dd { margin: 0; font-size: var(--t-sm); color: var(--suave); max-width: 30ch; }
+
+/* -- Condições -- */
+
+.condicoes { padding: var(--section) 0; }
+
+.condicoes-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+}
+.condicoes-grade h3 { font-size: var(--t-sm); margin-bottom: var(--s4); }
+.condicoes-grade ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.condicoes-grade li { font-size: var(--t-sm); color: var(--suave); }
+.condicoes-grade ul li { padding-left: 18px; position: relative; }
+.condicoes-grade ul li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.62em;
+  width: 5px; height: 5px; border-radius: 50%;
+  background: color-mix(in oklab, var(--acao) 60%, var(--fundo));
+}
+
+.passos { display: grid; gap: var(--s4); margin: 0; padding: 0; list-style: none; }
+.passos li { display: grid; grid-template-columns: auto 1fr; gap: var(--s3); align-items: baseline; }
+.passos .n {
+  font-weight: 600;
+  color: var(--acao);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xs);
+}
+
+.condicoes-fim {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s5);
+  flex-wrap: wrap;
+  margin-top: var(--s8);
+  padding-top: var(--s7);
+  border-top: 1px solid var(--linha);
+}
+.condicoes-fim p {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.026em;
+  line-height: 1.14;
+  max-width: 22ch;
+}
+
+/* ---------- 16. Revelação no scroll ---------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--reveal) var(--ease), transform var(--reveal) var(--ease);
+  transition-delay: var(--delay, 0ms);
+}
+[data-reveal].vis { opacity: 1; transform: none; }
+
+/* ---------- 18. O aparelho ----------
+   No lugar da fotografia: um mockup desenhado, preenchido com a
+   cor real do produto. Sem brilho de estúdio, sem reflexo no chão.
+   Ele é claramente um desenho, e é por isso que pode aparecer sem
+   mentir sobre o aparelho.
+
+   Todo preenchimento é derivado de --cor. Trocar essa variável
+   faz a peça inteira mudar de cor em cross-fade. */
+
+.poco {
+  position: relative;
+  display: block;
+  height: 100%;          /* o poço manda na altura, não o desenho */
+  border-radius: var(--r);
+  overflow: hidden;
+  /* o poço puxa um fio da cor do aparelho, então cada produto tem
+     o seu próprio ar sem precisar de uma segunda paleta */
+  background:
+    radial-gradient(118% 88% at 50% 4%,
+      color-mix(in oklab, var(--chao) 88%, var(--cor)) 0%,
+      var(--poco) 78%);
+}
+
+/* -- A foto do produto --
+   Recortada em alpha, então o poço aparece atrás dela e a peça
+   nunca ganha um retângulo branco em volta. */
+.foto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Padding em px, não em %: porcentagem se resolve pela largura, e
+     numa caixa larga e baixa isso come a altura toda e encolhe o
+     aparelho até virar um selo. */
+  padding: 10px;
+  transition: opacity 260ms var(--ease), transform 560ms var(--ease);
+}
+.poco--mockup .foto { padding: clamp(16px, 3vw, 36px); }
+.poco--linha .foto { padding: 2px; }
+.poco--capa .foto { padding: 0; }
+
+/* O cross-fade na troca de cor: some, troca o arquivo, volta. */
+.poco[data-trocando='true'] .foto { opacity: 0; }
+
+/* Se o arquivo não existir, o poço vira um vazio silencioso em vez
+   de um ícone de imagem quebrada. */
+.poco[data-sem-foto='true'] .foto { display: none; }
+
+/* Com foto, o poço puxa menos cor: a peça já é colorida, e o chão
+   atrás dela só precisa dar contexto, não competir. */
+.poco--foto {
+  background:
+    radial-gradient(118% 88% at 50% 4%,
+      color-mix(in oklab, var(--chao) 93%, var(--cor)) 0%,
+      var(--poco) 82%);
+}
+
+.aparelho {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* O viewBox é quadrado e o poço quase nunca é: o desenho encolhe
+     para caber na menor dimensão em vez de vazar por cima do nome e
+     do preço logo abaixo. */
+  overflow: visible;
+  transition: transform 560ms var(--ease);
+}
+
+/* Preenchimentos derivados da cor do produto */
+.ap-corpo { fill: var(--cor); }
+.ap-claro { fill: color-mix(in oklab, var(--cor) 74%, white); }
+.ap-escuro{ fill: color-mix(in oklab, var(--cor) 74%, black); }
+.ap-metal { fill: color-mix(in oklab, var(--cor) 52%, white); }
+.ap-faixa { fill: color-mix(in oklab, var(--cor) 84%, black); }
+.ap-linha { fill: color-mix(in oklab, var(--cor) 60%, black); }
+.ap-tecla { fill: color-mix(in oklab, var(--cor) 42%, black); }
+.ap-preto { fill: oklch(0.16 0.006 260); }
+
+/* Traços — precisam de classe própria: em SVG o CSS vence o
+   atributo fill="none", então um traço estilizado como
+   preenchimento vira um borrão sólido. */
+.ap-tracado, .ap-aro, .ap-arco, .ap-almofada, .ap-cabo { fill: none; }
+.ap-tracado  { stroke: color-mix(in oklab, var(--cor) 62%, black); }
+.ap-aro      { stroke: color-mix(in oklab, var(--cor) 74%, white); }
+.ap-arco     { stroke: color-mix(in oklab, var(--cor) 52%, white); }
+.ap-almofada { stroke: color-mix(in oklab, var(--cor) 84%, black); }
+.ap-cabo     { stroke: color-mix(in oklab, var(--cor) 34%, white); }
+
+/* Duas cores que não são derivadas porque não são escolha de cor:
+   o LED de carga e o botão de ação do Watch Ultra são laranja no
+   aparelho de verdade. */
+.ap-luz  { fill: var(--acao); }
+.ap-acao { fill: var(--acao); }
+
+/* Cross-fade da troca de cor. Só fill e stroke: nada de layout. */
+.ap-corpo, .ap-claro, .ap-escuro, .ap-metal, .ap-faixa, .ap-linha,
+.ap-tecla, .ap-tracado, .ap-aro, .ap-arco, .ap-almofada, .ap-cabo,
+.aparelho stop {
+  transition: fill 420ms var(--ease), stroke 420ms var(--ease),
+              stop-color 420ms var(--ease);
+}
+
+/* -- O poço dentro do card da vitrine -- */
+
+.card-poco {
+  height: clamp(178px, 19vw, 240px);
+  margin-bottom: var(--s5);
+  overflow: hidden;
+  border-radius: var(--r);
+}
+.card--peq .card-poco { height: clamp(154px, 16vw, 198px); }
+.card--largo .card-poco { height: auto; }
+
+/* Sobre a superfície forte o poço também escurece, senão vira um
+   retângulo branco colado no meio do laranja. */
+/* Dentro de uma caixa viva o poço sai de cena: um retângulo quase
+   branco no meio da cor viraria uma janela colada no card. O aparelho
+   é recortado em alpha, então ele assenta direto no chão colorido. */
+.card--areia .poco, .card--bruma .poco, .card--musgo .poco,
+.card--argila .poco, .card--linho .poco, .card--grafite .poco,
+.card--laranja .poco { background: none; }
+
+.card--forte .poco {
+  background:
+    radial-gradient(118% 88% at 50% 4%,
+      color-mix(in oklab, var(--cor) 20%, oklch(0.50 0.14 44)) 0%,
+      oklch(0.44 0.13 42) 82%);
+}
+
+/* A peça sobe junto com o card. Um gesto, não dois. */
+.card:hover .aparelho, .card:hover .foto { transform: translateY(-7px) scale(1.035); }
+
+/* -- Chãos dos destaques --
+   Cinco cards, cinco chãos. A variedade está na superfície;
+   o laranja de ação continua sendo um só. */
+.card--areia  { background: var(--areia-viva);   --olho: oklch(0.45 0.15 62);  --sub: oklch(0.44 0.035 62); }
+.card--bruma  { background: var(--bruma-viva);   --olho: oklch(0.45 0.13 238); --sub: oklch(0.44 0.035 238); }
+.card--argila { background: var(--argila-viva);  --olho: oklch(0.45 0.15 20);  --sub: oklch(0.44 0.035 20); }
+.card--musgo  { background: var(--musgo-vivo);   --olho: oklch(0.45 0.12 158); --sub: oklch(0.44 0.035 158); }
+.card--linho  { background: var(--linho-vivo);   --olho: oklch(0.45 0.12 95);  --sub: oklch(0.44 0.035 95); }
+.card--grafite { background: var(--grafite-vivo); --olho: oklch(0.45 0.14 272); --sub: oklch(0.44 0.035 272); }
+
+/* No escuro o realce de hover ESCURECE. Clarear derrubaria o texto
+   secundário para 3,5:1 — medido. */
+/* No claro o realce de hover volta a escurecer um degrau. */
+.card--areia:hover   { background: oklch(0.835 0.097 62); }
+.card--bruma:hover   { background: oklch(0.835 0.082 238); }
+.card--argila:hover  { background: oklch(0.835 0.079 20); }
+.card--musgo:hover   { background: oklch(0.835 0.127 158); }
+.card--linho:hover   { background: oklch(0.835 0.127 95); }
+.card--grafite:hover { background: oklch(0.835 0.073 272); }
+
+/* O card que puxa o olho é o único com o laranja de superfície. */
+.card--forte { background: var(--forte); color: var(--forte-tinta); }
+.card--forte:hover { background: linear-gradient(152deg, oklch(0.535 0.19 50) 0%, oklch(0.445 0.185 42) 100%); }
+.card--forte .card-preco small { color: oklch(0.974 0.017 72); }
+.card--forte .olho { color: oklch(0.965 0.022 72); }
+.card--forte .btn { background: var(--chao); color: var(--acao); }
+
+/* O card largo é o único com o aparelho ao lado do texto: ele tem
+   largura para isso e ganha um assunto em vez de um bloco de ar. */
+@media (min-width: 901px) {
+  .card--largo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(170px, 32%, 250px);
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: clamp(28px, 3.4vw, 52px);
+    align-items: start;
+  }
+  .card--largo > * { grid-column: 1; }
+  /* O preço encosta na base do vão flexível, logo acima do botão. */
+  .card--largo .card-preco { align-self: end; padding-top: 0; }
+  .card--largo .card-poco {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    align-self: center;
+    margin-bottom: 0;
+    aspect-ratio: 1 / 1.15;
+  }
+}
+
+/* -- O mockup grande, na página do produto -- */
+
+.produto-mockup {
+  margin: var(--s8) auto 0;
+  max-width: 560px;
+}
+/* O poço vira o objeto: pega o dedo, gira, e avisa disso pelo cursor. */
+.poco--mockup {
+  cursor: grab;
+  touch-action: pan-y;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.poco--mockup[data-pegando='true'] { cursor: grabbing; }
+.poco--mockup:focus-visible { outline: 2px solid var(--acao); outline-offset: 4px; }
+.poco--mockup {
+  aspect-ratio: 1 / 0.92;
+  border-radius: var(--r-lg);
+}
+.poco--mockup .aparelho { padding: clamp(18px, 4vw, 40px); }
+
+.mockup-nota {
+  margin: var(--s3) auto 0;
+  text-align: center;
+  font-size: var(--t-xs);
+  color: var(--suave);
+  max-width: none;
+}
+
+/* -- O aparelho na linha do catálogo --
+   Miniatura, sem poço e sem moldura. A lista continua sendo uma
+   lista: o desenho ajuda a reconhecer, não vira um mural. */
+
+.linha-poco {
+  width: clamp(50px, 6.5vw, 64px);
+  aspect-ratio: 1 / 1;
+  flex: none;
+}
+.linha-poco .poco { background: none; height: 100%; }
+.linha:hover .aparelho, .linha:hover .foto { transform: scale(1.06); }
+
+/* -- Mapeamento de categoria --
+   Aqui a cor significa alguma coisa: cada pílula do trilho puxa o
+   chão da sua própria família, na mesma ordem declarada nos tokens.
+   Uma por categoria, sem repetição. */
+.trilho-lista a[href*='cat=iphone']:hover     { background: var(--areia); }
+.trilho-lista a[href*='cat=ipad']:hover       { background: var(--bruma); }
+.trilho-lista a[href*='cat=audio']:hover      { background: var(--musgo); }
+.trilho-lista a[href*='cat=watch']:hover      { background: var(--argila); }
+.trilho-lista a[href*='cat=acessorios']:hover { background: var(--linho); }
+/* Mac é o único de chão escuro. Uma pílula pequena não vira preta no
+   hover — ela recebe o mesmo tom, diluído até a faixa das outras. */
+.trilho-lista a[href*='cat=mac']:hover {
+  background: color-mix(in oklab, var(--grafite) 7%, var(--tinta));
+}
+
+/* ---------- 19. Movimento ----------
+   Uma curva só, a mesma da folha inteira. Nada aqui compete com
+   o preço nem com o botão de comprar. */
+
+/* Entrada da página: uma coreografia curta, não seis micro-gestos
+   soltos. Só roda com JS ligado, para o texto nunca sumir. */
+.js [data-entra] { opacity: 0; }
+
+.js.pronto [data-entra] {
+  animation: entra 700ms var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes entra {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* A foto da capa entra por último e diferente do resto: em vez de
+   deslizar, ela **assenta** — chega desfocada e um passo maior, como
+   uma lente encontrando o foco, e para. Sem deslocamento nenhum.
+
+   `filter` não é `transform` nem `opacity`, e a folha inteira evita
+   animar outra coisa. A exceção é deliberada e cabe aqui por ser uma
+   peça só, uma vez por visita, e nunca durante a rolagem. */
+.js.pronto .capa-foto {
+  animation: assenta 1200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+  will-change: filter, opacity, transform;
+}
+@keyframes assenta {
+  from { opacity: 0; filter: blur(22px) saturate(1.35); transform: scale(1.045); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; filter: blur(0) saturate(1); transform: none; }
+}
+
+/* A barra de navegação não tem borda enquanto o conteúdo não passa
+   por baixo dela. O filete aparece quando começa a ter função. */
+.nav-topo {
+  transition: background-color 320ms var(--ease),
+              border-color 320ms var(--ease),
+              backdrop-filter 320ms var(--ease);
+}
+.nav-topo:not([data-rolado='true']) {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* A troca de filtro do catálogo: a lista velha sai antes da nova
+   entrar, senão o conteúdo pisca trocado no lugar. */
+.lista { transition: opacity 160ms var(--ease); }
+.lista[data-trocando='true'] { opacity: 0; }
+
+/* O pontinho de cor cresce quando a cor é a escolhida. */
+.opt .swatch { transition: transform var(--hover) var(--ease), box-shadow var(--hover) var(--ease); }
+.opt[aria-pressed='true'] .swatch {
+  transform: scale(1.24);
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.24), 0 0 0 3px oklch(0.52 0.19 45 / 0.18);
+}
+
+/* ---------- 20. Perguntas ----------
+   Sem vitrine de rua, a página precisa responder o que o balcão
+   responderia. Uma pergunta aberta por vez, filete entre elas, e
+   nada de card: isto é uma lista de dúvidas, não um mural. */
+
+/* O único chão saturado do site. As dúvidas ganham a cor porque são
+   o momento em que a pessoa está mais perto de desistir — e porque a
+   página precisava de um corte depois de quatro seções claras.
+
+   Não é um laranja novo: é o mesmo `--laranja` de sempre, ocupando a
+   superfície em vez do gesto. Tudo em cima dele é branco ou quase, e
+   cada tom foi medido contra o chão. */
+.perguntas {
+  background: var(--forte);
+  color: var(--forte-tinta);
+  padding: var(--section) 0;
+}
+.perguntas .sec-topo { margin-bottom: var(--s6); }
+
+/* Sobre chão saturado o filete não pode ser o `--linha` cinza: ele
+   sumiria. É o próprio branco, rebaixado. */
+.acordeao { border-top: 1px solid oklch(0.995 0.002 80 / 0.3); }
+.pergunta { border-bottom: 1px solid oklch(0.995 0.002 80 / 0.3); }
+
+.pergunta h3 { margin: 0; font-size: inherit; font-weight: inherit; }
+.pergunta button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s5);
+  padding: clamp(18px, 2.2vw, 26px) 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--t-md);
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  line-height: 1.3;
+  color: var(--forte-tinta);
+  transition: opacity var(--hover) var(--ease);
+}
+.pergunta button:hover { opacity: 0.8; }
+.pergunta button svg {
+  width: 19px; height: 19px;
+  flex: none;
+  color: oklch(0.97 0.02 74);
+  transition: transform 320ms var(--ease);
+}
+.pergunta button[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+/* `grid-template-rows` de 0fr para 1fr: o navegador continua medindo
+   o conteúdo, então a resposta não precisa de altura fixa e não corta
+   quando o texto muda de tamanho. */
+.resposta {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 380ms var(--ease);
+}
+.resposta > div { overflow: hidden; }
+.resposta p {
+  padding-bottom: clamp(18px, 2.2vw, 26px);
+  color: oklch(0.974 0.017 72);   /* 4,6:1 na parada mais clara da faixa */
+  font-size: var(--t-sm);
+  max-width: 64ch;
+}
+.pergunta[data-aberta='true'] .resposta { grid-template-rows: 1fr; }
+
+.perguntas-fim {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  margin-top: var(--s6);
+  font-size: var(--t-sm);
+  color: oklch(0.974 0.017 72);
+  max-width: none;
+}
+
+/* ---------- 21. Instagram ----------
+   O canal que traz a pessoa até aqui é o mesmo que prova que a loja
+   existe. A seção troca o chão claro por tinta: é o único momento em
+   que a página muda de mundo, e isso é de propósito — social é outro
+   lugar, e parecer outro lugar ajuda a pessoa a entender para onde
+   ela vai clicando. */
+
+.insta {
+  background: linear-gradient(158deg, oklch(0.275 0.028 42) 0%, var(--noite) 100%);
+  color: var(--chao);
+  padding: var(--section) 0;
+}
+/* Sobre a noite, o laranja de ação some — precisa subir de luz. */
+.insta .olho { color: oklch(0.78 0.15 55); margin-bottom: var(--s4); }
+.insta h2 { max-width: 16ch; margin-bottom: var(--s5); }
+.insta-txt { color: oklch(0.85 0.02 60); max-width: 46ch; }
+
+.insta-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+}
+
+.insta-cartao {
+  display: grid;
+  justify-items: center;
+  gap: var(--s3);
+  padding: clamp(28px, 3.5vw, 44px) clamp(32px, 4vw, 56px);
+  border-radius: var(--r-lg);
+  background: oklch(0.995 0.002 80 / 0.09);
+  transition: transform var(--hover) var(--ease), background-color var(--hover) var(--ease);
+}
+.insta-cartao:hover {
+  transform: translateY(-3px);
+  background: oklch(0.995 0.002 80 / 0.15);
+}
+.insta-cartao svg { width: 34px; height: 34px; color: oklch(0.78 0.15 55); }
+.insta-arroba { font-size: var(--t-md); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+.insta-acao { font-size: var(--t-xs); color: oklch(0.80 0.02 60); }
+
+@media (max-width: 760px) {
+  .insta-grade { grid-template-columns: 1fr; justify-items: start; }
+  .insta-cartao { justify-self: stretch; }
+}
+
+/* ---------- 22. A sacola ----------
+   Uma gaveta pela direita, com véu por baixo. Ela não é uma página:
+   a pessoa continua onde estava, e o fundo continua visível para
+   deixar isso claro. */
+
+html.travado { overflow: hidden; }
+
+.carrinho {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  pointer-events: none;
+}
+
+.carrinho-veu {
+  position: absolute;
+  inset: 0;
+  background: oklch(0.24 0.014 50 / 0.34);
+  opacity: 0;
+  transition: opacity 320ms var(--ease);
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+}
+
+.carrinho-folha {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: min(430px, 100%);
+  display: flex;
+  flex-direction: column;
+  background: var(--chao);
+  box-shadow: -32px 0 64px -32px oklch(0.3 0.02 50 / 0.34);
+  transform: translateX(100%);
+  transition: transform 460ms var(--ease);
+  will-change: transform;
+}
+
+.carrinho[data-aberto='true'] { pointer-events: auto; }
+.carrinho[data-aberto='true'] .carrinho-veu { opacity: 1; }
+.carrinho[data-aberto='true'] .carrinho-folha { transform: none; }
+
+.carrinho-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding: var(--s5) var(--s5) var(--s4);
+  border-bottom: 1px solid var(--linha);
+}
+.carrinho-topo h2 { font-size: var(--t-md); letter-spacing: -0.024em; }
+
+.carrinho-x {
+  position: relative;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--suave);
+  cursor: pointer;
+  transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease);
+}
+.carrinho-x:hover { background: var(--chao-2); color: var(--tinta); }
+.carrinho-x::after { content: ''; position: absolute; inset: -4px; }
+
+.carrinho-corpo {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--s2) var(--s5);
+}
+
+/* -- Uma linha da sacola -- */
+
+.sac-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--linha);
+}
+.sac-poco { width: 46px; aspect-ratio: 1; flex: none; }
+.sac-poco .poco { background: none; }
+
+.sac-txt { min-width: 0; }
+.sac-txt h3 { font-size: var(--t-sm); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
+.sac-txt h3 a:hover { color: var(--acao); }
+.sac-variante { font-size: var(--t-xs); color: var(--suave); margin-top: 2px; }
+.sac-preco { font-size: var(--t-sm); font-weight: 600; margin-top: 5px; font-variant-numeric: tabular-nums; }
+.sac-preco small {
+  display: block;
+  font-size: var(--t-xs);
+  font-weight: 400;
+  color: var(--suave);
+  letter-spacing: 0.005em;
+  margin-top: 1px;
+}
+
+.sac-qtd {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: none;
+  border: 1px solid var(--linha);
+  border-radius: 980px;
+  padding: 2px;
+}
+.sac-qtd button {
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--suave);
+  cursor: pointer;
+  transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease),
+              transform var(--tap) var(--ease);
+}
+.sac-qtd button:hover { background: var(--chao-2); color: var(--tinta); }
+.sac-qtd button:active { transform: scale(0.9); }
+.sac-qtd span {
+  min-width: 18px;
+  text-align: center;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.sac-vazio { padding: var(--s8) var(--s2); text-align: center; }
+.sac-vazio-t { font-size: var(--t-md); font-weight: 600; letter-spacing: -0.02em; margin-bottom: var(--s3); }
+.sac-vazio p { font-size: var(--t-sm); color: var(--suave); margin-inline: auto; max-width: 34ch; }
+.sac-vazio .btn { margin-top: var(--s5); }
+
+/* -- Costuma ir junto --
+   Não é um segundo catálogo dentro da gaveta: duas linhas, menores
+   que as do carrinho, com um botão de somar e nada mais. */
+
+.sugestoes { padding: var(--s5) 0 var(--s4); }
+.sugestoes h3 {
+  font-size: var(--t-olho);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--suave);
+  margin-bottom: var(--s3);
+}
+
+.sug {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--s3);
+  padding: 10px 0;
+}
+.sug-poco { width: 34px; aspect-ratio: 1; flex: none; }
+.sug-poco .poco { background: none; }
+.sug-txt h4 { font-size: var(--t-sm); font-weight: 600; letter-spacing: -0.018em; }
+.sug-txt p { font-size: var(--t-xs); color: var(--suave); margin-top: 1px; font-variant-numeric: tabular-nums; }
+
+.sug-mais {
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border: 1px solid var(--linha);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--acao);
+  cursor: pointer;
+  flex: none;
+  transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease),
+              border-color var(--hover) var(--ease), transform var(--tap) var(--ease);
+}
+.sug-mais:hover { background: var(--acao); color: var(--tinta); border-color: var(--acao); }
+.sug-mais:active { transform: scale(0.9); }
+
+/* -- O pé da gaveta -- */
+
+.carrinho-fim {
+  padding: var(--s5);
+  border-top: 1px solid var(--linha);
+  background: var(--fundo);
+  padding-bottom: calc(var(--s5) + env(safe-area-inset-bottom));
+}
+.carrinho-total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-bottom: var(--s4);
+}
+.carrinho-total span { flex: none; }
+.carrinho-total span { font-size: var(--t-sm); color: var(--suave); }
+.carrinho-total b { font-size: 1.35rem; font-weight: 600; letter-spacing: -0.028em; font-variant-numeric: tabular-nums; }
+.carrinho-parcelado {
+  font-size: var(--t-xs);
+  color: var(--suave);
+  text-align: right;
+  margin: -14px 0 var(--s4);
+  letter-spacing: 0.005em;
+  font-variant-numeric: tabular-nums;
+  max-width: none;
+}
+.carrinho-nota { font-size: var(--t-xs); color: var(--suave); margin-top: var(--s3); text-align: center; max-width: none; }
+
+/* A peça que voa da página até o selo. */
+.voando { border-radius: var(--r); overflow: hidden; }
+
+/* No celular a gaveta sobe do rodapé: é de onde o polegar vem. */
+@media (max-width: 560px) {
+  .carrinho-folha {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-height: 88dvh;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    transform: translateY(100%);
+  }
+}
+
+/* -- O botão de juntar, depois de juntar -- */
+#btn-sacola[data-feito='true'] {
+  border-color: var(--acao);
+  color: var(--acao);
+}
+
+/* ---------- 23. Aviso de armazenamento ----------
+   Faixa estreita, no rodapé, com um botão só. Não bloqueia a página,
+   não escurece nada e não volta depois de fechada. */
+
+.aviso {
+  position: fixed;
+  left: calc(clamp(14px, 3vw, 26px) + 70px);
+  right: calc(clamp(14px, 3vw, 26px) + 70px);
+  bottom: clamp(14px, 3vw, 26px);
+  margin-inline: auto;
+  z-index: 160;
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  flex-wrap: wrap;
+  max-width: 640px;
+  padding: 14px 16px 14px 20px;
+  border-radius: var(--r);
+  background: color-mix(in oklab, var(--chao) 90%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--linha);
+  box-shadow: 0 18px 44px -24px oklch(0.3 0.02 50 / 0.3);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 380ms var(--ease), transform 420ms var(--ease);
+}
+.aviso[data-visivel='true'] { opacity: 1; transform: none; }
+
+.aviso-txt { font-size: var(--t-xs); color: var(--suave); flex: 1 1 260px; max-width: none; }
+.aviso-txt a { color: var(--acao); text-decoration: underline; text-underline-offset: 2px; }
+.aviso .btn { flex: none; }
+
+@media (max-width: 700px) {
+  .aviso {
+    left: clamp(14px, 3vw, 26px);
+    right: clamp(14px, 3vw, 26px);
+    bottom: calc(clamp(14px, 3vw, 26px) + 66px);
+  }
+}
+/* Na página do produto a barra de compra também mora no rodapé. */
+@media (max-width: 900px) {
+  .aviso { transition: opacity 380ms var(--ease), transform 420ms var(--ease), bottom 340ms var(--ease); }
+  body:has(.barra-compra[data-visible='true']) .aviso {
+    bottom: calc(clamp(14px, 3vw, 26px) + 66px + 68px);
+  }
+}
+
+/* ---------- 24. Página de privacidade ---------- */
+
+.privacidade h1 { max-width: 13ch; }
+.priv-corpo { padding: clamp(48px, 7vw, 92px) 0 var(--section); }
+
+.priv-bloco { max-width: 720px; }
+.priv-bloco + .priv-bloco { margin-top: clamp(40px, 5vw, 64px); }
+.priv-bloco h2 { margin-bottom: var(--s5); }
+.priv-bloco > p { color: var(--suave); }
+
+.priv-tabela { display: grid; margin: 0; border-top: 1px solid var(--linha); }
+.priv-tabela > div {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.4fr) 1fr;
+  gap: var(--s4);
+  padding: var(--s4) 0;
+  border-bottom: 1px solid var(--linha);
+}
+.priv-tabela dt { font-size: var(--t-sm); font-weight: 600; }
+.priv-tabela dd { margin: 0; font-size: var(--t-sm); color: var(--suave); }
+.priv-tabela code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  padding: 1px 5px;
+  border-radius: 5px;
+  background: var(--chao-2);
+  color: var(--tinta);
+}
+
+.priv-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s3); }
+.priv-lista li {
+  position: relative;
+  padding-left: 20px;
+  font-size: var(--t-sm);
+  color: var(--suave);
+  max-width: 62ch;
+}
+.priv-lista li::before {
+  content: '';
+  position: absolute; left: 0; top: 0.62em;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: color-mix(in oklab, var(--acao) 55%, var(--fundo));
+}
+
+.priv-apagar .btn { margin-top: var(--s5); }
+.priv-feito { font-size: var(--t-xs); color: var(--acao); margin-top: var(--s3); min-height: 1.2em; }
+.priv-contato { display: flex; gap: var(--s5); flex-wrap: wrap; align-items: center; font-size: var(--t-sm); color: var(--suave); margin-top: var(--s4); }
+
+@media (max-width: 620px) {
+  .priv-tabela > div { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ---------- 25. Preferências do usuário ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 160ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  .card:hover { transform: none; }
+  .wa:hover, .wa:active, .fab-sacola:hover, .fab-sacola:active { transform: none; }
+  .fab-sacola:hover .fab-icone svg { animation: none; }
+  .fab-sacola-n { transform: none; }
+  .seta:hover::after { transform: none; }
+
+  /* Sem movimento não quer dizer sem resposta: a troca de cor do
+     aparelho continua, porque ela é a informação, não o enfeite.
+     O que sai são os deslocamentos e as aproximações. */
+  .js [data-entra], .js.pronto [data-entra] { opacity: 1; animation: none; }
+  .js.pronto .capa-foto { animation: none; filter: none; }
+  .card:hover .aparelho, .linha:hover .aparelho,
+  .card:hover .foto, .linha:hover .foto { transform: none; }
+  /* Sem movimento não há giro: o JS nem chega a registrar os
+     ouvintes, e o CSS zera o que sobrou. */
+  .poco--mockup { cursor: default; }
+  .aparelho, .foto { transition: none; }
+  .opt[aria-pressed='true'] .swatch { transform: none; }
+  .lista[data-trocando='true'] { opacity: 1; }
+  /* A resposta aparece inteira, sem a altura crescendo na tela. */
+  .resposta { transition: none; }
+  .pergunta button[aria-expanded='true'] svg { transform: none; }
+  .insta-cartao:hover { transform: none; }
+  .sug-mais:active { transform: none; }
+
+  /* A gaveta e a faixa aparecem por opacidade: sem deslize, sem véu
+     que embaça, sem selo que pula. A peça que voa nem chega a existir
+     — o próprio JS não a cria quando o movimento está reduzido. */
+  .carrinho-folha { transform: none; transition: opacity 200ms var(--ease); opacity: 0; }
+  .carrinho[data-aberto='true'] .carrinho-folha { opacity: 1; }
+  .carrinho-veu { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .aviso { transform: none; }
+  .sac-qtd button:active { transform: none; }
+  .marca:hover .simbolo { transform: none; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .nav-topo, .barra-compra, .aviso {
+    background: var(--chao);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .carrinho-veu { background: oklch(0.24 0.014 50 / 0.52); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --suave: oklch(0.38 0.016 50); --linha: oklch(0.74 0.016 66); }
+  .card { outline: 1px solid var(--linha); }
+  .btn--vazio { border-width: 2px; }
+  /* O botão do catálogo não fica esperando o hover para ter corpo. */
+  .linha-acoes .btn { background: var(--acao); color: var(--tinta); box-shadow: none; }
+}
+
+@media print {
+  .nav-topo, .wa, .fab-sacola, .barra-compra, .aviso, .carrinho { display: none; }
+  .resposta { grid-template-rows: 1fr; }
+  body { background: #fff; color: #000; }
+}

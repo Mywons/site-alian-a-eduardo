@@ -1,0 +1,10 @@
+# Configuração local de ferramenta, não faz parte do site
+.claude/
+
+# Lixo de sistema
+.DS_Store
+Thumbs.db
+*~
+
+# Se um dia entrar build ou dependência aqui
+node_modules/
