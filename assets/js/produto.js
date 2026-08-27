@@ -249,4 +249,24 @@ document.addEventListener('DOMContentLoaded', () => {
       barra.dataset.visible = String(!entrada.isIntersecting && entrada.boundingClientRect.top < 0);
     }, { threshold: 0 }).observe(btn);
   }
+
+  // O aviso de armazenamento sobe para cima da barra, e para isso o
+  // CSS precisa da altura dela. Mesma razão do `--aviso-h`: ela muda
+  // com o tamanho de fonte do usuário e com a safe-area do aparelho,
+  // então um número fixo erra justamente nos aparelhos que têm faixa
+  // embaixo — os que mais precisam de acerto. Acima de 900px a barra
+  // não é exibida e a medida sai zero: o `if` deixa o valor de reserva
+  // do CSS em pé em vez de escrever um zero que encavalaria os dois.
+  if (barra) {
+    const medirBarra = () => {
+      const h = barra.getBoundingClientRect().height;
+      if (h) document.documentElement.style.setProperty('--barra-h', `${Math.round(h)}px`);
+    };
+    medirBarra();
+    if (typeof ResizeObserver === 'function') {
+      new ResizeObserver(medirBarra).observe(barra);
+    } else {
+      window.addEventListener('resize', medirBarra, { passive: true });
+    }
+  }
 });

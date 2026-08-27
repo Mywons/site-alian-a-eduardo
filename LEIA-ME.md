@@ -5,20 +5,24 @@ Site estático. Não precisa instalar nada, não precisa de servidor. Dê dois c
 (Hostinger, Vercel, Netlify, GitHub Pages).
 
 ```
-index.html            capa, destaques, catálogo completo, compromissos
-produto.html          página de produto (abre com ?id=... na URL)
-sobre.html            atendimento: quem é a loja, endereço, horário
-privacidade.html      o que o site guarda no navegador e como apagar
-assets/img/           a foto do aparelho da capa
+index.html                capa, destaques, catálogo completo, compromissos
+produto.html              página de produto (abre com ?id=... na URL)
+sobre.html                atendimento: quem é a loja, endereço, horário
+privacidade.html          o que o site guarda no navegador e como apagar
+corporate.html            a página para empresas (veja a seção 11)
+assets/img/               a foto do aparelho da capa
 assets/css/style.css
-assets/js/data.js     ← número do WhatsApp, horários, categorias e produtos
-assets/js/aparelho.js desenho dos aparelhos e a tabela de cores
-assets/js/app.js      comportamento comum a todas as páginas
-assets/js/gesto.js    o arraste, a inclinação e a física da mola
-assets/js/carrinho.js o carrinho: juntar, somar e virar mensagem
-assets/js/produto.js  monta a página do produto
-PRODUCT.md            quem é a marca e por que o site é assim
-DESIGN.md             cores, tipografia, espaçamento e movimento
+assets/css/corporate.css  o visual da página para empresas, só dela
+assets/js/data.js         ← número do WhatsApp, horários, categorias e produtos
+assets/js/aparelho.js     desenho dos aparelhos e a tabela de cores
+assets/js/app.js          comportamento comum a todas as páginas
+assets/js/gesto.js        o arraste, a inclinação e a física da mola
+assets/js/carrinho.js     o carrinho: juntar, somar e virar mensagem
+assets/js/produto.js      monta a página do produto
+assets/js/corporate.js    o que a página para empresas faz
+assets/js/transicao.js    a passagem de uma cara do site para a outra
+PRODUCT.md                quem é a marca e por que o site é assim
+DESIGN.md                 cores, tipografia, espaçamento e movimento
 ```
 
 Só um arquivo precisa da sua atenção no dia a dia: **`assets/js/data.js`**.
@@ -282,7 +286,41 @@ nítido em qualquer tela e some junto com o resto se você trocar a cor da marca
 Ele aparece em três lugares: navegação, favicon (dentro da `<link rel="icon">` de cada
 página) e rodapé. Para mudar o desenho, os três precisam mudar juntos.
 
-## 11. Publicar
+## 11. A página para empresas (Corporate)
+
+`corporate.html` é a **segunda cara do site**: a mesma loja falando com empresa em vez
+de com pessoa. Chão preto, sem catálogo e sem carrinho — ali não se vende peça avulsa,
+se vende contrato. O visitante chega nela pelo link "Aliança Corporate" no menu e no
+rodapé de todas as páginas, e volta pelo "Loja de varejo".
+
+**Ela usa do `data.js` só duas coisas:** o número do WhatsApp e o nome da loja. Trocar o
+número na seção 1 já arruma a página inteira, e não há nada de Corporate para preencher
+lá dentro.
+
+**As mensagens são outras.** Quem toca em um botão dessa página não manda "tenho
+interesse no iPhone 17 Pro" — manda o **porte da empresa**, que é a primeira coisa que
+você perguntaria:
+
+> Olá! Vim pela página da Aliança One Corporate. Tenho entre 10 e 50 aparelhos para
+> equipar e queria falar sobre o formato Escala.
+
+São quatro textos, no começo de `assets/js/corporate.js`, no bloco `MENSAGENS`: um geral
+e um para cada formato (Equipe, Escala, Frota). Mude o texto entre aspas e pronto.
+
+**O resto do texto está escrito no `corporate.html`**, não no `data.js` — inclusive os
+três formatos e o que cada um inclui. Abra o arquivo em um editor de texto e procure a
+frase que quer trocar; ela está lá escrita por extenso.
+
+> ⚠️ **Leia a lista de cada formato antes de publicar.** Está prometido por escrito:
+> nota fiscal no CNPJ, garantia de 12 meses respondida por você, entrega em mãos na
+> Grande São Paulo e consultor no WhatsApp em horário comercial. É promessa de contrato
+> com empresa — se algum desses itens não for verdade hoje, apague a linha. A página
+> inteira do site funciona assim: **melhor não dizer do que dizer o que não se cumpre.**
+
+De propósito, a página não tem preço nenhum. O valor sai do diagnóstico, e um número
+inventado aqui custaria a conversa inteira.
+
+## 12. Publicar
 
 Suba a pasta inteira, mantendo a estrutura. Não renomeie `assets/`.
 Se a hospedagem pedir uma "pasta pública" ou "raiz do site", aponte para esta pasta.

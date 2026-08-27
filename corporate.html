@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aliança Corporate — Mac para a sua equipe</title>
+<meta name="description" content="Aliança Corporate: Mac, iPad e iPhone para empresas. Nota fiscal no CNPJ, configuração antes da entrega, garantia respondida por nós e um consultor dedicado.">
+<meta name="theme-color" content="#0d1012">
+<meta property="og:title" content="Aliança Corporate">
+<meta property="og:description" content="Faça a sua equipe trabalhar com Mac. Apple para empresas, com um consultor do começo ao fim.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap">
+<script>
+  document.documentElement.classList.add('js');
+  /* A metade da transição que pertence a esta página. Roda ANTES da
+     primeira pintura: se esperasse o JS do rodapé, existiria um quadro
+     com a página à mostra antes de a cortina cobrir, e o corte
+     apareceria exatamente onde a transição existe para não aparecer. */
+  try {
+    if (sessionStorage.getItem('alianca:troca') === '1') {
+      sessionStorage.removeItem('alianca:troca');
+      document.documentElement.classList.add('chegando');
+    }
+  } catch (e) { /* navegador sem sessionStorage: entra sem cortina */ }
+</script>
+<link rel="stylesheet" href="assets/css/corporate.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230d1012'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23d8ba79'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23d8ba79'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23d8ba79'/></svg>">
+</head>
+<body>
+
+<div class="troca" id="troca" aria-hidden="true"></div>
+
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ============ Navegação ============ -->
+<header class="topo">
+  <div class="shell topo-inner">
+    <a class="marca" href="corporate.html" aria-label="Aliança Corporate, início">
+      <svg class="simbolo" viewBox="4 2 56 58" aria-hidden="true" focusable="false">
+        <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+        <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+        <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+      </svg>
+      <b>Aliança</b>
+      <span class="ramo">Corporate</span>
+    </a>
+
+    <nav class="topo-links" id="topo-links" data-open="false" aria-label="Seções">
+      <a href="#por-que">Por que Mac</a>
+      <a href="#comparativo">Por que trocar</a>
+      <a href="#maquinas">As máquinas</a>
+      <a href="#lista">Montar a lista</a>
+      <a href="#planos">Planos</a>
+      <!-- A porta para o outro ramo NÃO é um item de seção: as outras
+           linhas navegam DENTRO desta página, esta sai dela. No
+           desktop ela vive no grupo de ações, à direita; aqui, onde
+           há espaço, ela se explica em duas linhas. -->
+    </nav>
+
+    <div class="topo-acao">
+      <a class="nav-varejo" href="index.html" data-troca="#bf4f04" title="Aliança One, a loja de varejo"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.52 13.98c-.25.7-1.45 1.34-2.02 1.42-.52.08-1.17.11-1.89-.12-.43-.14-.99-.32-1.7-.63-2.99-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.09 0-1.47.77-2.19 1.04-2.49.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.07.91 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg>
+        <span class="txt">Falar com um consultor</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="topo-links" aria-label="Abrir menu">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="conteudo">
+
+<!-- ============ Capa ============ -->
+<!-- Uma tela inteira: manchete à esquerda, o aparelho enorme logo
+     abaixo e a barra de vidro flutuando sobre ele. A foto é recortada
+     em alpha e assenta direto no preto — sem moldura, sem chão e sem
+     sombra. O objeto existe num vazio, e é ele que carrega a página. -->
+<section class="capa">
+  <div class="shell">
+    <p class="olho" data-entra>Aliança Corporate · Apple para empresas</p>
+
+    <h1 class="t-hero" data-entra>Faça a sua equipe
+      <em>trabalhar com Mac.</em></h1>
+
+    <p class="sub" data-entra>Você diz quantas pessoas precisa equipar. A gente volta com
+      a lista, o prazo e a conta de três anos ao lado do que você gasta hoje. Nota no
+      CNPJ, aparelho configurado antes de sair daqui e sempre o mesmo consultor.</p>
+
+    <div class="capa-acoes" data-entra>
+      <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">
+        Pedir o diagnóstico
+      </a>
+      <a class="seta" href="#comparativo">
+        Por que trocar de máquina
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- O palco NÃO entra com o grupo. A máquina tem entrada própria,
+         mais longa que a de todo o resto (ver `mac-assenta` na
+         folha), e o palco carrega a deriva de rolagem — as duas no
+         mesmo elemento brigariam pela mesma propriedade. -->
+    <div class="capa-palco">
+      <img class="capa-mac" src="assets/img/corporate-macbook-pro.webp"
+           width="1800" height="1087" fetchpriority="high" decoding="async"
+           alt="MacBook Pro 14 polegadas na cor Preto-espacial, aberto, visto de frente.">
+
+      <!-- Preço e ação sobre a fotografia. É o único elemento da
+           página com vidro fosco, e ele existe porque a barra passa
+           por cima do aparelho: um fundo sólido cortaria a foto. -->
+      <div class="capa-vidro" data-entra style="--i:6">
+        <p class="capa-vidro-preco">
+          MacBook Pro 14" M5
+          <b>A partir de R$ 18.999 no varejo</b>
+        </p>
+        <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">
+          Preço no CNPJ
+        </a>
+      </div>
+    </div>
+
+    <dl class="capa-fatos" data-entra>
+      <div>
+        <dt>Seu financeiro aprova sem perguntar</dt>
+        <dd>Nota fiscal no CNPJ, com todos os dados que a contabilidade pede.</dd>
+      </div>
+      <div>
+        <dt>Ninguém perde um dia configurando</dt>
+        <dd>O aparelho chega inscrito na sua gestão. A pessoa liga e trabalha.</dd>
+      </div>
+      <div>
+        <dt>Deu problema, você fala com gente</dt>
+        <dd>Doze meses de garantia respondidos pela Aliança, não por um 0800.</dd>
+      </div>
+      <div>
+        <dt>Você não recomeça a cada compra</dt>
+        <dd>O mesmo consultor do primeiro orçamento à reposição, no WhatsApp.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ Por que Mac ============ -->
+<section class="secao" id="por-que">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">Trocar as máquinas do time trava por medo de errar.
+        <em>Então a gente tira o risco da frente.</em></h2>
+      <p class="sub">Você não assina nada para começar, não paga pelo diagnóstico e
+        recebe a conta por escrito para levar a quem decide. Se o Mac não for a
+        resposta, o consultor diz isso na primeira conversa.</p>
+    </div>
+
+    <div class="args">
+      <article class="arg" data-reveal>
+        <h3>A máquina dura o ciclo inteiro</h3>
+        <div>
+          <p>Um notebook trocado no segundo ano custa duas compras em três anos, mais o
+            dia de trabalho perdido na migração. O Mac costuma atravessar o ciclo de
+            renovação sem virar gargalo, e o que sobra dele no fim ainda vale dinheiro
+            na revenda — que é a parte da conta que quase ninguém coloca na planilha.</p>
+        </div>
+      </article>
+
+      <article class="arg" data-reveal>
+        <h3>Silêncio e bateria mudam o dia</h3>
+        <div>
+          <p>O Apple Silicon trabalha sem ventoinha na maior parte das tarefas de
+            escritório e atravessa o expediente longe da tomada. Parece detalhe de
+            conforto e não é: é reunião sem barulho de turbina, viagem sem procurar
+            tomada e sala de trabalho que não esquenta.</p>
+          <span class="miudo">Autonomia declarada pela Apple para a linha MacBook Pro
+            com chip M. O número real depende da carga de trabalho da sua equipe.</span>
+        </div>
+      </article>
+
+      <article class="arg" data-reveal>
+        <h3>Uma equipe, um painel</h3>
+        <div>
+          <p>Com Apple Business Manager e um MDM, o aparelho novo chega na mesa da pessoa
+            já inscrito na sua organização: liga, entra com a conta da empresa e baixa
+            sozinho o que o time usa. Quem sai da empresa devolve um aparelho que se
+            apaga e se reinscreve remotamente, sem passar por TI de novo.</p>
+        </div>
+      </article>
+
+      <article class="arg" data-reveal>
+        <h3>Segurança que já vem ligada</h3>
+        <div>
+          <p>Disco criptografado de fábrica, chave guardada em hardware separado e
+            atualização de sistema que chega para todo mundo no mesmo dia. Não é um
+            produto a mais para comprar e renovar: é o comportamento padrão do aparelho
+            que você já ia comprar.</p>
+        </div>
+      </article>
+
+      <article class="arg" data-reveal>
+        <h3>O time já sabe usar</h3>
+        <div>
+          <p>A maior parte da sua equipe já carrega um iPhone. O Mac herda a mesma
+            lógica, os mesmos atalhos e o mesmo jeito de compartilhar arquivo entre
+            aparelhos. Treinamento de equipe costuma ser a linha invisível do orçamento,
+            e aqui ela encolhe.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Onde o Mac ganha ============ -->
+<!-- Era uma tabela de duas colunas, Mac contra Dell. Virou um painel
+     só dos ganhos do Mac: numa página de venda, a coluna do
+     concorrente dava metade do espaço para o argumento do outro lado.
+
+     O que NÃO saiu é a linha honesta do fim. Ela não está ali por
+     escrúpulo: em venda B2B, admitir onde a solução não serve é o que
+     faz o resto ser levado a sério. Quem lê vai defender essa escolha
+     para outra pessoa, e uma página que só elogia não sobrevive à
+     primeira pergunta difícil. -->
+<section class="secao" id="comparativo">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">Sete motivos para a sua equipe
+        <em>trocar de máquina.</em></h2>
+      <p class="sub">Nenhum deles é sobre o aparelho ser bonito. Todos são sobre o que
+        muda na conta da empresa e no dia de quem trabalha.</p>
+    </div>
+
+    <div class="ganhos">
+      <!-- O ganho principal ocupa a linha inteira: é o argumento que
+           destrava a aprovação do orçamento, e os outros seis existem
+           para sustentá-lo. -->
+      <article class="ganho ganho--largo" data-reveal>
+        <p class="ganho-olho">O argumento que aprova o orçamento</p>
+        <h3 class="ganho-titulo">No terceiro ano, o Mac já se pagou.</h3>
+        <p class="ganho-txt">A conta que interessa não é a da nota de compra: é quanto
+          custa manter uma pessoa produtiva por três anos. O Mac entra mais caro e sai na
+          frente — atravessa o ciclo sem virar gargalo e ainda vale dinheiro na troca.
+          É essa conta que o consultor monta com os números da sua empresa.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:60ms">
+        <h3 class="ganho-titulo">Atravessa o expediente longe da tomada.</h3>
+        <p class="ganho-txt">Reunião fora, viagem, cliente. O Apple Silicon não pede
+          tomada no meio da tarde.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:120ms">
+        <h3 class="ganho-titulo">Trabalha em silêncio.</h3>
+        <p class="ganho-txt">Sem ventoinha na maior parte do trabalho de escritório.
+          Parece conforto e é reunião sem barulho de turbina.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:180ms">
+        <h3 class="ganho-titulo">Chega na mesa já pronto.</h3>
+        <p class="ganho-txt">A pessoa liga, entra com a conta da empresa e trabalha. Sem
+          passar por TI, sem instalar nada.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:240ms">
+        <h3 class="ganho-titulo">Segurança que já vem ligada.</h3>
+        <p class="ganho-txt">Disco criptografado de fábrica e chave em hardware separado.
+          Não é mais um produto para comprar e renovar.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:300ms">
+        <h3 class="ganho-titulo">O time já sabe usar.</h3>
+        <p class="ganho-txt">Quem carrega um iPhone já conhece a lógica. Treinamento de
+          equipe é a linha invisível do orçamento, e aqui ela encolhe.</p>
+      </article>
+
+      <article class="ganho" data-reveal style="--delay:360ms">
+        <h3 class="ganho-titulo">Quem sai devolve a máquina limpa.</h3>
+        <p class="ganho-txt">Apaga e volta para o estoque da empresa remotamente. O desligamento deixa
+          de ser um chamado aberto por semanas.</p>
+      </article>
+    </div>
+
+    <div class="ganho-honesto" data-reveal>
+      <p><b>E onde o Mac não é a resposta:</b> se a sua operação depende de um sistema que
+        só existe em Windows, o consultor vai dizer isso na primeira conversa em vez de te
+        vender Mac. É o tipo de coisa que você prefere ouvir agora.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ As máquinas ============ -->
+<!-- A prova visual. Até aqui a página argumentou; aqui ela mostra o
+     que a empresa vai receber, com a foto oficial de cada modelo e o
+     preço de varejo ao lado — o mesmo número que está na loja
+     laranja. No CNPJ e no volume ele muda, e a página diz isso em vez
+     de esconder. -->
+<section class="secao secao--clara" id="maquinas">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">As máquinas que a sua equipe <em>vai receber.</em></h2>
+      <p class="sub">Aparelhos novos e lacrados, os mesmos da loja de varejo. O preço
+        ao lado é o de unidade avulsa; no CNPJ e em volume ele muda, e é isso que o
+        consultor fecha com você.</p>
+    </div>
+
+    <div class="maquinas" id="maquinas-grade"></div>
+
+    <p class="nota" style="margin-top:28px" data-reveal>Precisa de iPad para o time de
+      campo, iPhone para a operação ou acessório junto? Entra tudo na mesma proposta, na
+      mesma nota e na mesma entrega.</p>
+  </div>
+</section>
+
+<!-- ============ Montar a lista ============ -->
+<!-- O aparelho de conversão da página. Não é um checkout e não calcula
+     desconto nenhum: ele escreve a mensagem. A pessoa diz quantas
+     máquinas de cada modelo precisa, vê a soma no preço de balcão e
+     manda a lista pronta — a mesma regra do carrinho do varejo,
+     aplicada a uma compra de empresa. O consultor recebe a lista já formada e
+     responde com o preço de empresa. -->
+<section class="secao" id="lista">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">Monte a sua lista aqui e <em>mande em um toque.</em></h2>
+      <p class="sub">Diga quantas de cada. O WhatsApp abre com a lista inteira já
+        escrita — você não digita nada e não explica duas vezes. Do outro lado, o
+        consultor já responde com o preço de empresa.</p>
+    </div>
+
+    <div class="lista" data-reveal>
+      <div class="lista-grade" id="lista-grade"></div>
+
+      <aside class="lista-resumo" id="lista-resumo">
+        <p class="olho">Sua lista</p>
+        <div class="lista-itens" id="lista-itens">
+          <p class="lista-vazia">Escolha as quantidades ao lado. A soma aparece aqui.</p>
+        </div>
+
+        <div class="lista-total" id="lista-total" hidden>
+          <div class="lista-linha-total">
+            <span>Soma no preço de balcão</span>
+            <b id="lista-valor"></b>
+          </div>
+          <p class="lista-aviso">Este é o preço de unidade avulsa, somado. O valor de
+            empresa depende do volume e do prazo — é o que o consultor te manda.</p>
+        </div>
+
+        <a class="btn btn--largo" id="lista-enviar" target="_blank" rel="noopener" href="#">
+          Pedir proposta no WhatsApp
+        </a>
+        <button class="lista-limpar" type="button" id="lista-limpar" hidden>Limpar a lista</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Planos ============ -->
+<section class="secao" id="planos">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">Escolha pelo tamanho da sua equipe.
+        <em>O preço vem na conversa.</em></h2>
+      <p class="sub">Um número de tabela aqui seria inventado: o valor muda com o
+        aparelho, a quantidade e o prazo. O que não muda é o que cada formato inclui —
+        e é isso que está escrito abaixo.</p>
+    </div>
+
+    <div class="planos" data-reveal>
+      <article class="plano">
+        <p class="plano-selo">&nbsp;</p>
+        <h3>Equipe</h3>
+        <p class="plano-porte">Até 10 aparelhos</p>
+        <p class="plano-preco">Orçamento fechado por aparelho
+          <small>Você aprova antes de qualquer coisa sair daqui.</small>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Nota fiscal no CNPJ da empresa</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Garantia de 12 meses respondida por nós</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Entrega em mãos na Grande São Paulo</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Consultor por WhatsApp em horário comercial</span></li>
+        </ul>
+        <a class="btn btn--fumaca btn--largo" data-wa="plano-equipe" target="_blank" rel="noopener" href="#">Pedir orçamento</a>
+      </article>
+
+      <article class="plano plano--eleito">
+        <p class="plano-selo">O mais pedido</p>
+        <h3>Escala</h3>
+        <p class="plano-porte">De 10 a 50 aparelhos</p>
+        <p class="plano-preco">Proposta fechada por lote
+          <small>Com plano de troca e reposição por escrito.</small>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Tudo do Equipe</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Aparelho configurado e inscrito na sua gestão antes da entrega</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Entrada dos aparelhos usados da empresa como parte do pagamento</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Consultor dedicado, o mesmo do começo ao fim</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Reposição prioritária quando um aparelho para</span></li>
+        </ul>
+        <a class="btn btn--largo" data-wa="plano-escala" target="_blank" rel="noopener" href="#">Pedir proposta</a>
+      </article>
+
+      <article class="plano">
+        <p class="plano-selo">&nbsp;</p>
+        <h3>Operação</h3>
+        <p class="plano-porte">Acima de 50 aparelhos</p>
+        <p class="plano-preco">Contrato desenhado com você
+          <small>Com calendário de renovação combinado por ciclo.</small>
+        </p>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Tudo do Escala</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Diagnóstico de custo por posto de trabalho, com os seus números</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Calendário de renovação por ciclo, combinado por escrito</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Entrega em lotes, no ritmo da sua contratação</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Atendimento para todo o Brasil, com rastreio</span></li>
+        </ul>
+        <a class="btn btn--fumaca btn--largo" data-wa="plano-operacao" target="_blank" rel="noopener" href="#">Falar sobre contrato</a>
+      </article>
+    </div>
+
+    <p class="nota" style="margin-top:24px" data-reveal>Não há assinatura, mensalidade
+      nem fidelidade: os formatos descrevem como a Aliança te atende, não um contrato
+      recorrente. A compra continua sendo compra.</p>
+  </div>
+</section>
+
+<!-- ============ Quem somos ============ -->
+<!-- A história existe porque numa venda B2B alguém vai perguntar "quem
+     é essa empresa?" antes de aprovar a nota. Ela é contada com o que
+     é verdade e nada além: os dados que dependem do cliente preencher
+     (ano de fundação, CNPJ) só aparecem quando existem no data.js.
+     É a mesma regra do resto do site — elemento sem dado verdadeiro
+     não é renderizado. -->
+<section class="secao" id="historia">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">A Corporate nasceu de um pedido <em>que a loja não conseguia atender.</em></h2>
+    </div>
+
+    <div class="historia">
+      <div class="historia-texto" data-reveal>
+        <p>A Aliança One vende Apple em São Paulo por WhatsApp e entrega em mãos. Sem loja
+          de rua, sem vitrine e sem aluguel embutido no preço — é daí que vem o valor, e
+          é por isso que a conversa sempre foi com uma pessoa, nunca com um formulário.</p>
+
+        <p>O que começou a chegar foi outro tipo de pedido: não um iPhone, mas oito
+          MacBooks de uma vez, com nota no CNPJ, prazo para o financeiro aprovar e alguém
+          do outro lado que soubesse responder o que é MDM. Um pedido desses não cabe num
+          carrinho, e não cabia no jeito como a loja atendia.</p>
+
+        <p>A Corporate é a resposta a isso. O mesmo estoque, a mesma nota fiscal e a mesma
+          garantia respondida por nós — com um consultor que atende a empresa pelo nome,
+          prepara os aparelhos antes de entregar e continua sendo a mesma pessoa na
+          próxima leva.</p>
+
+        <p class="historia-fecho">Continua sendo uma loja que conversa. Só que agora ela
+          conversa com o seu financeiro também.</p>
+      </div>
+
+      <dl class="historia-fatos" data-reveal>
+        <div data-desde-bloco>
+          <dt data-desde></dt>
+          <dd>Vendendo Apple em São Paulo</dd>
+        </div>
+        <div data-cnpj-bloco>
+          <dt data-cnpj></dt>
+          <dd>CNPJ da empresa, na nota</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Como funciona ============ -->
+<section class="secao secao--clara" id="como">
+  <div class="shell">
+    <div class="secao-topo" data-reveal>
+      <h2 class="t-xl">Quatro etapas, <em>e uma pessoa só</em> do começo ao fim.</h2>
+      <p class="sub">Nenhuma delas passa por formulário, cotação automática ou fila de
+        atendimento. O primeiro contato é com o consultor que vai fechar a compra.</p>
+    </div>
+
+    <div class="passos">
+      <article class="passo" data-reveal>
+        <h3>Diagnóstico</h3>
+        <p>Você conta quantas pessoas, que trabalho elas fazem e o que existe hoje na
+          empresa. Sai daí a lista do que faz sentido, e o que não faz.</p>
+      </article>
+      <article class="passo" data-reveal style="--delay:80ms">
+        <h3>Proposta</h3>
+        <p>Aparelhos, prazo de pagamento e a conta de três anos ao lado do que você gasta
+          hoje. Por escrito, para você levar a quem decide.</p>
+      </article>
+      <article class="passo" data-reveal style="--delay:160ms">
+        <h3>Preparação</h3>
+        <p>Os aparelhos chegam aqui, entram na sua gestão e saem configurados. Quem
+          recebe liga e trabalha, sem instalar nada.</p>
+      </article>
+      <article class="passo" data-reveal style="--delay:240ms">
+        <h3>Convívio</h3>
+        <p>Garantia, reposição e a próxima leva com o mesmo consultor. É aqui que o
+          contrato de verdade acontece.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ Fecho ============ -->
+<section class="fecho">
+  <!-- A assinatura. O "A" da Aliança em escala de parede, quase da cor
+       do chão, cortado pela base. Não é conteúdo e não é lido: é a
+       última coisa que fica na tela depois que a página terminou de
+       argumentar. -->
+  <svg class="fecho-marca" viewBox="4 2 56 58" aria-hidden="true" focusable="false">
+    <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+    <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+    <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+  </svg>
+
+  <div class="shell">
+    <h2 class="t-xl" data-reveal>Comece com uma frase:
+      <em>quantas pessoas você precisa equipar.</em></h2>
+    <p class="sub" data-reveal>É só isso para começar. O consultor volta com a lista, o
+      prazo e a conta de três anos, por escrito, para você levar a quem decide. Sem
+      compromisso e sem custo.</p>
+    <div class="fecho-acoes" data-reveal>
+      <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">Pedir o diagnóstico</a>
+      <a class="btn btn--varejo" href="index.html" data-troca="#bf4f04"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Rodapé ============ -->
+<footer class="rodape">
+  <div class="shell">
+    <div class="rodape-grade">
+      <div class="rodape-sobre">
+        <a class="marca" href="corporate.html" aria-label="Aliança Corporate">
+          <svg class="simbolo" viewBox="4 2 56 58" aria-hidden="true" focusable="false">
+            <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+            <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+            <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+          </svg>
+          <b>Aliança</b>
+          <span class="ramo">Corporate</span>
+        </a>
+        <p>O braço de vendas para empresas da Aliança One. Mac, iPad e iPhone no CNPJ,
+          com nota fiscal, garantia respondida por nós e um consultor por WhatsApp.</p>
+      </div>
+
+      <div>
+        <h4>Nesta página</h4>
+        <ul>
+          <li><a href="#por-que">Por que Mac</a></li>
+          <li><a href="#comparativo">Por que trocar</a></li>
+          <li><a href="#maquinas">As máquinas</a></li>
+          <li><a href="#lista">Montar a lista</a></li>
+          <li><a href="#planos">Planos</a></li>
+          <li><a href="#historia">Quem somos</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Aliança</h4>
+        <ul>
+          <li><a class="volta-varejo" href="index.html" data-troca="#bf4f04">Aliança One</a></li>
+          <li><a href="sobre.html">Como funciona a loja</a></li>
+          <li><a href="privacidade.html">Privacidade</a></li>
+          <li><a data-wa="corporate" target="_blank" rel="noopener" href="#"><span data-telefone>WhatsApp</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rodape-fim">
+      <p>© <span id="ano"></span> Aliança One. Revendedora independente, sem vínculo com
+        a Apple Inc. Apple, Mac, MacBook Pro, iPad e iPhone são marcas registradas da
+        Apple Inc. </p>
+      <p>Os ganhos descritos aqui dependem do uso de cada equipe. O número que vale para a sua empresa sai do diagnóstico.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/transicao.js"></script>
+<script src="assets/js/corporate.js"></script>
+</body>
+</html>

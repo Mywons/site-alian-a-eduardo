@@ -276,12 +276,12 @@ function montarDestaques() {
   // segunda. Cinco cards idênticos seriam o caminho fácil e o errado.
   //
   // As cinco caixas usam a versão SATURADA de cada família, e a ordem
-  // espalha os matizes: laranja, azul, damasco, verde, rosa. Dois tons
-  // quentes vizinhos virariam uma mancha só.
+  // espalha os matizes: laranja, azul, manteiga, verde, rosa. O damasco
+  // saiu da lista quando o chão virou laranja — ele sumia dentro dele.
   const formas = [
     'card--largo card--forte',
     'card--alto card--bruma',
-    'card--terco card--areia card--peq',
+    'card--terco card--linho card--peq',
     'card--terco card--musgo card--peq',
     'card--terco card--argila card--peq'
   ];
@@ -574,17 +574,44 @@ function montarAviso() {
 
   if (guarda.ler(AVISO_CHAVE) === '1') return;
 
+  // No celular o aviso é uma folha colada na base, e os dois botões
+  // flutuantes sobem a altura dela para não se empilharem no mesmo
+  // canto. A altura é medida do elemento real — ela muda com o
+  // tamanho de fonte do usuário e com a safe-area do aparelho, então
+  // um número fixo no CSS erraria em metade dos casos.
+  const medir = () => {
+    const h = aviso.getBoundingClientRect().height;
+    if (h) document.documentElement.style.setProperty('--aviso-h', `${Math.round(h + 12)}px`);
+  };
+
   // Espera a página assentar. Uma faixa que aparece junto com o
   // conteúdo compete com ele logo no primeiro segundo.
   setTimeout(() => {
     aviso.hidden = false;
+    medir();
     requestAnimationFrame(() => { aviso.dataset.visivel = 'true'; });
   }, 1200);
 
-  aviso.querySelector('#aviso-ok')?.addEventListener('click', () => {
+  if (typeof ResizeObserver === 'function') {
+    new ResizeObserver(medir).observe(aviso);
+  } else {
+    window.addEventListener('resize', medir, { passive: true });
+  }
+
+  const guardarEFechar = () => {
     aviso.dataset.visivel = 'false';
     guarda.gravar(AVISO_CHAVE, '1');
-    setTimeout(() => { aviso.hidden = true; }, 400);
+    document.documentElement.style.removeProperty('--aviso-h');
+    setTimeout(() => { aviso.hidden = true; }, 460);
+  };
+
+  aviso.querySelector('#aviso-ok')?.addEventListener('click', guardarEFechar);
+
+  // Sair pelo teclado fecha também: a folha cobre a base da tela e
+  // quem navega por teclado precisa de uma saída que não seja o
+  // ponteiro. Não grava nada diferente — é o mesmo "li e entendi".
+  aviso.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') guardarEFechar();
   });
 }
 

@@ -1,111 +1,265 @@
 # Design
 
-## Visual Theme
+## Duas marcas, duas folhas
 
-Loja Apple, sem fotografia. Branco quente como chão, cinza-neve para separar seções,
-tinta quase preta no texto e um único laranja que aparece pouco e sempre com intenção.
+O projeto tem **dois ramos**, e cada um tem folha de estilo própria:
 
-A referência é o próprio site da Apple: navegação fina e translúcida, manchete enorme
-centralizada, muito ar, botão em pílula, lista de produtos densa e legível. A diferença
-é que aqui não há render nem foto de produto: **a tipografia carrega a página e o
-desenho confirma o que ela diz.** Cada produto aparece como um mockup em SVG — silhueta
-correta da categoria, preenchida na cor real que o cliente escolheu. É diagrama, não
-render: não tem brilho de estúdio nem reflexo no chão, e por isso nunca finge ser uma
-foto do aparelho. A página continua coerente quando o estoque muda, porque nada aqui
-depende de um arquivo de imagem existir.
+| Ramo | Página | Folha | Chão | Assinatura |
+|---|---|---|---|---|
+| **Aliança One** (varejo) | `index`, `produto`, `sobre`, `privacidade` | `assets/css/style.css` | Laranja | Capa partida |
+| **Aliança Corporate** (B2B) | `corporate.html` | `assets/css/corporate.css` | Preto | Régua numerada |
 
-Estratégia de cor: **Restrained, com dois cortes.** O laranja fica abaixo de 10% da
-superfície — botão, link, olho, foco — e sobe a chão inteiro em duas faixas: as dúvidas
-e o destaque. Fora delas, a página é branco quente e preto quente. Um bloco claro por página
-quebra o laranja — a faixa das dúvidas — e é ele que respira.
+Nenhum token atravessa de uma folha para a outra. O que os dois ramos compartilham é a
+**família de tipo**, a **curva de movimento**, as **durações** e as **formas** (pílula,
+raio de canto, filete de 1px). É de propósito: quem chega no Corporate vindo do laranja
+precisa reconhecer a casa, e o que muda tem de ser a cor e o ritmo, não a voz.
 
-A cor cai nas dúvidas por um motivo, não por rodízio: é o trecho em que a pessoa está
-mais perto de desistir, e o único em que ela lê texto corrido. Um bloco de perguntas em
-cinza sobre branco é o tipo de coisa que se rola por cima.
+O Corporate chegou a ter uma serifa (Gambetta) nas manchetes. Ela saiu: fazia parecer
+**outra empresa**, e não outro ramo da mesma.
 
-O laranja que ocupa a superfície é **o mesmo token de ação**, não um segundo laranja.
-Quando ele vira chão, tudo em cima dele é branco ou quase, e cada tom foi medido contra
-o chão. Fora dessas seções ele volta a ser só gesto: botão, link, olho, foco.
+## Visual Theme — Aliança One
 
-O ritmo importa mais que a contagem: o corte cai nas dúvidas porque é o único trecho de
-texto corrido da página e o momento em que a pessoa está mais perto de desistir.
+Loja Apple. Branco quente, laranja do iPhone 17 e uma tinta quase preta. A referência é o
+próprio site da Apple: navegação fina, manchete grande, muito ar, botão em pílula, lista
+de produtos densa e legível.
 
-Claro por decisão: o cliente compra de dia, no meio de outras dez abas, e precisa bater
-o olho e entender em dois segundos. O site chegou a ser drenched em terracota e em
-laranja vivo, e nos dois casos o custo apareceu no mesmo lugar — a hierarquia de leitura,
-que num chão saturado só cabe se o secundário quase encostar no primário. Num catálogo
-de 23 linhas com tabela de specs, isso não vale a troca. O laranja voltou a ser gesto, e
-ocupa superfície só onde há pouco texto.
+**A capa é cortada por uma DIAGONAL: laranja vivo à esquerda, branco à direita.** É a
+única composição do site em que as duas cores da marca aparecem no mesmo quadro — e é
+por isso que ela é a primeira coisa que a pessoa vê: a página inteira se explica ali. À
+esquerda o argumento; à direita, só o aparelho, recortado em alpha sobre branco, sem
+chão nem sombra de estúdio desenhados.
 
-## Color Palette
+O corte é pintado por um `::before` com `clip-path`, atrás de tudo, e **nunca recebe
+conteúdo**. O conteúdo continua numa grade de duas colunas normais — assim a diagonal
+pode inclinar quanto quiser sem que uma linha de texto a mais empurre a divisa para o
+lado. A inclinação é de 10 pontos: sai de 55% no topo e chega a 45% na base; o texto
+para em 42%, com margem de sobra.
 
-Branco quente como chão, preto quente no texto, e o laranja vivo da marca como gesto —
-`#ba3100`, o mesmo de sempre. O que mudou em relação à primeira versão clara do site é
-que o **degradê virou parte do sistema**, e não enfeite de manchete.
+No celular o corte **deita**: vira uma inclinação de 34px na base da faixa laranja. Ali
+ele não pode morar no `::before` da capa — seria uma porcentagem da altura total, e essa
+altura muda com o número de linhas da manchete. Passa a ser pintado no próprio elemento
+laranja, que sabe onde o conteúdo dele termina.
 
-O laranja é declarado **além do gamut sRGB de propósito**: o recorte que o navegador faz
-é o que entrega o tom saturado; o equivalente "correto" dentro do gamut sai apagado.
+### A vitrine flutua
 
-| Token | Valor | Papel | Contraste |
-|---|---|---|---|
-| `--chao` | `oklch(0.99 0.004 75)` · `#fdfbf9` | Documento | — |
-| `--chao-2` | `oklch(0.967 0.009 68)` · `#f8f3ee` | Seções, cards | — |
-| `--fundo` | `oklch(0.938 0.014 66)` · `#f1e9e1` | Poço, hover | — |
-| `--tinta` | `oklch(0.22 0.012 50)` | Texto | 16,9:1 no chão · 14,4:1 no pior |
-| `--suave` | `oklch(0.48 0.016 50)` | Secundário | 6,4:1 no chão · 5,5:1 no pior |
-| `--acao` | `oklch(0.52 0.19 45)` · `#ba3100` | Botão, link, olho, foco | 5,8:1 no chão |
+O site era chapado por decisão, e **essa decisão mudou na vitrine**. Os cartões de
+destaque passaram a ter 28px de raio e sombra dupla — uma camada curta que cola o objeto
+no chão e uma longa que dá volume. Uma sombra só, dura, é o que faz parecer adesivo.
 
-### O degradê como sistema
+O poço de cada peça tem raio **8px menor** que o do cartão que o contém. Essa diferença
+é o que cria a moldura fina em volta do aparelho; sem ela, poço e cartão viram uma peça
+só e o produto encosta na aresta externa.
 
-Ele aparece em quatro lugares, e em todos vale a mesma regra: **a rampa anda dentro de
-uma família só de matiz, e o contraste é fechado na parada mais clara dela** — que é
-onde ele reprovaria.
+A elevação vive **apenas na vitrine e nas peças que se levantam** — cartões, etiqueta da
+capa, aviso, chips. Seções, faixas e linhas de catálogo continuam separadas por cor e
+por filete, como sempre foram.
 
-| Onde | Rampa | Medido |
+## Color Palette — Aliança One
+
+**Toda a família foi trazida para dentro do gamut sRGB.** O laranja anterior (`#c44800`)
+era declarado fora: o canal azul estourava para baixo de zero, o navegador cortava, e o
+matiz caía de 45 para 36 — chegava ao olho como **vermelho queimado**, não como laranja.
+É essa a razão de o laranja antigo nunca ter parecido laranja. Nenhum token da paleta
+atual corta.
+
+Existem **duas intensidades do mesmo laranja**, e a diferença entre elas não é estética,
+é de contrato de leitura:
+
+| Token | Valor | Papel |
 |---|---|---|
-| Botão primário (`--rampa-acao`) | `0.56 0.19 50` → `0.455 0.185 41` | branco a **4,9:1** no topo |
-| Faixa das dúvidas (`--forte`) | `0.56 0.19 50` → `0.47 0.185 42` | branco a **4,9:1** · secundário a **4,6:1** |
-| Faixa do Instagram | `0.275 0.028 42` → `--noite` | branco a **14,5:1** |
-| Fecho das manchetes | laranja → âmbar, e o inverso na faixa | ver Typography |
+| `--chao` | `oklch(0.565 0.160 45)` · `#bf4f04` | Chão de trabalho — onde mora texto miúdo branco (4,63:1) |
+| `--chao-2` | `oklch(0.505 0.140 45)` · `#a34400` | Cards, chips, barra rolada |
+| `--fundo` | `oklch(0.445 0.130 44)` · `#8b3500` | Poço, hover, etiqueta |
+| `--cosmico` | `oklch(0.665 0.155 52)` · `#dc7426` | **Laranja-cósmico do iPhone 17** — superfície |
+| `--papel` | `oklch(0.985 0.008 72)` | O branco das ilhas e da metade direita da capa |
+| `--tinta` / `--acao` | `oklch(0.985 0.008 72)` | Branco, sobre o chão de trabalho |
+| `--suave` | `oklch(0.978 0.016 72)` | Secundário no chão (4,52:1) |
+| `--escuro` | `oklch(0.22 0.012 50)` | Preto quente — a tinta do cósmico e das ilhas |
+| `--sobre-claro` | `oklch(0.535 0.140 46)` · `#ac4d15` | O laranja que se escreve sobre o branco (5,25:1) |
 
-Um botão liso e um botão em degradê custam a mesma coisa em código. A diferença é que a
-rampa dá volume à peça sem sombra nenhuma — e sombra num site de papel branco é o que
-mais o envelhece.
+### Os dois gradientes
 
-### Chãos por categoria, em duas intensidades
+O site deixou de ser chapado: o laranja tem rampa. Mas **uma rampa embaixo de texto tem
+um custo** — o contraste muda ao longo dela, e quem valida só no meio publica um site que
+reprova nas pontas. As duas rampas foram medidas **nas duas extremidades**, e o
+verificador do projeto aprendeu a ler paradas de gradiente justamente por causa disso
+(antes ele lia `backgroundColor`, que num gradiente é transparente, e media contra o
+elemento de trás — um número que não existe na tela).
 
-A cor diz de que família é o produto antes de você ler o nome — e ela existe em dois
-pesos, porque as duas situações são diferentes.
+| Rampa | De → até | Carrega | Janela |
+|---|---|---|---|
+| `--grad-vivo` | `#e0730a` → `#d0662e` | Tinta **escura** | ink 5,48 → 4,65 · branco grande 3,03 → 3,57 |
+| `--grad-chao` | `#bf4e0b` → `#ab4b19` | Texto **branco miúdo** | branco 4,66 → 5,35 |
 
-**Pálidos** (`--areia`, `--bruma`, `--musgo`, `--argila`, `--linho`, `--grafite`), croma
-0,024–0,032: servem a seções inteiras e às pílulas do trilho, que se repetem pela página.
-Secundário entre 8,6:1 e 8,9:1.
+A janela do `--grad-vivo` é apertada dos dois lados: **acima de L 0.67 o branco da
+manchete cai abaixo de 3:1, e abaixo de L 0.62 a tinta escura cai abaixo de 4,5:1.** As
+pontas ficam exatamente dentro disso. O par mais apertado da página inteira é o numeral
+branco da faixa de compromissos: **3,03:1** na ponta clara.
 
-**Vivos** (`--areia-viva`, `--bruma-viva`, …), croma 0,06–0,115: as caixas dos destaques.
-São seis blocos aparecendo uma vez só — é onde a cor pode pesar sem cansar.
+`--grad-vivo` ocupa a capa, a faixa dos compromissos e a barra rolada. `--grad-chao`
+atravessa destaques e catálogo como uma rampa contínua, para as duas seções lerem como um
+degradê só e não como duas faixas.
 
-Dentro de uma caixa viva, **o texto muda junto**. O secundário cinza do resto do site
-reprova ali (4,1:1 no pior caso), então cada caixa carrega dois tons próprios: `--olho`
-para o rótulo e `--sub` para o miúdo, ambos escuros e no matiz da própria família.
-Medidos: preto entre 11,4:1 e 12,4:1, `--sub` entre 5,2:1 e 5,5:1, `--olho` entre
-4,9:1 e 5,4:1.
+### O cabeçalho tem três estados
 
-O poço da foto também some dentro delas: um retângulo quase branco no meio da cor viraria
-uma janela colada no card, e o aparelho é recortado em alpha — assenta direto no chão
-colorido.
+A barra passa por chãos diferentes, e cada um pede uma tinta. Em vez de repetir a lista
+de filhos em cada caso, **a tinta virou uma variável** (`--nav-tinta`) e os filhos leem
+dela:
 
-A ordem das cinco caixas espalha os matizes de propósito: laranja, azul, damasco, verde,
-rosa. Dois tons quentes vizinhos virariam uma mancha só.
+1. **Rolada, em qualquer página** → rampa viva, tinta escura.
+2. **No topo do índice** → transparente sobre a diagonal, que é laranja de um lado e
+   branco do outro. Tinta escura é a única que se lê nos dois.
+3. **No topo das outras páginas** → transparente sobre o laranja de trabalho, tinta branca.
 
-### Os dois momentos de cor
+### Nenhum poço tem chão
 
-A página é clara do começo ao fim, com dois cortes: a **faixa laranja das dúvidas** —
-que cai ali porque é o único trecho de texto corrido e o momento em que a pessoa está
-mais perto de desistir — e a **faixa noite do Instagram**, escura porque social é outro
-lugar, e parecer outro lugar ajuda a entender para onde se está clicando.
+O quadrado claro atrás do aparelho **saiu de toda a vitrine**. A foto já vem recortada em
+alpha, e um retângulo atrás dela devolve exatamente a moldura que o recorte existe para
+tirar — o produto passa a parecer colado num selo em vez de estar na página. O poço
+continua existindo como *caixa*, para o card não pular de tamanho conforme a silhueta do
+produto, mas é uma caixa invisível. A única exceção é a página do produto, onde a peça
+aparece sozinha e sem fundo flutuaria no vazio.
 
-O hover escurece um degrau, como manda um site claro. O card de destaque é o único com o
-laranja de superfície.
+### A regra que governa os dois laranjas
+
+O Laranja-cósmico é **claro demais para texto miúdo branco**: 3,06:1. Ele só passa em
+manchete, que é texto grande e pede 3:1. Então onde o cósmico é superfície, a tinta
+**vira escura** — preto quente fecha **5,43:1** nele, em qualquer tamanho.
+
+Isso foi medido tom a tom, com conversão OKLCH→sRGB de verdade, e o resultado é uma
+regra dura:
+
+> **No Laranja-cósmico: ou manchete branca, ou tinta preta. Nunca branco miúdo.**
+
+E uma armadilha que a medição pegou: **rebaixar a tinta escura por opacidade reprova.**
+A mesma tinta a 86% já cai para 4,49:1. Por isso não há dois brilhos dentro do painel
+laranja — há **uma tinta só**, e o que separa manchete de corpo é **peso e tamanho**,
+nunca brilho. É a mesma inversão de hierarquia que o site já usava, aplicada ao contrário.
+
+Onde o cósmico é superfície: a **metade esquerda da capa** e a **faixa dos compromissos**.
+
+### A porta para o outro ramo
+
+O Corporate **não é uma categoria de produto, é outra empresa** — e o menu precisa dizer
+isso antes do clique. Como link de texto no meio de "iPhone, Mac, iPad" ele lia como
+mais um item de catálogo e sumia.
+
+Virou uma **pílula preta no grupo de ações, à direita**, onde moram as coisas que levam
+para fora desta loja. Preta de propósito: é a cor do ramo do outro lado, e num menu
+laranja ela é o único aviso honesto de que a página inteira vai mudar de cor. Dentro
+dela, o monograma num disco de **ouro** — a pílula carrega as duas cores da outra página
+em miniatura — e uma seta de canto dizendo "sai daqui".
+
+No celular ela sai da barra (só cabem marca, WhatsApp e menu sem os alvos caírem abaixo
+de 44px) e reaparece **dentro do menu**, como um bloco escuro com subtítulo — que é onde
+há espaço para explicar o que o Corporate é, em vez de só nomeá-lo.
+
+### A barra sobre a capa partida
+
+No topo do índice a barra é transparente, e por baixo dela passam **as duas cores**.
+Branco sumiria na metade direita; laranja sumiria na esquerda. A única tinta que se lê
+nas duas é o preto quente — 5,43:1 no laranja, 16,6:1 no branco — e é para ele que a
+barra troca enquanto está no alto. Assim que a página rola, ela ganha chão sólido e tudo
+volta a ser branco. Escopado por `:has(.capa-lado--laranja)`, para valer só onde a capa
+é partida.
+
+## Visual Theme — Aliança Corporate
+
+**Teatro preto, hardware luminoso.** A página é um filme: preto absoluto engole tudo
+menos a fotografia do produto, o tipo em escala grande e uma nota de azul.
+
+O chão é `#000` puro, e não um cinza-azulado. O que ele existe para fazer é **sumir**:
+sobre preto absoluto a foto recortada em alpha não tem borda, não tem plano de fundo e
+não tem onde terminar — o objeto existe num vazio. Qualquer cinza devolve uma caixa em
+volta do produto. A capa é uma tela inteira com o MacBook Pro em 1180px, e a barra de
+preço flutua sobre ele em vidro fosco.
+
+### O racionamento de cor é a identidade
+
+Esta é a regra que governa tudo, e ela não é preferência estética: a página lê como um
+filme em preto e branco com **duas notas de azul**.
+
+| Token | Valor | Papel |
+|---|---|---|
+| `--preto` | `#000000` | Canvas |
+| `--carvao` | `#1d1d1f` | Cartão sobre o canvas |
+| `--fumaca` | `#333336` | Botão terciário, plano eleito |
+| `--seda` | `#f5f5f7` | Texto principal · 19,3:1 |
+| `--cinza` | `#86868b` | Secundário no escuro · 5,8:1 |
+| `--platina` | `#cccccc` | Menu 12px · 13,1:1 |
+| `--azul` | `#0071e3` | **Único preenchimento cromático** · branco por cima 4,70:1 |
+| `--azul-link` | `#2997ff` | Texto de link e grifo · 6,96:1 |
+| `--azul-fundo` | `#0066cc` | Link na faixa branca · 5,57:1 |
+
+**O ouro saiu.** Ele era um segundo acento cromático, e diluir o azul com um segundo
+acento desmonta o sistema — verde, laranja e roxo estão fora pelo mesmo motivo. Encher um
+botão com o tom de *link* também está fora: confunde a hierarquia da ação.
+
+Na faixa branca a tinta inverte. **O `--cinza` da referência reprova ali** (3,62:1), então
+o secundário claro é `#6e6e73` (5,07:1) — o mesmo tipo de armadilha que o `--platina` já
+tinha criado no cartão gelo.
+
+### Três regras duras, todas da referência
+
+- **Peso máximo 600.** 700 não existe: com o tracking negativo desta escala, ele lê como
+  desespero.
+- **Título nenhum abaixo de 28px.** A escala começa em subtítulo e sobe.
+- **Sombra nenhuma.** A profundidade vem de contraste tonal, do raio de 28px e do vidro
+  fosco — nunca de `box-shadow`.
+
+Só três curvas existem: pílula (9999px), cartão (28px) e link (10px).
+
+### O que saiu junto
+
+A **régua lateral** foi removida. Além de não pertencer ao sistema — a referência é
+explícita: *sem sidebar, navegação horizontal em texto e nada mais* — ela passava por
+cima do conteúdo assim que o contêiner cresceu para 1440px e não sobrou margem para ela.
+
+O **olho laranja** também saiu, pelo racionamento. Restou um único ponto de laranja na
+página inteira: a bolinha de 9px do link de volta para o varejo, que não é ação — é
+bandeira do outro ramo.
+
+### O vidro é a única exceção ao chapado
+
+`rgba(66,66,69,0.72)` com `backdrop-filter: blur(20px)`, e ele existe por um motivo
+funcional: a barra de preço passa **por cima do aparelho**, e um fundo sólido cortaria a
+fotografia ao meio.
+
+## A troca de ramo — a bola que cresce
+
+Laranja ⇄ preto, em `assets/js/transicao.js` (sem dependência).
+
+O gesto **nasce onde a pessoa tocou**: uma bola da cor do outro ramo abre a partir do
+dedo e engole a página. Isso é o oposto de uma cortina genérica — a transição fica
+ancorada no gesto que a causou, e por isso parece resposta, não espera.
+
+O truque que faz a emenda sumir: a bola é pintada **exatamente com a cor de fundo da
+página de destino**. Quando a navegação acontece, o que estava na tela e o que chega são
+a mesma cor, então não existe quadro de emenda para aparecer. A página nova só precisa
+trazer o conteúdo de volta — e faz isso com uma subida curta de 14px.
+
+Três detalhes que o desenho exigiu:
+
+- **O raio é a distância até o canto mais longe**, não a diagonal da tela. A diagonal
+  erraria para menos em toda origem fora do centro e deixaria um naco de página
+  aparecendo no canto.
+- **A classe `chegando` é posta por um script inline no `<head>`**, antes da primeira
+  pintura. Se esperasse o JS do rodapé, existiria um quadro com a página à mostra, e o
+  corte apareceria justamente onde a transição existe para não aparecer.
+- **A revelação da chegada é uma animação CSS com `both`, nunca um par de classes
+  trocadas pelo JS.** Esta é a correção de um bug real: na primeira versão o conteúdo
+  ficava em `opacity: 0` esperando o JS pôr uma classe. Se o `requestAnimationFrame`
+  atrasasse — aba em segundo plano, carga lenta — ou se o JS falhasse por qualquer
+  motivo, a página ficava invisível **para sempre**, e o que sobrava na tela era só a
+  cor de fundo do corpo: a página inteira laranja, sem conteúdo nenhum. Como animação,
+  ela se completa sozinha e termina visível; o JS não participa da visibilidade.
+
+E um detalhe que o `bfcache` exigiu: **limpar o `style` inline não desfaz uma animação
+da Web Animations API com `fill: 'forwards'`** — ela continua segurando o valor final.
+Sem `getAnimations().forEach(a => a.cancel())`, voltar pelo botão do histórico devolvia
+a página com a bola ainda cobrindo a tela inteira.
+
+Com `prefers-reduced-motion`, a bola vira um fade de 180ms.
 
 ## Typography
 

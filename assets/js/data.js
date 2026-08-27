@@ -17,6 +17,12 @@ const CONFIG = {
   horario: 'Segunda a sábado, 10h às 19h',
   parcelas: 12,
 
+  /* Ano em que a loja começou. Alimenta o bloco "Quem somos" da página
+     Corporate — numa venda para empresa alguém sempre pergunta há
+     quanto tempo a loja existe. Vazio = o fato não é renderizado, em
+     vez de aparecer com um número inventado. Ex.: '2019'. */
+  desde: '',
+
   /* Horário de ATENDIMENTO, em número: é o que faz a página dizer
      "Atende agora" ou "Volta a atender amanhã às 10h". Não é horário
      de loja — a Aliança One não tem balcão, vende por WhatsApp e
