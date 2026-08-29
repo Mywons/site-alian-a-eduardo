@@ -6,16 +6,16 @@ O projeto tem **dois ramos**, e cada um tem folha de estilo própria:
 
 | Ramo | Página | Folha | Chão | Acento |
 |---|---|---|---|---|
-| **Aliança One** (varejo) | `index`, `produto`, `sobre`, `privacidade` | `assets/css/style.css` | Off-white quente | Laranja |
-| **Aliança Corporate** (B2B) | `corporate.html` | `assets/css/corporate.css` | Preto absoluto | Bronze |
+| **Aliança One** (varejo) | `index`, `produto`, `sobre`, `privacidade` | `assets/css/style.css` | Off-white quente | `#FF6200` |
+| **Aliança Corporate** (B2B) | `corporate.html` | `assets/css/corporate.css` | Preto absoluto | `#db7102` |
 
 Nenhum token atravessa de uma folha para a outra. O que os dois ramos compartilham é a
 **família de tipo**, a **curva de movimento**, as **durações** e as **formas** (pílula,
 raio de canto, filete de 1px). É de propósito: quem chega no Corporate vindo do varejo
 precisa reconhecer a casa, e o que muda tem de ser a cor e o ritmo, não a voz.
 
-Os dois são **imagens espelhadas**: um é papel com um acento quente, o outro é preto com
-um acento quente. É essa simetria que faz a troca de ramo ler como virar uma página do
+Os dois são **imagens espelhadas**: um é papel com um laranja, o outro é preto com um
+laranja treze graus ao lado. É essa simetria que faz a troca de ramo ler como virar uma página do
 mesmo catálogo, e não como sair para outro site.
 
 ## Visual Theme — Aliança One
@@ -215,10 +215,10 @@ um item de catálogo e sumia.
 Virou uma **pílula preta no grupo de ações, à direita**, onde moram as coisas que levam
 para fora desta loja. Preta de propósito: numa barra de papel ela é a única mancha escura,
 e o único aviso honesto de que a página inteira vai mudar de cor. Dentro dela, o monograma
-**em bronze, direto sobre o preto** — a pílula carrega as duas cores da outra página em
+**no laranja do Corporate, direto sobre o preto** — a pílula carrega as duas cores da outra página em
 miniatura — e uma seta de canto dizendo "sai daqui".
 
-O monograma já morou dentro de um disco de bronze, com o "A" recortado em preto. O disco
+O monograma já morou dentro de um disco colorido, com o "A" recortado em preto. O disco
 saiu: a 22px ele lia como um **selo colado na pílula**, e o que se via de longe era a
 bolinha, não a marca. Sem ele a pílula é inteira preta com uma coisa colorida só dentro —
 a letra. O "A" pôde crescer de 11 para 15px porque não precisa mais caber num círculo.
@@ -234,7 +234,7 @@ espaço para explicar o que o Corporate é.
 ## Visual Theme — Aliança Corporate
 
 **Teatro preto, hardware luminoso.** A página é um filme: preto absoluto engole tudo menos
-a fotografia do produto, o tipo em escala grande e uma nota de bronze.
+a fotografia do produto, o tipo em escala grande e uma nota de laranja.
 
 O chão é `#000` puro, e não um cinza-azulado. O que ele existe para fazer é **sumir**:
 sobre preto absoluto a foto recortada em alpha não tem borda, não tem plano de fundo e não
@@ -244,7 +244,7 @@ do produto.
 ### O racionamento de cor é a identidade
 
 Esta é a regra que governa tudo, e ela não é preferência estética: a página lê como um
-filme em preto e branco com **uma nota de bronze**.
+filme em preto e branco com **uma nota de laranja**.
 
 | Token | Valor | Papel |
 |---|---|---|
@@ -254,26 +254,31 @@ filme em preto e branco com **uma nota de bronze**.
 | `--seda` | `#f5f5f7` | Texto principal · 19,3:1 |
 | `--cinza` | `#86868b` | Secundário no escuro · 5,8:1 |
 | `--platina` | `#cccccc` | Menu 12px · 13,1:1 |
-| `--bronze` | `#d49537` · `oklch(0.715 0.131 73)` | **Único preenchimento cromático** · 8,15:1 no preto |
-| `--bronze-alto` | `oklch(0.77 0.11 74.6)` · `#deaa60` | Hover do preenchimento |
-| `--bronze-fundo` | `oklch(0.52 0.10 74.6)` · `#8a5f18` | O acento na faixa branca · 5,6:1 |
+| `--laranja` | `#db7102` · `oklch(0.66 0.163 55)` | **Único preenchimento cromático** · 6,37:1 no preto |
+| `--laranja-alto` | `oklch(0.72 0.17 55)` · `#f3821d` | Hover do preenchimento |
+| `--laranja-fundo` | `oklch(0.50 0.123 55)` · `#974c02` | O acento na faixa branca · 6,3:1 |
 
-**O acento é `#d49537` — ouro velho**, o tom que o bronze polido tem sob luz quente. Em
-OKLCH ele mede `0.715 · 0.131 · 73`, e a diferença para um laranja-bronze aparece no que
-ele *não* parece: não parece um laranja claro, parece metal.
+**O acento é `#db7102` — laranja vivo, um degrau abaixo do brilho máximo.** É o croma
+(0.163) que faz dele "vivo", e a luz rebaixada (0.66) que impede o par preto-laranja de
+virar sinalização de obra.
 
-Ele substituiu um amarelo, e o amarelo era o problema: **preto com amarelo é fita de
-advertência antes de ser marca**, e nenhuma dose de racionamento apaga essa leitura. O
-bronze carrega a mesma temperatura sem o alarme — é metal, não sinalização.
+Ele já foi **amarelo** e já foi **ouro velho**. O amarelo saiu porque preto com amarelo é
+fita de advertência antes de ser marca; o ouro saiu porque lia como metal de catálogo de
+uísque, e não como a cor de uma loja de tecnologia.
 
-Os números seguram: 8,15:1 sobre preto, e tinta escura por cima a 8,15:1 também. É quase o
-dobro da margem que o azul da Apple dava (4,47 e 4,70), na mesma função.
+Os números seguram: 6,37:1 sobre preto, e tinta escura por cima a 6,37:1 também — acima do
+que o azul da Apple dava nas duas direções (4,47 e 4,70), na mesma função.
 
-**O que está fora:** azul, verde, roxo, amarelo e ouro. Diluir o bronze com um segundo
+**O parentesco com o varejo.** Este laranja fica a **13° do `#FF6200`** da loja, e é a menor
+distância que os dois ramos já tiveram. O que os separa deixou de ser o matiz: é o **chão**.
+Lá o laranja é o detalhe de uma página de papel; aqui é a única cor de uma página preta.
+Duas notas do mesmo instrumento, tocadas em salas opostas.
+
+**O que está fora:** azul, verde, roxo, amarelo e ouro. Diluir o laranja com um segundo
 acento desmonta o sistema. Encher um botão com o tom de *link* também está fora: confunde
-a hierarquia da ação. E bronze em superfície larga, nunca — um preenchimento por tela,
-muito preto em volta e tipo grande. O risco do par preto-bronze é virar catálogo de
-uísque, e o que impede isso é o racionamento.
+a hierarquia da ação. E laranja em superfície larga, nunca — um preenchimento por tela,
+muito preto em volta e tipo grande. O risco do par preto-laranja é virar sinalização de
+obra, e o que impede isso é o racionamento.
 
 Na faixa branca a tinta inverte. **O `--cinza` da referência reprova ali** (3,62:1), então
 o secundário claro é `#6e6e73` (5,07:1).
@@ -296,8 +301,8 @@ A regra que governa as duas portas é a mesma, e ela não é "usar a cor do outr
 - o chão da pílula é o **chão** da outra página;
 - o monograma dentro dela é o **acento** da outra página.
 
-No varejo isso dá pílula preta com o "A" em bronze. Aqui dá pílula off-white com o "A" em
-`#FF6200`. Os dois lados são o mesmo retrato invertido.
+No varejo isso dá pílula preta com o "A" em `#db7102`. Aqui dá pílula off-white com o "A"
+em `#FF6200`. Os dois lados são o mesmo retrato invertido.
 
 **O disco atrás do monograma saiu dos dois lados no mesmo dia.** A 20–22px ele lia como um
 selo colado na pílula, e o que se via de longe era a bolinha, não a marca. Sem ele a pílula
@@ -305,7 +310,7 @@ selo colado na pílula, e o que se via de longe era a bolinha, não a marca. Sem
 não precisa mais caber num círculo.
 
 Uma pílula clara é a coisa mais brilhante de uma barra preta, e é por isso que ela é a
-**menor**: 30px de altura contra os 32 do botão de bronze. Quem for grande aqui é a ação,
+**menor**: 30px de altura contra os 32 do botão laranja. Quem for grande aqui é a ação,
 não a saída.
 
 No celular ela sai da barra pelo mesmo motivo que a do varejo sai — marca, WhatsApp e o
@@ -313,6 +318,54 @@ botão do menu já somam a largura de um iPhone — e reaparece como um bloco no
 Enquanto ela ficava na barra, **o botão do menu ia parar fora da tela**, atrás do
 `overflow-x: hidden` do corpo: a navegação inteira do Corporate era inalcançável no
 celular.
+
+### O celular não é a mesma página mais estreita
+
+Esta folha foi desenhada num canvas de 1440 e, no telefone, ela apenas **desabava** para
+uma coluna. Nada era reproporcionado, e a conta somava: **15.566px de altura no celular
+contra 10.835 no desktop.** Uma página que fica *mais longa* quando a tela encolhe está
+dizendo que ninguém olhou para ela nesse tamanho.
+
+Três causas, todas de proporção:
+
+**1. O tipo não descia.** A manchete de seção fica em 56px numa coluna de 1120 — 5% dela.
+No telefone ela parava em 32px numa coluna de 346 — **9,2%**. Quase o dobro em tamanho
+relativo, e é por isso que toda manchete ocupava três linhas e todo cartão comia uma tela.
+
+A regra "título nenhum abaixo de 28px" continua valendo. Ela sempre foi sobre **proporção**,
+e 28px era a expressão dela num canvas de 1120; numa coluna de 346 a mesma proporção dá
+20px. A escala inteira desce um degrau abaixo de 640px, e desce **fluida** — um iPhone SE
+tem 320px e um Pro Max tem 430, e 34% de diferença de largura não recebe a mesma manchete.
+
+| Token | Desktop | Celular (320 → 640) |
+|---|---|---|
+| `--t-hero` | 44 → 80px | 33 → 38px |
+| `--t-xl` | 32 → 56px | 22 → 26px |
+| `--t-lg` | 28 → 40px | 20 → 23px |
+| `--t-md` | 28px fixo | 18 → 20px |
+
+**2. O ritmo não encolhia.** `--section` de 72px em cima e 72 embaixo são 144px de preto
+entre cada par de seções. Oito seções depois, 1.150px de página sem nada dentro. No celular
+ele cai para 56px.
+
+**3. Os cartões não adensavam.** Padding de 48px e título de 28px numa caixa de 346
+deixavam cada máquina com **579px** — um cartão por tela, quatro telas para ver quatro
+aparelhos. Com a escala nova e o padding ajustado, 484px.
+
+Resultado: **13.606px**, e o MacBook da capa passou a aparecer na primeira tela.
+
+### Duas correções que a revisão de celular encontrou
+
+- **O terciário sumia na faixa branca.** `.btn--fumaca` era `#f5f5f7` ali — exatamente o
+  chão do cartão de máquina. O botão desaparecia dentro dele e sobrava o texto solto, sem
+  nada que dissesse "isto se toca". Ele desce um degrau e ganha um aro de 1px: num cartão
+  claro é a **borda** que desenha o botão, a mesma conclusão a que o trilho de categorias do
+  varejo chegou.
+- **O filete das etapas deitou.** No desktop ele corre na horizontal ligando um passo ao
+  seguinte. Empilhado numa coluna ele era simplesmente desligado, e as quatro etapas viravam
+  quatro parágrafos soltos que não diziam ser uma sequência. Agora ele é **vertical**, desce
+  do numeral até o passo de baixo, e o numeral vai para a canaleta à esquerda — que é o
+  desenho que uma sequência empilhada pede.
 
 ### O vidro é a única exceção ao chapado
 

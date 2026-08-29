@@ -6,9 +6,9 @@
    uma cor cromática só na página inteira.
 
    A REGRA QUE GOVERNA TUDO É O RACIONAMENTO DE COR. A página lê como
-   um filme em preto e branco com UMA nota de bronze. Verde, azul,
+   um filme em preto e branco com UMA nota de laranja. Verde, azul,
    amarelo e roxo não entram. Não é preferência estética — é a
-   identidade. Diluir o bronze com um segundo acento desmonta o
+   identidade. Diluir o laranja com um segundo acento desmonta o
    sistema inteiro.
 
    Três outras regras duras, e todas vieram da referência:
@@ -42,33 +42,37 @@
   --tinta-clara:  #1d1d1f;   /* 16,8:1 no branco */
   --cinza-claro:  #6e6e73;   /* 5,07:1 no branco */
 
-  /* -- O bronze, e só ele --
-     Preto e bronze. O acento é `#d49537`, que mede
-     `oklch(0.715 0.131 73)` — ouro velho, o tom que o bronze polido
-     tem sob luz quente. É meio grau mais amarelo e meio grau mais
-     fundo que o laranja-bronze anterior, e a diferença aparece no que
-     ele NÃO parece: não parece um laranja claro, parece metal.
+  /* -- O laranja, e só ele --
+     Preto e laranja. O acento é `#db7102`, que mede
+     `oklch(0.66 0.163 55)` — laranja vivo, um degrau abaixo do
+     brilho máximo. É o croma que faz dele "vivo" e a luz rebaixada
+     que impede o par preto-laranja de virar sinalização de obra.
 
-     O que ele substituiu, duas versões atrás, era um amarelo — e o
-     amarelo era o problema: preto com amarelo é fita de advertência
-     antes de ser marca, e nenhuma dose de racionamento apaga essa
-     leitura. O bronze carrega a mesma temperatura sem o alarme.
+     Ele já foi amarelo e já foi ouro velho. O amarelo saiu porque
+     preto com amarelo é fita de advertência antes de ser marca; o
+     ouro saiu porque lia como metal de catálogo de uísque, e não
+     como a cor de uma loja de tecnologia.
 
-     Os números seguram: **8,15:1 sobre preto**, e tinta escura por
-     cima a **8,15:1** também. É quase o dobro da margem que o azul da
-     Apple dava (4,47 e 4,70), na mesma função.
+     Os números seguram: **6,37:1 sobre preto**, e tinta escura por
+     cima a 6,37:1 também. É acima do que o azul da Apple dava nas
+     duas direções (4,47 e 4,70), na mesma função.
 
-     O risco do par preto-bronze é virar catálogo de uísque. O que
-     impede isso é o racionamento de sempre: um preenchimento por
-     tela, muito preto em volta e tipo grande. Bronze em superfície
-     larga, nunca. */
-  --bronze:      #d49537;                 /* oklch(0.715 0.131 73) · 8,15:1 no preto */
-  --bronze-alto: oklch(0.77 0.11 74.6);   /* #deaa60 · hover · preto por cima 10,0:1 */
+     PARENTESCO COM O VAREJO. Este laranja fica a 13° do `#FF6200` da
+     loja, e é a menor distância que os dois ramos já tiveram. O que
+     os separa não é mais o matiz: é o CHÃO. Lá o laranja é o detalhe
+     de uma página de papel; aqui ele é a única cor de uma página
+     preta. Duas notas do mesmo instrumento, tocadas em salas
+     opostas.
 
-  /* Na faixa branca o bronze desaparece (2,58:1). Ali o acento é o
-     mesmo matiz levado ao fundo do gamut — o tom mais escuro que ainda
-     lê como ouro velho e passa nos dois chãos claros. */
-  --bronze-fundo: oklch(0.52 0.10 74.6);  /* #8a5f18 · 5,6:1 no branco · 5,2:1 no gelo */
+     O risco continua sendo o de sempre, e o remédio também: um
+     preenchimento por tela, muito preto em volta e tipo grande.
+     Laranja em superfície larga, nunca. */
+  --laranja:      #db7102;                 /* oklch(0.66 0.163 55) · 6,37:1 no preto */
+  --laranja-alto: oklch(0.72 0.17 55);     /* #f3821d · hover · preto por cima 8,0:1 */
+
+  /* Na faixa branca o laranja vivo desaparece (2,9:1). Ali o acento é
+     o mesmo matiz levado ao fundo do gamut. */
+  --laranja-fundo: oklch(0.50 0.123 55);   /* #974c02 · 6,3:1 no branco · 5,8:1 no gelo */
 
   /* -- Filetes --
      O decorativo pode ser quase invisível; a fronteira de verdade
@@ -182,8 +186,8 @@ button { font: inherit; color: inherit; }
 a { color: inherit; text-decoration: none; }
 img, svg { max-width: 100%; }
 
-:focus-visible { outline: 2px solid var(--bronze); outline-offset: 3px; border-radius: 4px; }
-::selection { background: var(--bronze); color: var(--preto); }
+:focus-visible { outline: 2px solid var(--laranja); outline-offset: 3px; border-radius: 4px; }
+::selection { background: var(--laranja); color: var(--preto); }
 
 .shell {
   width: 100%;
@@ -244,10 +248,10 @@ p { margin: 0; max-width: 62ch; }
   letter-spacing: 0.007em;
 }
 
-/* O grifo usa o mesmo bronze do botão, e isso só funciona porque ele
+/* O grifo usa o mesmo laranja do botão, e isso só funciona porque ele
    aparece em UMA expressão por manchete. Grifar duas coisas na mesma
    frase faria o texto competir com o próprio CTA. */
-.t-hero em, .t-xl em, .t-lg em { font-style: normal; color: var(--bronze); }
+.t-hero em, .t-xl em, .t-lg em { font-style: normal; color: var(--laranja); }
 
 /* O olho é identificação silenciosa do produto, não um rótulo
    gritado: peso 400, tamanho de corpo, cor de texto. Caixa-alta com
@@ -284,7 +288,7 @@ p { margin: 0; max-width: 62ch; }
   padding: 11px 22px;
   border: 0;
   border-radius: var(--r-pill);
-  background: var(--bronze);
+  background: var(--laranja);
   color: var(--preto);
   font-size: var(--t-body);
   font-weight: 400;
@@ -299,7 +303,7 @@ p { margin: 0; max-width: 62ch; }
               color var(--hover) var(--ease),
               transform var(--tap) var(--ease);
 }
-.btn:hover { background: var(--bronze-alto); }
+.btn:hover { background: var(--laranja-alto); }
 .btn:active { transform: scale(0.98); }
 
 /* O secundário é fantasma: sem preenchimento e sem borda. Um segundo
@@ -311,7 +315,7 @@ p { margin: 0; max-width: 62ch; }
 .btn--fantasma:hover { background: var(--fumaca); }
 
 /* O terciário existe para as ações repetidas — uma por cartão de
-   plano, uma por máquina — onde encher tudo de bronze viraria um
+   plano, uma por máquina — onde encher tudo de laranja viraria um
    mural de botões. Fundo `--fumaca`, que é superfície e não cor. */
 .btn--fumaca { background: var(--fumaca); color: var(--seda); }
 .btn--fumaca:hover { background: var(--grafite); }
@@ -324,7 +328,7 @@ p { margin: 0; max-width: 62ch; }
      · o chão da pílula é o CHÃO da outra página;
      · o monograma dentro dela é o ACENTO da outra página.
 
-   No varejo isso dá pílula preta com o "A" em bronze. Aqui dá pílula
+   No varejo isso dá pílula preta com o "A" em laranja. Aqui dá pílula
    off-white com o "A" em `#FF6200`. Os dois lados são o mesmo retrato
    invertido, e nenhum precisa dizer em palavras que a página inteira
    vai mudar de cor.
@@ -336,7 +340,7 @@ p { margin: 0; max-width: 62ch; }
 
    Uma pílula clara é a coisa mais brilhante de uma barra preta, e é
    por isso que ela é a MENOR: 30px de altura, contra os 32 do botão
-   de bronze. Quem for grande aqui é a ação, não a saída.
+   de laranja. Quem for grande aqui é a ação, não a saída.
 
    A seta de canto diz "sai daqui", igual à de lá. */
 .nav-varejo, .btn--varejo {
@@ -429,7 +433,7 @@ p { margin: 0; max-width: 62ch; }
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  color: var(--bronze);
+  color: var(--laranja);
   font-size: var(--t-body);
   font-weight: 400;
   letter-spacing: -0.022em;
@@ -571,18 +575,29 @@ p { margin: 0; max-width: 62ch; }
 }
 .secao--clara h2, .secao--clara h3,
 .secao--clara .t-xl, .secao--clara .t-lg, .secao--clara .t-md { color: var(--tinta-clara); }
-.secao--clara .t-xl em, .secao--clara .t-lg em { color: var(--bronze-fundo); }
+.secao--clara .t-xl em, .secao--clara .t-lg em { color: var(--laranja-fundo); }
 .secao--clara .olho { color: var(--tinta-clara); }
 .secao--clara .sub,
 .secao--clara .miudo,
 .secao--clara .nota,
 .secao--clara p { color: var(--cinza-claro); }
-.secao--clara .seta { color: var(--bronze-fundo); }
+.secao--clara .seta { color: var(--laranja-fundo); }
 .secao--clara .btn--fantasma { color: var(--tinta-clara); }
 .secao--clara .btn--fantasma:hover { background: #f5f5f7; }
-.secao--clara .btn--fumaca { background: #f5f5f7; color: var(--tinta-clara); }
-.secao--clara .btn--fumaca:hover { background: #e8e8ed; }
-.secao--clara :focus-visible { outline-color: var(--bronze-fundo); }
+/* O terciário na faixa branca. `#f5f5f7` é EXATAMENTE o chão do
+   cartão de máquina, e o botão desaparecia dentro dele: sobrava o
+   texto solto, sem nada que dissesse "isto se toca".
+
+   Ele desce um degrau para `#e8e8ed` e ganha um aro de 1px. Num
+   cartão claro é a borda que desenha o botão — a mesma conclusão a
+   que o trilho de categorias do varejo chegou, pelo mesmo motivo. */
+.secao--clara .btn--fumaca {
+  background: #e8e8ed;
+  color: var(--tinta-clara);
+  box-shadow: inset 0 0 0 1px rgba(29, 29, 31, 0.14);
+}
+.secao--clara .btn--fumaca:hover { background: #dcdce2; }
+.secao--clara :focus-visible { outline-color: var(--laranja-fundo); }
 
 /* ---------- 8. Capa ----------
    Uma tela inteira: manchete alinhada à esquerda, o aparelho enorme
@@ -810,7 +825,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
    seriam o caminho fácil e o errado.
 
    A animação é UMA, orquestrada: os cartões sobem em cascata e, em
-   cada um, um filete de bronze cresce da esquerda para a direita. Não
+   cada um, um filete laranja cresce da esquerda para a direita. Não
    há micro-interação espalhada — é um gesto só, que acontece uma vez
    quando a seção entra na tela. */
 
@@ -838,7 +853,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: var(--bronze);
+  background: var(--laranja);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 720ms var(--ease);
@@ -867,7 +882,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
 .ganho-olho {
   font-size: var(--t-xs);
   font-weight: 600;
-  color: var(--bronze);
+  color: var(--laranja);
   margin-bottom: var(--s4);
 }
 
@@ -892,7 +907,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
 .ganho--largo .ganho-txt { font-size: var(--t-body); max-width: 62ch; }
 
 /* -- A linha honesta --
-   Sem chão de cartão e sem bronze: ela não é um argumento de venda,
+   Sem chão de cartão e sem laranja: ela não é um argumento de venda,
    é uma ressalva, e precisa parecer uma. O que a destaca é o filete
    à esquerda e o respiro em volta. */
 .ganho-honesto {
@@ -906,8 +921,8 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
 .secao--clara .ganho { background: #f5f5f7; }
 .secao--clara .ganho-titulo { color: var(--tinta-clara); }
 .secao--clara .ganho-txt { color: var(--cinza-claro); }
-.secao--clara .ganho-olho { color: var(--bronze-fundo); }
-.secao--clara .ganho::before { background: var(--bronze-fundo); }
+.secao--clara .ganho-olho { color: var(--laranja-fundo); }
+.secao--clara .ganho::before { background: var(--laranja-fundo); }
 
 @media (prefers-reduced-motion: reduce) {
   /* O filete aparece pronto: crescer é deslocamento, e aqui ele sai. */
@@ -1003,7 +1018,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
   font-size: 1.125rem; line-height: 1; cursor: pointer;
   transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease);
 }
-.lista-passo button:hover:not(:disabled) { background: var(--bronze); color: var(--preto); }
+.lista-passo button:hover:not(:disabled) { background: var(--laranja); color: var(--preto); }
 .lista-passo button:active:not(:disabled) { transform: scale(0.92); }
 .lista-passo button:disabled { opacity: 0.3; cursor: default; }
 .lista-passo output { min-width: 30px; text-align: center; font-size: var(--t-xs); font-weight: 600; }
@@ -1022,7 +1037,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
   font-size: var(--t-xs); color: var(--cinza);
   padding: 7px 0; border-bottom: 1px solid var(--fio);
 }
-.lista-resumo-linha b { color: var(--bronze); font-weight: 600; }
+.lista-resumo-linha b { color: var(--laranja); font-weight: 600; }
 .lista-total { margin-top: var(--s5); }
 .lista-linha-total {
   display: flex; justify-content: space-between; align-items: baseline; gap: var(--s4);
@@ -1068,11 +1083,17 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
 .plano--eleito {
   background: var(--fumaca);
   --cinza: #a1a1a6;   /* 4,7:1 sobre `--fumaca` */
+  /* O cartão eleito é um degrau mais claro que o resto, e o acento
+     sobe junto. O laranja cheio fecha só 3,82:1 sobre `--fumaca` —
+     ele foi calibrado contra preto absoluto, não contra um cinza.
+     `--laranja-alto`, que é o mesmo matiz um degrau acima, fecha
+     4,81:1: a mesma cor, na luz que este chão pede. */
+  --laranja: var(--laranja-alto);
 }
 .plano-selo {
   font-size: var(--t-xs);
   font-weight: 600;
-  color: var(--bronze);
+  color: var(--laranja);
   margin-bottom: var(--s4);
   min-height: 1.3em;
 }
@@ -1089,7 +1110,7 @@ html.chegando .capa-palco::before { animation: none !important; opacity: 1; }
   display: grid; grid-template-columns: 15px minmax(0, 1fr); gap: 11px;
   font-size: var(--t-xs); color: var(--cinza); line-height: 1.4;
 }
-.plano li svg { width: 15px; height: 15px; margin-top: 3px; color: var(--bronze); }
+.plano li svg { width: 15px; height: 15px; margin-top: 3px; color: var(--laranja); }
 .plano .btn { margin-top: auto; }
 
 /* ---------- 14. Como funciona ---------- */
@@ -1344,6 +1365,162 @@ html.chegando [data-entra] { animation: none !important; opacity: 1; }
     color: var(--cinza-claro);
   }
   .topo-links .varejo-menu .varejo-seta { color: var(--varejo-acao); opacity: 1; }
+}
+
+/* ---------- 18b. O CELULAR ----------
+   Esta folha foi desenhada num canvas de 1440 e, no celular, ela
+   apenas DESABAVA para uma coluna. Nada era reproporcionado, e as
+   três consequências eram todas de proporção:
+
+   1. O TIPO NÃO DESCIA. A manchete de seção fica em 56px numa coluna
+      de 1120 — 5% dela. No telefone ela para em 32px numa coluna de
+      346 — 9,2%. É quase o dobro em tamanho relativo, e é por isso
+      que toda manchete ocupava três linhas e todo cartão comia uma
+      tela inteira.
+
+      A regra "título nenhum abaixo de 28px" continua valendo: ela
+      sempre foi sobre PROPORÇÃO, e 28px era a expressão dela num
+      canvas de 1120. Numa coluna de 346 a mesma proporção dá 20px.
+
+   2. O RITMO NÃO ENCOLHIA. `--section` de 72px em cima e 72 embaixo
+      são 144px de preto entre cada par de seções. Oito seções depois,
+      são 1.150px de página sem nada dentro.
+
+   3. OS CARTÕES NÃO ADENSAVAM. Padding de 48px e título de 28px numa
+      caixa de 346 deixavam cada máquina com 579px — um cartão por
+      tela, quatro telas para ver quatro aparelhos.
+
+   O resultado somado: 15.566px de altura no telefone contra 10.835 no
+   desktop. Uma página que fica MAIS longa quando a tela encolhe está
+   dizendo que ninguém olhou para ela nesse tamanho. */
+
+@media (max-width: 640px) {
+  :root {
+    /* A escala inteira desce um degrau. As razões entre os degraus
+       são as mesmas; o que muda é onde a escala começa. */
+    /* Fluida também DENTRO da faixa do celular: um iPhone SE tem 320px
+       e um Pro Max tem 430, e 34% de diferença de largura não pode
+       receber a mesma manchete. Presa em 38px ela quebrava em quatro
+       linhas no SE. */
+    --t-hero: clamp(2.0625rem, 9.75vw, 2.375rem);  /* 33 → 38px */
+    --t-xl:   clamp(1.375rem, 6.7vw, 1.625rem);    /* 22 → 26px */
+    --t-lg:   clamp(1.25rem, 5.9vw, 1.4375rem);    /* 20 → 23px */
+    --t-md:   clamp(1.125rem, 5.15vw, 1.25rem);    /* 18 → 20px · títulos de cartão */
+
+    /* O respiro entre seções encolhe junto: 72 → 56px. */
+    --section: 56px;
+  }
+
+  /* Num tipo menor a entrelinha aperta: 1,47 era a folga de um título
+     de 28px, e a 20px ela vira um vão no meio do nome do aparelho. */
+  .maquina h3, .plano h3, .passo h3, .ganho-titulo, .lista-linha-total b {
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+  }
+
+  /* O cabeçalho de seção para de empurrar o conteúdo para a segunda
+     tela: a manchete não passa de duas linhas e o subtítulo entra
+     logo abaixo. */
+  .secao-topo { margin-bottom: var(--s6); }
+  .secao-topo h2 { max-width: 20ch; }
+  .secao-topo .sub { max-width: 44ch; }
+
+  /* -- Os cartões adensam --
+     O padding de 48px no topo existia para dar ar a um título de
+     28px. Com 20px ele vira buraco. */
+  .maquina { padding: var(--s5) var(--s5) var(--s5); }
+  .maquina-poco { height: 132px; margin-bottom: var(--s4); }
+  .maquina-txt { margin-bottom: var(--s4); }
+  .maquina-preco { padding-top: var(--s3); margin-bottom: var(--s3); }
+
+  .ganho { padding: var(--s5); }
+  .ganho--largo { padding: var(--s6) var(--s5) var(--s5); }
+  .ganho--largo .ganho-titulo { font-size: 1.5rem; max-width: none; }
+  .ganho--largo .ganho-txt { font-size: var(--t-xs); }
+
+  .plano { padding: var(--s6) var(--s5) var(--s5); }
+  .plano ul { margin-bottom: var(--s5); }
+  .plano-porte { margin-bottom: var(--s4); }
+
+  .passo { padding-top: var(--s5); }
+  .passos { row-gap: var(--s6); }
+
+  /* -- Os fatos da capa --
+     Empilhados sem filete eles viravam um bloco de texto de oito
+     linhas. Cada um ganha a própria linha, como a lista de garantias
+     que eles são. */
+  .capa-fatos { gap: 0; padding-top: var(--s5); }
+  .capa-fatos > div { padding: var(--s4) 0; border-bottom: 1px solid var(--fio); }
+  .capa-fatos > div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .capa-fatos dd { max-width: none; font-size: var(--t-xs); }
+
+  /* -- A barra de preço --
+     Fora da fotografia ela não é mais uma pílula: uma pílula com duas
+     linhas de conteúdo e um botão dentro vira uma cápsula deformada.
+     Vira um cartão, com o raio de cartão, e o preço ganha uma linha
+     inteira em vez de disputar espaço com o botão. */
+  .capa-vidro {
+    border-radius: var(--r-card);
+    padding: var(--s4);
+    gap: var(--s4);
+  }
+  .capa-vidro-preco b { font-size: var(--t-md); letter-spacing: -0.01em; }
+
+  /* A régua da história: numa coluna só, ela lê como lista. */
+  .historia-fatos > div { padding: var(--s4) 0; }
+
+  /* O palco não precisa de 56px embaixo depois que a barra de preço
+     deixou de flutuar sobre a foto: ela já é o fecho da composição. */
+  .capa-palco { padding-bottom: var(--s6); }
+
+  /* -- O filete das etapas DEITA --
+     No desktop ele corre na horizontal, ligando um passo ao seguinte.
+     Empilhados numa coluna só ele era simplesmente desligado, e as
+     quatro etapas viravam quatro parágrafos soltos que não diziam ser
+     uma sequência.
+
+     Aqui ele vira VERTICAL: desce do numeral até o passo de baixo, que
+     é exatamente o desenho que uma sequência empilhada pede. O último
+     não tem para onde apontar e continua sem filete. */
+  .passos { row-gap: var(--s6); }
+  .passo { padding-left: 40px; padding-top: 0; }
+  .passo::before { top: 0; left: 0; font-size: var(--t-xs); letter-spacing: 0.06em; }
+  /* -- OS ALVOS DE TOQUE --
+     No ponteiro um link de 18px de altura é um alvo confortável; no
+     polegar é uma aposta. Sete peças desta página estavam abaixo dos
+     44px que a Apple pede, e as duas que mais doem são as que se
+     tocam REPETIDAMENTE: o mais e o menos da lista.
+
+     Onde crescer não move nada — os passos da lista, os links do
+     rodapé — o alvo cresce de verdade. Onde crescer empurraria o
+     layout, ele cresce por um `::after` invisível: a área de toque
+     aumenta, o desenho fica onde estava. */
+  .lista-passo button { width: 44px; height: 44px; }
+  .lista-passo { padding: 2px; }
+
+  .rodape ul { gap: 0; }
+  .rodape li a { display: inline-block; padding: 13px 0; }
+  .rodape-col h4 { margin-bottom: var(--s2); }
+
+  .marca, .seta, .volta-varejo { position: relative; }
+  .marca::after, .seta::after, .volta-varejo::after {
+    content: '';
+    position: absolute;
+    inset: -12px -8px;
+  }
+
+  .passo::after {
+    /* `display` precisa voltar: o bloco de 1080px desliga este filete
+       (lá ele apontaria para o passo errado numa grade de duas
+       colunas), e aquele bloco vem antes deste na folha. */
+    display: block;
+    top: 22px;
+    left: 7px;
+    right: auto;
+    bottom: calc(-1 * var(--s6));
+    width: 1px;
+    height: auto;
+  }
 }
 
 @media (max-width: 700px) {

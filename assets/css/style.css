@@ -138,11 +138,12 @@
      disco do monograma na pílula do menu e o bloco dela no menu de
      celular. São os únicos lugares em que uma cor de fora do sistema
      entra, e entram porque não são decoração — são a amostra do
-     lugar para onde o link leva. O ouro saiu de lá, depois o amarelo
-     saiu também: hoje o acento do Corporate é um bronze, e a
-     miniatura tem de dizer a verdade sobre a página que promete. */
+     lugar para onde o link leva. O ouro saiu de lá, depois o amarelo,
+     depois o próprio bronze: hoje o acento do Corporate é um laranja
+     vivo e escuro, e a miniatura tem de dizer a verdade sobre a
+     página que promete. */
   --corp-preto:  oklch(0.19 0.008 250);
-  --corp-bronze: #d49537;                /* oklch(0.715 0.131 73) */
+  --corp-laranja: #db7102;               /* oklch(0.66 0.163 55) */
 
   /* ---------------------------------------------------------------
      Chãos por categoria. A cor diz de que família é o produto antes
@@ -576,8 +577,8 @@ p { margin: 0; max-width: 62ch; }
    inteira vai mudar de cor. A seta de canto diz "sai daqui".
 
    A pílula é uma MINIATURA HONESTA da outra página: chão preto e o
-   BRONZE do Corporate no disco do monograma. Ela já mostrou ouro, e
-   depois amarelo; nenhum dos dois existe mais lá. Uma miniatura que
+   LARANJA do Corporate no monograma. Ela já mostrou ouro, amarelo e
+   bronze; nenhum dos três existe mais lá. Uma miniatura que
    promete uma página que não existe é pior que nenhuma. */
 .nav-corp {
   flex: none;
@@ -597,7 +598,7 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 600;
   letter-spacing: -0.008em;
   white-space: nowrap;
-  /* O anel de bronze é o hover. Mora numa sombra INTERNA, que não é
+  /* O anel laranja é o hover. Mora numa sombra INTERNA, que não é
      elevação e não empurra layout: a pílula não muda de tamanho
      quando o dedo chega. */
   box-shadow: inset 0 0 0 1px transparent;
@@ -607,18 +608,18 @@ p { margin: 0; max-width: 62ch; }
 }
 .nav-corp:hover {
   background: var(--corp-preto);
-  box-shadow: inset 0 0 0 1px var(--corp-bronze);
+  box-shadow: inset 0 0 0 1px var(--corp-laranja);
 }
 .nav-corp:active { transform: scale(0.97); }
 
 /* O monograma dentro da pílula: o "A" da marca, EM BRONZE, direto
-   sobre o preto. Ele morava num disco de bronze, com o "A" recortado
+   sobre o preto. Ele morava num disco colorido, com o "A" recortado
    em preto dentro — e o disco era o problema. A 22px ele lia como um
    selo, um segundo objeto colado na pílula, e o que se via de longe
    era a bolinha, não a marca.
 
    Sem disco a pílula fica **inteira preta**, com uma única coisa
-   colorida dentro dela: a letra. O bronze deixa de ser uma mancha e
+   colorida dentro dela: a letra. O laranja deixa de ser uma mancha e
    passa a ser o desenho — que é o que um monograma tem de ser.
 
    O "A" pode crescer de 11 para 15px porque não precisa mais caber
@@ -631,7 +632,7 @@ p { margin: 0; max-width: 62ch; }
   transition: transform var(--hover) var(--ease);
 }
 .nav-corp:hover .nav-corp-marca { transform: scale(1.09); }
-.nav-corp-marca svg { width: 15px; height: auto; fill: var(--corp-bronze); }
+.nav-corp-marca svg { width: 15px; height: auto; fill: var(--corp-laranja); }
 
 .nav-corp-seta {
   opacity: 0.5;
@@ -667,7 +668,7 @@ p { margin: 0; max-width: 62ch; }
     letter-spacing: -0.02em;
     line-height: 1.2;
   }
-  .nav-links .nav-corp-menu-t b { font-weight: 700; color: var(--corp-bronze); }
+  .nav-links .nav-corp-menu-t b { font-weight: 700; color: var(--corp-laranja); }
   .nav-links .nav-corp-menu-s {
     display: block;
     margin-top: 3px;
