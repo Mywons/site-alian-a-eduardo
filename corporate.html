@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aliança Corporate — Mac para a sua equipe</title>
 <meta name="description" content="Aliança Corporate: Mac, iPad e iPhone para empresas. Nota fiscal no CNPJ, configuração antes da entrega, garantia respondida por nós e um consultor dedicado.">
-<meta name="theme-color" content="#0d1012">
+<meta name="theme-color" content="#000000">
 <meta property="og:title" content="Aliança Corporate">
 <meta property="og:description" content="Faça a sua equipe trabalhar com Mac. Apple para empresas, com um consultor do começo ao fim.">
 <meta property="og:type" content="website">
@@ -26,7 +26,7 @@
   } catch (e) { /* navegador sem sessionStorage: entra sem cortina */ }
 </script>
 <link rel="stylesheet" href="assets/css/corporate.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230d1012'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23d8ba79'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23d8ba79'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23d8ba79'/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23000000'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23d49537'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23d49537'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23d49537'/></svg>">
 </head>
 <body>
 
@@ -53,14 +53,33 @@
       <a href="#maquinas">As máquinas</a>
       <a href="#lista">Montar a lista</a>
       <a href="#planos">Planos</a>
+
       <!-- A porta para o outro ramo NÃO é um item de seção: as outras
            linhas navegam DENTRO desta página, esta sai dela. No
-           desktop ela vive no grupo de ações, à direita; aqui, onde
-           há espaço, ela se explica em duas linhas. -->
+           desktop ela vive no grupo de ações, à direita. No celular
+           não cabe lá — marca, WhatsApp e o botão do menu já ocupam a
+           barra inteira — e ela reaparece AQUI, onde há espaço para
+           dizer em duas linhas o que a Aliança One é, em vez de só
+           nomeá-la. É o espelho exato do que o varejo faz com o
+           Corporate. -->
+      <a class="varejo-menu" href="index.html" data-troca="#f8f4ee">
+        <span class="varejo-marca" aria-hidden="true">
+          <svg viewBox="4 2 56 58" focusable="false">
+            <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+            <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+            <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+          </svg>
+        </span>
+        <span class="varejo-menu-txt">
+          <b>Aliança One</b>
+          <small>A loja de varejo: iPhone, Mac, iPad e Watch</small>
+        </span>
+        <svg class="varejo-seta" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+      </a>
     </nav>
 
     <div class="topo-acao">
-      <a class="nav-varejo" href="index.html" data-troca="#bf4f04" title="Aliança One, a loja de varejo"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="nav-varejo" href="index.html" data-troca="#f8f4ee" title="Aliança One, a loja de varejo"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.52 13.98c-.25.7-1.45 1.34-2.02 1.42-.52.08-1.17.11-1.89-.12-.43-.14-.99-.32-1.7-.63-2.99-1.29-4.94-4.3-5.09-4.5-.15-.2-1.22-1.62-1.22-3.09 0-1.47.77-2.19 1.04-2.49.27-.3.59-.37.79-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.07.91 2.22.07.15.12.32.02.52-.1.2-.15.32-.3.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.03 1.12 1 2.07 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.16.2-.3.4-.25.67-.15.27.1 1.72.81 2.02.96.3.15.5.22.57.35.07.12.07.72-.18 1.42Z"/></svg>
         <span class="txt">Falar com um consultor</span>
@@ -526,7 +545,7 @@
       compromisso e sem custo.</p>
     <div class="fecho-acoes" data-reveal>
       <a class="btn" data-wa="corporate" target="_blank" rel="noopener" href="#">Pedir o diagnóstico</a>
-      <a class="btn btn--varejo" href="index.html" data-troca="#bf4f04"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      <a class="btn btn--varejo" href="index.html" data-troca="#f8f4ee"><span class="varejo-marca" aria-hidden="true"><svg viewBox="4 2 56 58" focusable="false"><path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/><path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/><path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/></svg></span><span>Aliança One</span><svg class="varejo-seta" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </div>
   </div>
 </section>
@@ -564,7 +583,7 @@
       <div>
         <h4>Aliança</h4>
         <ul>
-          <li><a class="volta-varejo" href="index.html" data-troca="#bf4f04">Aliança One</a></li>
+          <li><a class="volta-varejo" href="index.html" data-troca="#f8f4ee">Aliança One</a></li>
           <li><a href="sobre.html">Como funciona a loja</a></li>
           <li><a href="privacidade.html">Privacidade</a></li>
           <li><a data-wa="corporate" target="_blank" rel="noopener" href="#"><span data-telefone>WhatsApp</span></a></li>

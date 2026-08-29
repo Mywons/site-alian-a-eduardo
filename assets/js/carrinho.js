@@ -348,7 +348,9 @@ function montarSacola() {
 }
 
 /* ---------- A porta de entrada ----------
-   Chamada pela página do produto. `origem` é o elemento que voa. */
+   Chamada pela página do produto — o único lugar do site onde um
+   aparelho entra na sacola, porque é o único onde cor e capacidade
+   já foram escolhidas. `origem` é o elemento que voa. */
 
 function adicionarNaSacola(produto, cor, capacidade, origem) {
   if (!produto) return;
@@ -367,3 +369,32 @@ function adicionarNaSacola(produto, cor, capacidade, origem) {
 }
 
 document.addEventListener('DOMContentLoaded', montarSacola);
+
+/* ---------- Quando a página volta ----------
+   `DOMContentLoaded` roda UMA vez por documento carregado, e há três
+   situações em que a sacola muda sem que ele volte a rodar:
+
+     1. O BOTÃO VOLTAR. O navegador guarda a página inteira viva no
+        back/forward cache e a devolve congelada no estado em que ela
+        saiu — com o selo marcando o que havia ANTES de a pessoa
+        juntar o produto na página seguinte. `DOMContentLoaded` não
+        dispara nessa volta; só `pageshow` com `persisted`.
+     2. Outra aba do mesmo site alterou o localStorage.
+     3. A aba voltou a ficar visível depois de a pessoa comprar em
+        outra janela.
+
+   Nos três, o remédio é o mesmo e é barato: reler o que está guardado
+   e repintar. `pintarSacola` é idempotente — chamar à toa não custa
+   nada e não pisca. */
+window.addEventListener('pageshow', (e) => {
+  // Numa carga normal o `montarSacola` do DOMContentLoaded já cuidou.
+  if (e.persisted) pintarSacola();
+});
+
+window.addEventListener('storage', (e) => {
+  if (!e.key || e.key === SACOLA_CHAVE) pintarSacola();
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') pintarSacola();
+});

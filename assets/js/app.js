@@ -222,10 +222,17 @@ function montarWhatsApp() {
    preço. A frase de venda mora na página do produto, para quem quis
    saber mais.
 
-   "Comprar" leva para a página do produto, não direto para a conversa:
-   é lá que se escolhe cor e capacidade, e é isso que faz a mensagem
-   chegar pronta do outro lado. Comprar sem escolher seria mandar o
-   vendedor perguntar de novo. */
+   "Comprar" leva para a página do produto, não para a sacola: é lá
+   que se escolhe cor e capacidade, e um aparelho de R$ 11 mil não
+   entra na sacola sem que a pessoa tenha dito qual. Juntar a variante
+   padrão daqui pouparia um clique e devolveria o problema em cheio —
+   o vendedor perguntando de novo do outro lado, que é exatamente o
+   que a sacola existe para evitar.
+
+   Quem junta é o botão da PÁGINA DO PRODUTO. A vitrine mostra e
+   encaminha; a página do produto decide. Da página principal a sacola
+   é só leitura: o selo conta o que já está lá dentro e a gaveta abre
+   com a lista, venha ela de onde vier. */
 
 function cardHTML(p, classes = 'card--terco card--peq') {
   return `

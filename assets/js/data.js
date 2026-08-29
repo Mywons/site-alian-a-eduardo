@@ -108,6 +108,32 @@ const CATEGORIAS = [
    Para adicionar um produto, copie um bloco inteiro e edite.
    O campo "id" precisa ser único: ele é o endereço da página
    do produto (produto.html?id=SEU-ID).
+
+   -----------------------------------------------------------
+   VISTAS EXTRAS — a foto de lado, de costas, da caixa
+   -----------------------------------------------------------
+   A galeria da página do produto mostra a foto da COR escolhida,
+   lendo `assets/img/produtos/<id>/<cor>.webp`, e trocar de cor troca
+   essa foto no lugar. Para acrescentar ÂNGULOS — perfil, traseira,
+   tela ligada, o que houver — basta listá-los aqui: é isso que faz
+   as setas e os pontos NASCEREM. Sem este campo não há galeria para
+   passar, e a página mostra a foto sozinha.
+
+     vistas: [
+       { src: 'assets/img/produtos/iphone-17-pro-max/costas.webp',
+         legenda: 'De costas' },
+       { src: 'assets/img/produtos/iphone-17-pro-max/lado.webp',
+         legenda: 'De perfil' }
+     ]
+
+   `legenda` é o que aparece embaixo da foto e no rótulo do ponto.
+   `src` é o caminho do arquivo, relativo à raiz do site.
+
+   Nenhum produto usa este campo hoje, e o motivo é que a foto não
+   existe: os bancos de render da Apple que costumam alimentar
+   catálogos publicam UM frontal por cor e mais nada. Perfil e
+   traseira saem de fotografar o aparelho — e no dia em que
+   saírem, é só listar aqui. Nada de código muda.
    ------------------------------------------------------------- */
 
 const PRODUTOS = [

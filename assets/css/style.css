@@ -1,9 +1,19 @@
 /* =============================================================
-   ALIANÇA — folha de estilo única
-   Chão laranja, gesto branco, nada de profundidade falsa: o site é
-   chapado de propósito. Sem degradê, sem sombra projetada, sem
-   vidro fosco — dois planos se separam pela cor, e quando a cor não
-   basta, por um filete de 1px.
+   ALIANÇA ONE — folha de estilo única
+
+   A PÁGINA É OFF-WHITE E O LARANJA É O DETALHE. Essa é a inversão
+   que governa tudo o que vem abaixo. Antes o laranja era o chão e o
+   branco era o gesto; agora o papel é o chão e o laranja é o gesto —
+   ele preenche botão, rótulo, o filete que corta a capa e uma única
+   superfície inteira — a faixa dos compromissos, no pé da página —
+   e nada mais.
+
+   O argumento não é de gosto, é de quanto laranja o olho aguenta. Um
+   chão saturado obriga a página inteira a se defender dele: toda
+   tinta vira branca, todo secundário some, toda cor de produto tem
+   de brigar com a cor da loja. Sobre papel, o laranja volta a ser o
+   que uma marca precisa que ele seja — a coisa que o olho encontra
+   primeiro, justamente porque não está em todo lugar.
 
    O laranja é o do iPhone 17 Pro: a página e o aparelho fotografado
    na capa são da mesma família de matiz.
@@ -13,167 +23,159 @@
 
 :root {
   /* ---------------------------------------------------------------
-     TODO DEGRADÊ SAIU. Onde havia rampa agora há uma cor só: o botão,
-     a faixa das dúvidas, o poço de cada peça, o chão da capa, as
-     manchetes recortadas. O que separava dois planos por transição
-     de luz passou a separá-los por diferença de tom — e onde nem
-     isso bastava, entrou um filete. Sombra projetada, `backdrop-
-     filter` e o levantar dos cards no hover saíram junto.
+     OS TRÊS DEGRAUS DO PAPEL.
+
+     Off-white, nunca `#fff`: o branco puro é uma tela de escritório,
+     e a loja vende objeto, não planilha. Os três são o MESMO papel
+     com o croma da marca dentro (0.004 a 0.012 no matiz 70–78) — é
+     essa gota de laranja que faz o cinza parecer quente em vez de
+     parecer poeira.
+
+     A ordem entre eles é a de uma lista agrupada de iOS, e é o
+     contrário do que parece: o chão da página é o degrau do MEIO, o
+     cartão é MAIS CLARO que ele, e o recuo é mais escuro. É assim que
+     um cartão se levanta sem precisar de borda — a sombra confirma o
+     que a luz já disse.
      --------------------------------------------------------------- */
+  --chao:    oklch(0.968 0.009 74);  /* #f8f4ee · o chão da página     */
+  --chao-2:  oklch(0.993 0.004 78);  /* #fefcfa · cartão, campo, chip  */
+  --fundo:   oklch(0.945 0.011 70);  /* #f2ece5 · recuo, hover, poço   */
+
+  /* Os mesmos três, com os nomes que o resto da folha já usava. As
+     ilhas claras deixaram de ser exceção: agora a página inteira é
+     ilha, e `--papel` é o papel mais alvo, para o que precisa saltar
+     um degrau acima do chão. */
+  --papel:   oklch(0.988 0.006 76);
+  --papel-2: oklch(0.945 0.011 70);
 
   /* ---------------------------------------------------------------
-     O LARANJA VIVO É O CHÃO, e a página inteira é a inversão do que
-     era antes: tudo que carregava laranja agora carrega branco.
-     Botão, link, olho, foco, a faixa forte e o card de destaque —
-     todos trocaram de lado.
+     O LARANJA DA MARCA É `#FF6200`, e ele tem um limite físico que
+     define sozinho toda a estrutura desta seção.
 
-     O tom é o do iPhone 17 Pro. O laranja anterior (`#ba3100`) era
-     declarado fora do gamut sRGB e o recorte do navegador o puxava
-     para o matiz 36 — vermelho queimado, não laranja. Agora a família
-     é declarada DENTRO do gamut, e por isso o matiz 45 sobrevive ao
-     recorte: `#c44800` chega ao olho como laranja de verdade.
+     `#FF6200` mede `oklch(0.691 0.207 42)`. A luminância dele é 0.30,
+     e isso quer dizer que o MELHOR contraste que ele pode alcançar
+     contra qualquer fundo claro é **3,00:1 — no branco puro**. Não é
+     questão de escolher bem o papel: não existe fundo mais claro que
+     branco. Como texto sobre papel ele fecha 2,74:1, e não há ajuste
+     que o salve.
 
-     A luz subiu de 0.52 para 0.565, que é o teto: acima disso o texto
-     branco cai abaixo de 4,5:1 sobre o chão. É por isso que o tom
-     cheio do aparelho — `--cosmico`, mais claro — não é o chão da
-     página, e sim a cunha da capa, onde nada é escrito por cima.
+     Do outro lado ele é excelente como CHÃO: a tinta preta quente por
+     cima dele fecha **5,79:1** — melhor que os 5,43:1 que o
+     Laranja-cósmico dava. É para isso que ele serve.
 
-     O que faz um chão tão vivo funcionar é a hierarquia invertida.
-     Num fundo claro o texto secundário se rebaixa ESCURECENDO; aqui
-     isso reprovaria. Então os dois níveis ficam quase juntos em luz —
-     4,7:1 e 4,5:1 — e o que os separa é peso e tamanho, não brilho.
+     Daí a divisão de trabalho, e ela não é "dois laranjas": é o mesmo
+     matiz 42 em duas luzes, cada uma no trabalho que a física permite.
+
+       `--marca`  PREENCHE. Botão, cartão forte, faixa, etiqueta,
+                  carrinho, chip, o filete da capa. Sempre com tinta
+                  preta por cima — nunca com papel, que daria 2,90:1.
+       `--acao`   ESCREVE. Rótulo, link, seta, chevron, monograma,
+                  foco. Mesmo matiz, luz 0.53, 5,14:1 no chão.
+
+     Visualmente o site é `#FF6200`: ele é quem preenche tudo o que
+     tem área. O irmão escuro só aparece em texto miúdo, que é onde
+     `#FF6200` seria ilegível de qualquer jeito.
+
+     A REGRA DURA, e ela vale em toda superfície laranja da página:
+
+         Sobre laranja, a tinta é PRETA. Nunca papel miúdo.
+
+     E a armadilha que a medição pegou: rebaixar essa tinta por
+     opacidade reprova. Por isso não há dois brilhos dentro de uma peça
+     laranja — há uma tinta só, e o que separa manchete de corpo é peso
+     e tamanho, nunca brilho.
+
+     O Laranja-cósmico saiu. Ele era um segundo tom de superfície, e
+     dois laranjas de superfície numa página que tem um laranja de
+     marca é exatamente a diluição que a folha inteira existe para
+     evitar.
      --------------------------------------------------------------- */
+  --marca:       #FF6200;                 /* oklch(0.691 0.207 42) · preto por cima 5,79:1 */
+  --marca-funda: oklch(0.655 0.19 42);    /* #eb5e15 · hover do preenchimento · 5,08:1 */
+
+  --acao:       oklch(0.53 0.16 42);      /* #b44200 · o laranja que se ESCREVE · 5,14:1 */
+  --acao-funda: oklch(0.475 0.143 42);    /* #9b3801 · hover do laranja escrito */
+  --acao-tenue: color-mix(in oklab, var(--marca) 12%, transparent);
+
+  /* O degrau de ênfase: a tinta laranja de um botão de PAPEL que mora
+     dentro de uma superfície laranja. */
+  --sobre-claro: oklch(0.48 0.145 42);    /* #9d3900 · 6,7:1 no papel */
+
   /* ---------------------------------------------------------------
-     DUAS INTENSIDADES DO MESMO LARANJA, e as duas dentro do gamut.
+     A TINTA. Preto quente, nunca `#000`: o mesmo matiz do laranja,
+     com croma quase zero. 15,9:1 no chão.
 
-     O laranja anterior (`#c44800`) era declarado FORA do sRGB: o azul
-     estourava para baixo de zero, o navegador cortava, e o matiz caía
-     de 45 para 36 — chegava ao olho como vermelho queimado, não como
-     laranja. Toda a família agora é declarada dentro do gamut, medida
-     com conversão OKLCH→sRGB real, e nenhum token corta. É isso que
-     faz o laranja finalmente parecer laranja.
-
-     `--chao` é o chão de trabalho: onde mora texto miúdo — catálogo,
-     navegação, rodapé, preços. Ele é o mais fundo dos dois porque
-     branco pequeno sobre laranja só fecha 4,5:1 até aqui.
-
-     `--cosmico` é o Laranja-cósmico do iPhone 17, o tom em que a
-     pessoa reconhece o aparelho. Ele deixou de ser um detalhe da capa
-     e virou superfície: capa, faixa das dúvidas, faixa dos
-     compromissos. Ele é claro demais para texto miúdo branco (3,1:1),
-     então nas superfícies dele só entra manchete — que é texto grande
-     e pede 3:1 — botão branco e ilha branca. A regra é dura e é o que
-     mantém a página legível: se é pequeno, não é escrito no cósmico.
+     O secundário se rebaixa ESCURECENDO, que é o que um chão claro
+     pede — foi exatamente o contrário na versão laranja, e é a única
+     regra do site que a inversão virou de cabeça para baixo.
      --------------------------------------------------------------- */
-  --chao:    oklch(0.565 0.160 45);  /* trabalho   #bf4f04 · branco 4,63:1 */
-  --chao-2:  oklch(0.505 0.140 45);  /* cards      #a34400 */
-  --fundo:   oklch(0.445 0.130 44);  /* poço, hover #8c3900 */
-  --cosmico: oklch(0.665 0.155 52);  /* Cósmico    #dc7426 · superfície */
-  --cosmico-fundo: oklch(0.615 0.158 50); /*          #cc6212 · hover do cósmico */
+  --tinta:   oklch(0.22 0.012 50);   /* #1f1916 · 15,9:1 no chão */
+  --escuro:  oklch(0.22 0.012 50);   /* o mesmo, pelo nome antigo */
+  --suave:   oklch(0.475 0.020 55);  /* #665952 · 6,15:1 no chão  */
 
-  /* ---------------------------------------------------------------
-     O LARANJA É CHAPADO. NÃO HÁ RAMPA NENHUMA.
+  /* O `--claro` é o papel visto de dentro de uma superfície escura:
+     a tinta da faixa do Instagram, do botão preto da capa, do selo
+     do carrinho. Ele não é mais o gesto do site — o gesto é o
+     laranja. */
+  --claro:   oklch(0.988 0.006 76);
 
-     As duas rampas que viviam aqui saíram. O argumento contra elas
-     não é estético, é de contrato: um degradê embaixo de texto muda
-     de contraste ao longo de si mesmo, e o valor que vale é sempre o
-     da PONTA PIOR — nunca o do meio, que é o que se vê e o que se
-     mede por engano. Trocar a rampa por um plano só apaga a classe
-     inteira de erro: uma superfície, um número, verdadeiro na
-     superfície toda.
+  /* O filete. Sobre papel ele é a tinta rebaixada, não o branco. */
+  --linha:   oklch(0.22 0.012 50 / 0.12);
+  --linha-forte: oklch(0.22 0.012 50 / 0.22);
 
-     Chapado saiu mais folgado do que a rampa era, e não mais
-     apertado. O pior par da página era o branco grande sobre a ponta
-     clara do `--grad-vivo`, a 3,03:1 — raspando o mínimo de 3:1. Sem
-     rampa esse mesmo par é o branco sobre `--cosmico`, a 3,08:1.
-
-     Sobram três cores no sistema, e é só isso que existe: o laranja,
-     o branco e o preto quente. O laranja tem dois degraus porque um
-     só não daria conta dos dois trabalhos — `--cosmico` é claro
-     demais para texto miúdo branco (3,08:1) e `--chao` é fundo o
-     bastante para carregá-lo (4,66:1). Degrau é contrato de leitura,
-     não decoração: os dois são o mesmo laranja.
-     --------------------------------------------------------------- */
-  --linha:   oklch(0.99 0.01 78 / 0.3);
-
-  /* O branco é o gesto. Tudo que pedia laranja pede este. */
-  --claro:   oklch(0.985 0.008 72);
-
-  /* A tinta é clara: é ela que se lê sobre o laranja de trabalho. */
-  --tinta:   oklch(0.985 0.008 72);   /* 4,83:1 no chão */
-  --suave:   oklch(0.978 0.016 72);   /* 4,52:1 no chão */
-
-  /* A ação é branca. O botão inverte por completo: fundo branco
-     chapado, laranja por cima. Link, olho e foco também são brancos;
-     o que os distingue do corpo é o sublinhado e o peso, não uma
-     segunda cor. */
-  --acao:       oklch(0.985 0.008 72);
-  --acao-clara: oklch(0.995 0.004 80); /* branco puro, para traço  */
-  --acao-funda: oklch(0.945 0.020 72); /* o branco de hover        */
-  --acao-tenue: oklch(0.99 0.008 78 / 0.18);
-
-  /* O laranja do outro lado: o que se escreve SOBRE o branco. Também
-     foi trazido para dentro do gamut — 5,25:1 no papel, 4,91:1 no
-     papel de baixo. */
-  --sobre-claro: oklch(0.535 0.140 46);   /* #ac4d15 */
-
-  /* O preto quente continua existindo — só não é o texto padrão.
-     Ele serve às ilhas claras: caixas dos destaques, faixa das
-     dúvidas, cartões de plano. 16,6:1 no papel. */
-  --escuro:  oklch(0.22 0.012 50);
-  --escuro-suave: oklch(0.44 0.030 45);   /* 7,48:1 no papel */
-
-  /* O papel das ilhas. Branco quente, nunca #fff. */
-  --papel:   oklch(0.985 0.008 72);
-  --papel-2: oklch(0.962 0.012 70);
+  /* A faixa forte e o botão: `#FF6200` cheio com a tinta preta por
+     cima. É a mesma dupla em toda a folha, e é o único preenchimento
+     cromático que o site tem. */
+  --forte: var(--marca);
+  --forte-tinta: oklch(0.22 0.012 50);
 
   /* Sem degradê em lugar nenhum: o token continua para o resto da
      folha não quebrar, mas é uma cor só. */
-  --rampa-acao: var(--acao);
+  --rampa-acao: var(--marca);
 
   /* -- Os dois grãos do outro ramo --
-     O site laranja carrega exatamente duas peças com a cor do
-     Corporate: o disco do monograma na pílula do menu e o bloco dela
-     no menu de celular. São os únicos lugares em que uma cor de fora
-     do sistema entra, e entram porque não são decoração — são a
-     amostra do lugar para onde o link leva. */
-  --corp-preto:   oklch(0.19 0.008 250);
-  --corp-amarelo: oklch(0.85 0.165 93);
-
-  /* A faixa forte: ilha branca com o laranja escrito por cima. */
-  --forte: oklch(0.985 0.008 72);
-  --forte-tinta: oklch(0.535 0.140 46);
+     O site carrega exatamente duas peças com a cor do Corporate: o
+     disco do monograma na pílula do menu e o bloco dela no menu de
+     celular. São os únicos lugares em que uma cor de fora do sistema
+     entra, e entram porque não são decoração — são a amostra do
+     lugar para onde o link leva. O ouro saiu de lá, depois o amarelo
+     saiu também: hoje o acento do Corporate é um bronze, e a
+     miniatura tem de dizer a verdade sobre a página que promete. */
+  --corp-preto:  oklch(0.19 0.008 250);
+  --corp-bronze: #d49537;                /* oklch(0.715 0.131 73) */
 
   /* ---------------------------------------------------------------
      Chãos por categoria. A cor diz de que família é o produto antes
-     de você ler o nome. Croma baixo de propósito: quem sinaliza ação
-     é o laranja, e esses aqui são só chão.
+     de você ler o nome. Eles subiram de saturação junto com a
+     inversão: contra um chão laranja bastava serem pálidos, contra
+     um chão de papel um pálido some. Croma baixo mesmo assim — quem
+     sinaliza ação é o laranja, e esses aqui são só chão.
      --------------------------------------------------------------- */
-  --areia:   oklch(0.955 0.032 52);   /* iPhone     */
-  --bruma:   oklch(0.955 0.026 238);  /* iPad       */
-  --musgo:   oklch(0.955 0.028 158);  /* Áudio      */
-  --argila:  oklch(0.955 0.032 20);   /* Watch      */
-  --linho:   oklch(0.955 0.024 92);   /* Acessórios */
-  --grafite: oklch(0.955 0.026 268);  /* Mac        */
+  --areia:   oklch(0.925 0.042 52);   /* iPhone     */
+  --bruma:   oklch(0.925 0.036 238);  /* iPad       */
+  --musgo:   oklch(0.925 0.038 158);  /* Áudio      */
+  --argila:  oklch(0.925 0.034 20);   /* Watch      */
+  --linho:   oklch(0.925 0.034 92);   /* Acessórios */
+  --grafite: oklch(0.925 0.034 268);  /* Mac        */
 
   /* ---------------------------------------------------------------
      As caixas dos destaques usam a versão SATURADA da mesma família.
      São seis blocos só, aparecendo uma vez na página — é onde a cor
      pode pesar sem cansar. Os chãos pálidos acima continuam servindo
-     às seções inteiras e às pílulas do trilho, que se repetem.
+     às pílulas do trilho, que se repetem.
 
      Cada caixa carrega dois tons próprios: `--olho` para o rótulo e
-     `--sub` para o texto miúdo. O secundário cinza do resto do site
-     reprova aqui (4,1:1 no pior caso), então dentro da caixa ele
-     escurece e ganha o matiz da própria família.
+     `--sub` para o texto miúdo. O secundário do resto do site
+     reprova aqui, então dentro da caixa ele escurece e ganha o matiz
+     da própria família.
      --------------------------------------------------------------- */
-  --areia-viva:   oklch(0.875 0.09 52);
-  --bruma-viva:   oklch(0.875 0.07 238);
-  --musgo-vivo:   oklch(0.875 0.115 158);
-  --argila-viva:  oklch(0.875 0.067 20);
-  --linho-vivo:   oklch(0.875 0.115 95);
-  --grafite-vivo: oklch(0.875 0.061 272);
-  --laranja-vivo: oklch(0.885 0.115 50);
+  --areia-viva:   oklch(0.875 0.072 52);
+  --bruma-viva:   oklch(0.875 0.065 238);
+  --musgo-vivo:   oklch(0.875 0.105 158);
+  --argila-viva:  oklch(0.875 0.062 20);
+  --linho-vivo:   oklch(0.875 0.105 95);
+  --grafite-vivo: oklch(0.875 0.058 272);
+  --laranja-vivo: oklch(0.872 0.076 50);
 
   /* A noite: o único chão escuro do site, na faixa do Instagram.
      Social é outro lugar, e parecer outro lugar ajuda a pessoa a
@@ -181,23 +183,17 @@
   --noite:   oklch(0.235 0.022 45);
 
   /* O verde do WhatsApp. Não é cor da loja: é o rótulo de um
-     aplicativo, como o ícone. Sobre branco fecha sozinho: ícone
-     branco a 3,6:1 e a bolha a 3,3:1 do chão. */
-  --zap: oklch(0.60 0.16 148);
+     aplicativo, como o ícone. */
+  --zap: oklch(0.565 0.155 148);
 
-  /* O poço da peça é um plano só, um degrau abaixo do cartão que o
-     contém. É a diferença de tom que desenha a moldura em volta do
-     aparelho, e não uma transição de luz. */
-  --poco:    oklch(0.455 0.15 43);
+  /* O poço da peça na página do produto: um degrau abaixo do papel,
+     com um fio do laranja dentro. */
+  --poco:    oklch(0.935 0.014 62);
 
-  /* Chapado: nada aqui flutua. O que separa dois planos é a cor de
-     cada um e, quando ela não basta, um filete de 1px. As duas
-     sombras continuam declaradas porque o resto da folha as chama —
-     só que agora não desenham nada. */
-  --aro:       inset 0 0 0 1px oklch(0.22 0.012 50 / 0.09);
-  --aro-forte: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.16);
-  --sombra-sm: none;
-  --sombra:    none;
+  /* O aro de 1px: o que separa um chip do chão quando a diferença de
+     tom entre os dois é de 1,07:1 e uma sombra seria pesada demais
+     para uma peça de 42px. */
+  --aro: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.10);
 
   --sans: 'Switzer', 'Switzer-fallback', -apple-system, BlinkMacSystemFont,
           'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
@@ -258,10 +254,11 @@
                   0 2px 4px -2px oklch(0.22 0.012 50 / 0.10);
   --sombra-alta:  0 12px 28px -8px oklch(0.22 0.012 50 / 0.22),
                   0 4px 8px -4px oklch(0.22 0.012 50 / 0.14);
-  --sombra-suave: 0 2px 8px oklch(0.22 0.012 50 / 0.08);
 
-  /* A cor DESTE ramo, usada pela cortina da troca. */
-  --troca-cor: var(--cosmico);
+  /* A cor DESTE ramo, usada pela cortina da troca. É o CHÃO da
+     página, não o acento: a bola tem de chegar do outro lado já
+     pintada com aquilo que vai estar embaixo do conteúdo. */
+  --troca-cor: var(--chao);
 
   color-scheme: light;
 }
@@ -279,9 +276,11 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
-  /* Reservado desde sempre: sem isso a página inteira salta 15px para
-     o lado quando a sacola trava a rolagem. */
-  scrollbar-gutter: stable;
+  /* Reservado onde existe barra de rolagem de verdade: sem isso a
+     página inteira salta 15px para o lado quando a sacola trava a
+     rolagem. No celular a barra é sobreposta e não ocupa espaço —
+     ali a reserva vira uma faixa morta na direita da tela. */
+  scrollbar-gutter: auto;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav) + 24px);
@@ -315,7 +314,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 5px;
 }
 
-::selection { background: oklch(0.99 0.008 78 / 0.3); color: var(--tinta); }
+::selection { background: var(--acao-tenue); color: var(--tinta); }
 
 .shell {
   width: 100%;
@@ -333,7 +332,7 @@ a { color: inherit; text-decoration: none; }
 
 .skip {
   position: absolute; top: -100px; left: var(--gutter); z-index: 300;
-  background: var(--claro); color: var(--sobre-claro);
+  background: var(--tinta); color: var(--claro);
   padding: 12px 20px; border-radius: 0 0 var(--r-sm) var(--r-sm);
   font-weight: 600;
 }
@@ -403,7 +402,7 @@ p { margin: 0; max-width: 62ch; }
   padding: 0 22px;
   border: 0;
   border-radius: 980px;
-  /* Branco chapado, laranja por cima: 5,6:1. */
+  /* Laranja chapado, papel por cima: 5,45:1. */
   background: var(--rampa-acao);
   color: var(--forte-tinta);
   font-size: var(--t-sm);
@@ -414,29 +413,27 @@ p { margin: 0; max-width: 62ch; }
               background-color var(--hover) var(--ease),
               opacity var(--hover) var(--ease);
 }
-.btn:hover { opacity: 0.88; }
+.btn:hover { background: var(--marca-funda); opacity: 1; }
 .btn:active { transform: scale(0.97); }
 
 /* -- A pílula de tinta --
-   O botão do painel laranja. Um botão branco ali encostaria no branco
-   da metade vizinha e as duas superfícies brigariam; um botão laranja
-   sumiria no próprio chão. Preto resolve os dois problemas de uma vez
-   e é a coisa mais decidida da tela — que é o que um botão de capa
-   deve ser. 16,6:1. */
+   O botão do painel cósmico. Um botão de papel ali encostaria no
+   papel da metade vizinha e as duas superfícies brigariam; um botão
+   laranja sumiria no próprio chão. Preto resolve os dois problemas de
+   uma vez e é a coisa mais decidida da tela — que é o que um botão de
+   capa deve ser. 16,6:1. */
 .btn--tinta {
-  background: var(--escuro);
-  color: var(--papel);
+  background: var(--tinta);
+  color: var(--claro);
 }
 .btn--tinta:hover { background: oklch(0.30 0.02 50); }
 
 .btn--vazio {
   background: none;
-  color: var(--tinta);
-  border: 1px solid var(--linha);
+  color: var(--acao);
+  border: 1px solid color-mix(in oklab, var(--acao) 38%, transparent);
 }
-.btn--vazio:hover { background: var(--fundo); opacity: 1; }
-
-.btn--tinta { background: var(--fundo); color: var(--claro); box-shadow: var(--aro-forte); }
+.btn--vazio:hover { background: var(--acao-tenue); opacity: 1; }
 .btn--grande { min-height: 54px; padding: 0 28px; font-size: 1.0625rem; }
 .btn--largo { width: 100%; }
 /* Na linha do catálogo o botão divide espaço com o preço: menor, e com
@@ -461,41 +458,45 @@ p { margin: 0; max-width: 62ch; }
   line-height: 0.9;
   transition: transform var(--hover) var(--ease);
 }
+/* Sobre chão laranja cheio a seta inverte: papel, não laranja. */
 .seta--clara { color: var(--forte-tinta); }
 .seta:hover { text-decoration: underline; text-underline-offset: 3px; }
 .seta:hover::after { transform: translateX(3px); }
 
 /* ---------- 5. Navegação ---------- */
 
-/* A barra tem TRÊS estados de cor, e cada um pede uma tinta
-   diferente. Em vez de repetir a lista de filhos em cada caso, a
-   tinta vira uma variável e os filhos leem dela. Foi assim que os
-   três estados couberam sem triplicar seletor:
+/* A barra tinha TRÊS estados de tinta, um por chão que ela
+   atravessava, e a inversão apagou dois deles de uma vez: agora
+   TODOS os chãos por baixo dela são claros — o papel das páginas
+   internas, os dois lados da capa partida (cósmico à esquerda, papel
+   à direita) e o vidro fosco quando ela rola.
 
-     1. rolada, em qualquer página → cósmico chapado, tinta ESCURA
-     2. no topo do índice          → transparente sobre a diagonal,
-                                     que é laranja vivo de um lado e
-                                     branco do outro: tinta ESCURA é a
-                                     única que se lê nos dois
-     3. no topo das outras páginas → transparente sobre o laranja de
-                                     trabalho, tinta BRANCA           */
+   Sobra uma tinta só, o preto quente, e ela se lê nos três: 16,6:1 no
+   papel, 5,43:1 no cósmico, 15,4:1 no vidro. A variável `--nav-tinta`
+   continua existindo porque os filhos leem dela, mas ela não muda
+   mais de valor — e uma classe inteira de bug de contraste deixou de
+   ter onde morar.
+
+   Rolada, a barra vira MATERIAL: papel translúcido com desfoque, e o
+   conteúdo passa por baixo dela em vez de bater numa faixa opaca. É o
+   único `backdrop-filter` da folha, e ele existe porque a barra
+   atravessa a página inteira — um chão sólido cortaria a foto da capa
+   e o topo de cada seção. Quem pede menos translucidez recebe papel
+   cheio (ver `prefers-reduced-transparency`). */
 .nav-topo {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 200;
   --nav-tinta: var(--tinta);
-  /* O CONTRÁRIO da tinta, e ele existe por causa de um bug de
-     contraste: a pílula do menu pintava o próprio fundo com uma
-     lavagem DA COR DA PRÓPRIA TINTA. Isso aproxima os dois em vez de
-     afastá-los — quanto mais visível a pílula, menos legível a
-     palavra dentro dela. Reprovava a 3,95:1 no topo das páginas
-     internas. A lavagem passa a puxar para o lado oposto ao da
-     tinta, e aí ela melhora o par nos três estados em vez de piorar
-     em um deles. */
-  --nav-contra: var(--escuro);
+  /* A lavagem da pílula do menu: a própria tinta, muito rebaixada.
+     Sobre papel ela pode ser da cor da tinta sem estreitar o par — a
+     8% o texto dentro dela ainda fecha 14,6:1. */
+  --nav-contra: var(--tinta);
   color: var(--nav-tinta);
-  background: var(--cosmico);
-  border-bottom: 1px solid color-mix(in oklab, var(--tinta) 12%, transparent);
+  background: color-mix(in oklab, var(--chao) 78%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--linha);
 }
 
 .nav-inner {
@@ -556,12 +557,12 @@ p { margin: 0; max-width: 62ch; }
   padding: 6px 13px;
   margin-inline: -2px;
   border-radius: 980px;
-  background: color-mix(in oklab, var(--nav-contra) 14%, transparent);
+  background: color-mix(in oklab, var(--nav-contra) 8%, transparent);
   opacity: 1;
   font-weight: 500;
   transition: background-color var(--hover) var(--ease);
 }
-.nav-destaque:hover { background: color-mix(in oklab, var(--nav-contra) 22%, transparent); }
+.nav-destaque:hover { background: color-mix(in oklab, var(--nav-contra) 14%, transparent); }
 
 /* -- A porta para o outro ramo --
    O Corporate não é uma categoria de produto, é outra empresa — e o
@@ -570,22 +571,25 @@ p { margin: 0; max-width: 62ch; }
    sumia. Virou uma pílula PRETA no grupo de ações, à direita, onde
    moram as coisas que levam para fora desta loja.
 
-   Preta de propósito: é a cor do ramo do outro lado, e num menu
-   laranja ela é o único aviso honesto de que a página inteira vai
-   mudar de cor. A seta de canto diz "sai daqui".
+   Preta de propósito: é a cor do ramo do outro lado, e numa barra de
+   papel ela é a única mancha escura — o aviso honesto de que a página
+   inteira vai mudar de cor. A seta de canto diz "sai daqui".
 
    A pílula é uma MINIATURA HONESTA da outra página: chão preto e o
-   amarelo do Corporate no disco do monograma. Ela mostrava ouro, que
-   é uma cor que o Corporate não tem mais — a miniatura prometia uma
-   página que não existe. */
+   BRONZE do Corporate no disco do monograma. Ela já mostrou ouro, e
+   depois amarelo; nenhum dos dois existe mais lá. Uma miniatura que
+   promete uma página que não existe é pior que nenhuma. */
 .nav-corp {
   flex: none;
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
   min-height: 36px;
-  padding: 0 14px 0 8px;
+  /* Simétrico agora: o recuo menor à esquerda existia para o disco
+     não encostar na borda da pílula. Sem disco, o "A" pede o mesmo
+     ar dos dois lados. */
+  padding: 0 15px;
   border-radius: 980px;
   background: var(--escuro);
   color: var(--papel);
@@ -593,7 +597,7 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 600;
   letter-spacing: -0.008em;
   white-space: nowrap;
-  /* O anel amarelo é o hover. Mora numa sombra INTERNA, que não é
+  /* O anel de bronze é o hover. Mora numa sombra INTERNA, que não é
      elevação e não empurra layout: a pílula não muda de tamanho
      quando o dedo chega. */
   box-shadow: inset 0 0 0 1px transparent;
@@ -603,25 +607,31 @@ p { margin: 0; max-width: 62ch; }
 }
 .nav-corp:hover {
   background: var(--corp-preto);
-  box-shadow: inset 0 0 0 1px var(--corp-amarelo);
+  box-shadow: inset 0 0 0 1px var(--corp-bronze);
 }
 .nav-corp:active { transform: scale(0.97); }
 
-/* O monograma dentro da pílula, num disco do amarelo do Corporate. É
-   o mesmo "A" da marca, e o disco é a única peça amarela do site
-   laranja inteiro — pelo mesmo motivo que o ponto laranja é a única
-   peça laranja do site preto. Cada ramo carrega um grão do outro. */
+/* O monograma dentro da pílula: o "A" da marca, EM BRONZE, direto
+   sobre o preto. Ele morava num disco de bronze, com o "A" recortado
+   em preto dentro — e o disco era o problema. A 22px ele lia como um
+   selo, um segundo objeto colado na pílula, e o que se via de longe
+   era a bolinha, não a marca.
+
+   Sem disco a pílula fica **inteira preta**, com uma única coisa
+   colorida dentro dela: a letra. O bronze deixa de ser uma mancha e
+   passa a ser o desenho — que é o que um monograma tem de ser.
+
+   O "A" pode crescer de 11 para 15px porque não precisa mais caber
+   dentro de um círculo, e é essa altura que o faz legível ao lado de
+   um texto de 13px. Bronze sobre preto: 9,8:1. */
 .nav-corp-marca {
   display: grid;
   place-items: center;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: var(--corp-amarelo);
   flex: none;
   transition: transform var(--hover) var(--ease);
 }
 .nav-corp:hover .nav-corp-marca { transform: scale(1.09); }
-.nav-corp-marca svg { width: 11px; height: auto; fill: var(--corp-preto); }
+.nav-corp-marca svg { width: 15px; height: auto; fill: var(--corp-bronze); }
 
 .nav-corp-seta {
   opacity: 0.5;
@@ -638,24 +648,27 @@ p { margin: 0; max-width: 62ch; }
 
 @media (max-width: 860px) {
   .nav-corp { display: none; }
-  .nav-corp-menu {
+  /* `.nav-links a` pinta a cor de todo link do menu e vence este
+     bloco na especificidade — sem o seletor mais longo, o nome e o
+     subtítulo saem escuros sobre o chão escuro dele. */
+  .nav-links .nav-corp-menu {
     display: block;
-    margin-top: var(--s4);
+    margin-top: var(--s5);
     padding: 14px 16px;
-    border-radius: var(--r);
-    background: var(--escuro);
+    border-radius: var(--r-lg);
+    background: var(--corp-preto);
     color: var(--papel);
     border-bottom: 0 !important;
   }
-  .nav-corp-menu-t {
+  .nav-links .nav-corp-menu-t {
     display: block;
     font-size: 1.0625rem;
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.2;
   }
-  .nav-corp-menu-t b { font-weight: 700; color: var(--corp-amarelo); }
-  .nav-corp-menu-s {
+  .nav-links .nav-corp-menu-t b { font-weight: 700; color: var(--corp-bronze); }
+  .nav-links .nav-corp-menu-s {
     display: block;
     margin-top: 3px;
     font-size: var(--t-xs);
@@ -670,7 +683,7 @@ p { margin: 0; max-width: 62ch; }
   content: '';
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--escuro);
+  background: var(--corp-preto);
   flex: none;
 }
 
@@ -720,7 +733,7 @@ p { margin: 0; max-width: 62ch; }
     gap: 0;
     border-radius: 50%;
   }
-  .nav-wa:hover { background: color-mix(in oklab, var(--tinta) 7%, transparent); opacity: 1; }
+  .nav-wa:hover { background: var(--acao-tenue); opacity: 1; }
   .nav-wa .txt { display: none; }
   .nav-wa svg { width: 20px; height: 20px; }
   .nav-links {
@@ -733,7 +746,7 @@ p { margin: 0; max-width: 62ch; }
     padding: var(--s5) var(--gutter) var(--s7);
     background: var(--chao-2);
     border-bottom: 1px solid var(--linha);
-    box-shadow: var(--sombra);
+    box-shadow: var(--sombra-alta);
     font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: -0.025em;
@@ -746,7 +759,25 @@ p { margin: 0; max-width: 62ch; }
   }
   .nav-links[data-open='true'] { opacity: 1; transform: none; pointer-events: auto; }
   .nav-links a { padding: 14px 0; border-bottom: 1px solid var(--linha); opacity: 1; }
+  /* A pílula de "Atendimento" existe para se destacar numa FILEIRA de
+     links. Empilhada, cada linha já ocupa a largura inteira: a pílula
+     vira uma barra cinza atrás de uma palavra, e o destaque que ela
+     dava passa a ser só ruído. */
+  .nav-links .nav-destaque {
+    background: none;
+    padding: 14px 0;
+    margin-inline: 0;
+    /* O raio da pílula tem de sair junto com o fundo dela: sem isso o
+       `border-bottom` da linha do menu é desenhado seguindo os 980px
+       e sobra o fantasma de uma cápsula em volta da palavra. */
+    border-radius: 0;
+  }
+  .nav-links .nav-destaque:hover { background: none; color: var(--acao); }
+  /* `.nav-links .btn { display: none }` esconde este botão no desktop,
+     e a regra de celular nunca o trazia de volta: ele existia no HTML,
+     ocupava lugar no leitor de tela e não aparecia para ninguém. */
   .nav-links .btn {
+    display: inline-flex;
     margin-top: var(--s5);
     font-size: var(--t-sm);
     border-bottom: 0;
@@ -755,27 +786,30 @@ p { margin: 0; max-width: 62ch; }
 }
 
 /* ---------- 6. Capa ----------
-   A capa é cortada por uma DIAGONAL: laranja vivo à esquerda, branco à
-   direita, e entre os dois um corte inclinado em vez de uma divisa
-   reta. É a única composição do site em que as duas cores da marca
-   aparecem no mesmo quadro, e é a primeira coisa que a pessoa vê — a
-   página inteira se explica ali.
+   A capa continua CORTADA POR UMA DIAGONAL, e essa é a assinatura da
+   página. O que mudou é do que o corte é feito.
 
-   O laranja é o `--cosmico`, o tom cheio do iPhone 17. Ele pode ser
-   esse aqui, e não o chão de trabalho mais fundo, porque o painel
-   TROCA A TINTA: sobre ele o texto é preto quente, que fecha 5,43:1 em
-   qualquer tamanho. Branco miúdo sobre esse laranja daria 3,1:1 e
-   reprovaria — é a razão de o resto do site usar o laranja mais fundo,
-   e a razão de a capa poder usar o mais vivo.
+   Ele era uma metade de laranja cheio contra uma metade de branco. A
+   página virou off-white, e uma metade laranja deixou de ser um
+   detalhe para virar de novo um chão — a primeira tela sozinha
+   carregava mais laranja que o resto do site inteiro.
 
-   O branco da direita é o palco do aparelho: a foto é recortada em
-   alpha, então o branco é o único fundo em que ela não precisa fingir
-   chão nem sombra de estúdio.
+   Agora o corte separa DOIS PAPÉIS: areia à esquerda, onde mora o
+   argumento, e o papel mais alvo à direita, que é o palco do
+   aparelho. A diferença entre os dois é de 1,04:1 — quase nada, e é
+   exatamente o ponto: quem desenha a diagonal não é o contraste entre
+   as duas metades, é UM FILETE DE LARANJA correndo sobre a divisa.
 
-   A diagonal é pintada por um `::before` com `clip-path`, atrás de
-   tudo, e nunca recebe conteúdo. O conteúdo continua numa grade de
-   duas colunas normais — assim o corte pode inclinar quanto quiser
-   sem que uma linha de texto a mais empurre a divisa para o lado. */
+   Uma linha de 5px carrega a composição inteira porque ela é a única
+   coisa saturada do quadro. É o mesmo argumento do resto da folha,
+   levado ao caso mais difícil: quanto menos laranja há na página,
+   mais longe cada grama dele chega.
+
+   A diagonal é pintada por dois `::before`/`::after` com `clip-path`,
+   atrás de tudo, e nenhum dos dois recebe conteúdo. O conteúdo
+   continua numa grade de duas colunas normais — assim o corte pode
+   inclinar quanto quiser sem que uma linha de texto a mais empurre a
+   divisa para o lado. */
 
 .capa {
   position: relative;
@@ -790,14 +824,29 @@ p { margin: 0; max-width: 62ch; }
 /* O corte. A inclinação é de 10 pontos percentuais — sai de 55% no
    topo e chega a 45% na base. É o bastante para ler como diagonal e
    pouco o bastante para a coluna de texto nunca alcançar a borda: o
-   texto para em 42%, e o ponto mais estreito do laranja é 45%. */
+   texto para em 42%, e o ponto mais estreito do painel é 45%. */
 .capa::before {
   content: '';
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background: var(--cosmico);
+  z-index: -2;
+  background: var(--fundo);
   clip-path: polygon(0 0, 55% 0, 45% 100%, 0 100%);
+}
+
+/* O FILETE. Uma faixa de 5px correndo exatamente sobre a divisa, com
+   a mesma inclinação — é ela que faz o olho ver um corte onde os dois
+   papéis quase não se distinguem.
+
+   Ela é a peça mais saturada da primeira tela, e é do tamanho de uma
+   linha. Toda a proporção da página está declarada aqui. */
+.capa::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--marca);
+  clip-path: polygon(55% 0, calc(55% + 5px) 0, calc(45% + 5px) 100%, 45% 100%);
 }
 
 .capa-lado {
@@ -813,32 +862,26 @@ p { margin: 0; max-width: 62ch; }
    manchete da capa e o título da próxima seção nascem na mesma
    vertical, mesmo com o corte sangrando até a borda da tela. */
 .capa-lado--laranja {
-  color: var(--escuro);
+  color: var(--tinta);
   padding-left: max(var(--gutter), calc((100vw - var(--shell-larga)) / 2 + var(--gutter)));
   padding-right: clamp(24px, 3vw, 48px);
 }
 
-/* Rebaixar por opacidade aqui é armadilha: a mesma tinta a 86% já cai
-   para 4,49:1 e reprova. Medido alpha por alpha. Então não há dois
-   brilhos dentro do laranja — há uma tinta só, e o que separa manchete
-   de corpo é peso e tamanho, como no resto do site. O único
-   rebaixamento é o do olho, a 92%, que ainda fecha 4,92:1. */
-.capa-lado--laranja .selo { color: var(--escuro); opacity: 0.92; }
-.capa-lado--laranja h1 { color: var(--escuro); }
-/* O fecho da manchete é a única peça BRANCA do lado laranja: 3,06:1, e
-   só pode ser branco por ser enorme — texto grande pede 3:1. É também
-   o que amarra os dois lados, porque repete à esquerda o branco que é
-   o chão da direita. */
-.capa-lado--laranja h1 em { font-style: normal; color: var(--papel); }
-.capa-lado--laranja .sub { color: var(--escuro); font-weight: 400; }
-.capa-lado--laranja .seta { color: var(--escuro); font-weight: 600; }
-.capa-lado--laranja .estado { color: var(--escuro); }
-.capa-lado--laranja .estado[data-aberta='true'] { color: var(--escuro); }
-.capa-lado--laranja .capa-fatos { border-top-color: oklch(0.22 0.012 50 / 0.28); }
-.capa-lado--laranja .capa-fatos dt { color: var(--escuro); font-weight: 600; }
-.capa-lado--laranja .capa-fatos dd { color: var(--escuro); font-weight: 400; }
-
-.capa-lado--laranja :focus-visible { outline-color: var(--escuro); }
+/* Sobre papel a hierarquia volta ao normal: o secundário se rebaixa
+   ESCURECENDO, e não há mais a armadilha de rebaixar por opacidade
+   sobre chão saturado. O olho fica no laranja porque ele é rótulo, e
+   rótulo é onde a marca assina. */
+.capa-lado--laranja .selo { color: var(--acao); }
+.capa-lado--laranja h1 { color: var(--tinta); }
+/* O fecho da manchete é LARANJA, e é a maior mancha de cor da
+   primeira tela. Ele fecha o argumento e, ao mesmo tempo, rima com o
+   filete do corte a três centímetros dele. */
+.capa-lado--laranja h1 em { font-style: normal; color: var(--acao); }
+.capa-lado--laranja .sub { color: var(--suave); font-weight: 400; }
+.capa-lado--laranja .seta { color: var(--acao); font-weight: 600; }
+.capa-lado--laranja .capa-fatos { border-top-color: var(--linha); }
+.capa-lado--laranja .capa-fatos dt { color: var(--tinta); font-weight: 600; }
+.capa-lado--laranja .capa-fatos dd { color: var(--suave); font-weight: 400; }
 
 /* -- O lado do aparelho --
    Só a foto. Sem título, sem botão, sem legenda solta: é palco. */
@@ -882,18 +925,22 @@ p { margin: 0; max-width: 62ch; }
 
 /* O fecho da manchete. Já foi um degradê recortado no texto; é tinta
    chapada, que é o que a página inteira faz agora. O <em> continua
-   existindo porque ele marca a frase que fecha o argumento — só que
-   quem o distingue passou a ser o peso do tipo, não uma rampa. */
+   existindo porque ele marca a frase que fecha o argumento.
+
+   Sobre papel ele é LARANJA — é este o lugar onde o acento da marca
+   encontra a manchete, e é por isso que o site pode ser off-white sem
+   ficar mudo. Sobre superfície laranja cheia ele inverte para papel;
+   ver `.rampa-branca`. */
 .capa h1 em, .rampa {
   font-style: normal;
-  color: var(--claro);
+  color: var(--acao);
 }
 
 /* Onde a rampa aparece fora da capa, o tipo também é o de manchete. */
 .rampa { font-family: var(--display); }
 
-/* A mesma ideia do outro lado: o fecho das manchetes que ficam sobre
-   chão claro. Laranja da marca, chapado, 5,6:1 no papel. */
+/* O fecho das manchetes que ficam sobre chão laranja cheio: ali ele
+   inverte e vira papel. */
 .rampa-branca {
   font-style: normal;
   font-family: var(--display);
@@ -954,11 +1001,16 @@ p { margin: 0; max-width: 62ch; }
   right: -2%;
   bottom: 8%;
   border-radius: var(--r);
-  /* Ela mudou de chão: antes flutuava sobre o laranja, agora sobre o
-     branco do lado direito. Fica no laranja de trabalho, que é o
-     único da família que segura texto miúdo branco — e ganha sombra,
-     porque sobre branco ela precisa de aresta. */
-  background: var(--chao);
+  /* PRETA, e não laranja. Ela flutua sobre a foto do aparelho, e ali
+     o laranja tinha dois problemas: brigava com o Laranja-cósmico do
+     próprio iPhone logo atrás dela, e repetia a cor do botão da
+     esquerda numa peça que não é ação — é legenda.
+
+     Preto resolve os dois de uma vez e é o que uma etiqueta de
+     fotografia sempre foi. 15,9:1 com o papel por cima, e sombra,
+     porque sobre papel ela precisa de aresta. */
+  background: var(--tinta);
+  color: var(--papel);
   box-shadow: var(--sombra-alta);
   transition: transform var(--hover) var(--ease), box-shadow var(--hover) var(--ease);
 }
@@ -969,11 +1021,15 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--acao);
+  /* Sobre o preto o rótulo pode se rebaixar: papel a 70% ainda fecha
+     8,6:1. O que o separa do nome continua sendo o caixa-alta e o
+     tracking; a luz só confirma. */
+  color: var(--papel);
+  opacity: 0.7;
   margin-bottom: 3px;
 }
 .capa-etiqueta b { font-size: var(--t-sm); font-weight: 600; letter-spacing: -0.02em; }
-.capa-etiqueta:hover { transform: translateY(-2px); }
+.capa-etiqueta:hover { transform: translateY(-2px); background: oklch(0.30 0.02 50); }
 
 /* -- A seta que desce --
    Existe porque a capa ocupa a tela inteira e não sobra borda de
@@ -1009,21 +1065,34 @@ p { margin: 0; max-width: 62ch; }
 @media (max-width: 900px) {
   .capa { grid-template-columns: 1fr; }
   /* Empilhado, o corte deita: em vez de separar esquerda de direita,
-     ele inclina a BASE da faixa laranja.
+     ele inclina a BASE do painel do argumento.
 
-     Aqui o corte NÃO pode morar no `::before` da capa: ele seria uma
+     Aqui o corte NÃO pode morar nos pseudos da capa: eles seriam uma
      porcentagem da altura total, e essa altura muda com o número de
-     linhas da manchete — bastava uma quebra a mais para a divisa
-     cair no meio do texto. O laranja passa a ser pintado no próprio
+     linhas da manchete — bastava uma quebra a mais para a divisa cair
+     no meio do texto. O painel passa a ser pintado no próprio
      elemento, que sabe onde o conteúdo dele termina, e o corte é uma
-     medida fixa em px a partir da base dele. */
-  .capa::before { display: none; }
+     medida fixa em px a partir da base dele.
+
+     O filete acompanha: um `::after` do mesmo elemento, colado na
+     base, com a mesma inclinação e a mesma espessura. */
+  .capa::before, .capa::after { display: none; }
   .capa-lado--laranja {
-    background: var(--cosmico);
+    position: relative;
+    background: var(--fundo);
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 34px), 0 100%);
     /* O padding devolve o que a inclinação tirou, senão a última
        linha do texto encosta na aresta. */
     padding-bottom: calc(clamp(28px, 6vw, 56px) + 34px);
+  }
+  .capa-lado--laranja::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 39px;
+    background: var(--marca);
+    clip-path: polygon(0 100%, 100% calc(100% - 34px), 100% calc(100% - 29px), 0 calc(100% - 5px));
+    pointer-events: none;
   }
   .capa-lado {
     padding-inline: var(--gutter);
@@ -1085,18 +1154,33 @@ p { margin: 0; max-width: 62ch; }
   justify-content: center;
 }
 .trilho-lista::-webkit-scrollbar { display: none; }
+/* -- As pílulas --
+   Elas estavam lá e não se viam. Um chip de `--chao-2` sobre o chão
+   `--chao` é uma diferença de **1,07:1** — abaixo do limiar em que o
+   olho reconhece uma borda — e o aro de 10% não dava conta sozinho.
+   O trilho inteiro lia como uma linha de texto solta no meio do ar.
+
+   Numa página de papel quem desenha um objeto é a BORDA, não o
+   preenchimento: não há para onde escurecer o chão nem para onde
+   clarear o chip. O aro sobe para 22% da tinta, que é a mesma força
+   dos separadores de lista do iOS, e ganha um degrau de sombra para o
+   chip assentar em cima do papel em vez de estar impresso nele. */
 .trilho-lista a {
   flex: none;
-  padding: 10px 19px;
+  padding: 11px 20px;
   border-radius: 980px;
-  box-shadow: var(--sombra-suave);
   background: var(--chao-2);
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.22),
+              0 1px 2px oklch(0.22 0.012 50 / 0.06);
   font-size: var(--t-sm);
   font-weight: 500;
   white-space: nowrap;
-  transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease);
+  transition: background-color var(--hover) var(--ease),
+              color var(--hover) var(--ease),
+              box-shadow var(--hover) var(--ease),
+              transform var(--tap) var(--ease);
 }
-.trilho-lista a:hover { background: var(--chao-2); }
+.trilho-lista a:active { transform: scale(0.97); }
 
 @media (max-width: 700px) { .trilho-lista { justify-content: flex-start; } }
 
@@ -1143,6 +1227,7 @@ section { position: relative; }
   padding: clamp(24px, 2.6vw, 38px);
   border-radius: var(--r-lg);
   background: var(--chao-2);
+  color: var(--tinta);
   box-shadow: var(--sombra-card);
   transition: transform var(--hover) var(--ease),
               box-shadow var(--hover) var(--ease),
@@ -1152,11 +1237,11 @@ section { position: relative; }
   .card:hover { transform: translateY(-3px); box-shadow: var(--sombra-alta); }
 }
 .card:active { transform: translateY(-1px); }
-/* Atenção: num chão de meia-luz o realce SOBE. Escurecer aqui derruba
-   o texto secundário para 3,6:1 — medido. */
+/* Num chão claro o realce de hover ESCURECE um degrau. Clarear aqui
+   derrubaria o texto secundário de cada caixa — medido. */
 
-.card--laranja  { background: var(--laranja-vivo);  color: var(--escuro); --olho: oklch(0.45 0.17 47);  --sub: oklch(0.44 0.045 47); }
-.card--laranja:hover  { background: oklch(0.845 0.12 58); }
+.card--laranja  { background: var(--laranja-vivo);  color: var(--tinta); --olho: oklch(0.45 0.124 47);  --sub: oklch(0.44 0.045 47); }
+.card--laranja:hover  { background: oklch(0.838 0.088 50); }
 
 /* Dentro de uma caixa viva, o rótulo e o miúdo usam o tom da própria
    família. Fora dela, caem no laranja e no cinza de sempre. */
@@ -1234,7 +1319,7 @@ section { position: relative; }
 
 .chip {
   flex: none;
-  box-shadow: var(--sombra-suave);
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.22);
   min-height: 42px;
   padding: 0 17px;
   border-radius: 980px;
@@ -1249,9 +1334,9 @@ section { position: relative; }
               background-color var(--hover) var(--ease),
               color var(--hover) var(--ease);
 }
-.chip:hover { background: var(--chao-2); }
+.chip:hover { background: var(--fundo); }
 .chip:active { transform: scale(0.96); }
-.chip[aria-pressed='true'] { background: var(--claro); color: var(--sobre-claro); }
+.chip[aria-pressed='true'] { background: var(--marca); color: var(--forte-tinta); box-shadow: none; }
 
 .busca { position: relative; flex: 1 1 200px; max-width: 280px; }
 .busca input {
@@ -1267,7 +1352,7 @@ section { position: relative; }
   transition: border-color var(--hover) var(--ease);
 }
 .busca input::placeholder { color: var(--suave); }
-.busca input:focus { border-color: var(--acao); outline: none; }
+.busca input:focus { border-color: var(--acao); box-shadow: 0 0 0 1px var(--acao); outline: none; }
 .busca svg {
   position: absolute; left: 14px; top: 50%;
   transform: translateY(-50%);
@@ -1291,7 +1376,7 @@ section { position: relative; }
   border-bottom: 1px solid var(--linha);
   transition: background-color var(--hover) var(--ease);
 }
-.linha:hover { background: var(--chao-2); }
+.linha:hover { background: var(--fundo); }
 
 .linha-txt { min-width: 0; }
 .linha .olho { margin-bottom: 3px; }
@@ -1318,8 +1403,8 @@ section { position: relative; }
   }
   .linha:hover .linha-acoes .btn,
   .linha-acoes .btn:focus-visible {
-    background: var(--acao);
-    color: var(--sobre-claro);
+    background: var(--marca);
+    color: var(--forte-tinta);
     box-shadow: none;
   }
 }
@@ -1351,7 +1436,9 @@ section { position: relative; }
   .linha-preco small { display: block; }
   .linha-txt { grid-row: 1; }
 
-  /* O botão sai; quem diz "tem mais aqui" é o chevron. */
+  /* O botão sai: ele levaria para a mesma página que a linha inteira
+     já abre, e repetir um destino num alvo menor é só ruído. Quem diz
+     "tem mais aqui" é o chevron. */
   .linha-acoes { display: none; }
   .linha-poco { grid-row: 1 / span 2; }
 
@@ -1367,7 +1454,7 @@ section { position: relative; }
     opacity: 0.7;
   }
   /* Resposta no toque, não no hover: a linha inteira é o alvo. */
-  .linha:active { background: var(--chao-2); }
+  .linha:active { background: var(--fundo); }
 }
 
 .vazio {
@@ -1393,19 +1480,19 @@ section { position: relative; }
 
 /* ---------- 11. Faixa de compromissos ---------- */
 
-/* A faixa de compromissos fecha a página num chão quente, e não no
-   mesmo cinza-neve de todo o resto: depois do laranja e do grafite,
-   voltar ao neve puro aqui faria a última seção sumir.
-   Medido: tinta 14,3:1 · suave 5,2:1 · laranja 5,2:1 neste chão. */
-/* A faixa dos compromissos é o maior plano de Laranja-cósmico da
-   página, e é o único que carrega texto miúdo. Ele só cabe aqui
-   porque a tinta vira ESCURA: preto quente fecha 5,43:1 no cósmico,
-   enquanto qualquer secundário claro reprovaria (2,4:1). Não há dois
-   níveis de brilho dentro da faixa — o que separa título de corpo é
-   peso e tamanho, como no resto do site. */
+/* A ÚNICA superfície de Laranja-cósmico da página inteira, e ela mora
+   no pé dela. É a coisa mais barulhenta do site, e cabe justamente
+   porque está sozinha: sete seções de papel antes dela é o que dá a
+   uma faixa de cor o direito de fechar a página.
+
+   A faixa carrega texto miúdo, e ele só cabe aqui porque a tinta vira
+   ESCURA: preto quente fecha 5,43:1 no cósmico, enquanto qualquer
+   secundário claro reprovaria (2,4:1). Não há dois níveis de brilho
+   dentro dela — o que separa título de corpo é peso e tamanho, como
+   no resto do site. */
 .compromissos {
-  background: var(--cosmico);
-  color: var(--escuro);
+  background: var(--marca);
+  color: var(--tinta);
   padding: var(--section) 0;
 }
 .compromissos h2 { text-align: center; margin-bottom: var(--s7); max-width: 20ch; margin-inline: auto; }
@@ -1421,22 +1508,32 @@ section { position: relative; }
   font-size: 2.4rem;
   font-weight: 700;
   letter-spacing: -0.04em;
-  color: var(--acao);          /* branco grande no cósmico: 3,06:1 */
+  /* O numeral não é papel nem laranja: é a MESMA tinta preta do
+     título e do corpo. Papel sobre `#FF6200` dá 2,90:1 e reprova até
+     em texto grande, e laranja sobre laranja não é cor nenhuma. O
+     que dá ao numeral o papel dele é ser 2,4rem em peso 700 no meio
+     de um bloco de 15px — tamanho e peso, como no resto da folha. */
+  color: var(--forte-tinta);
   line-height: 1;
   margin-bottom: var(--s3);
 }
 .compromissos-grade h3 { font-size: var(--t-md); margin-bottom: 6px; }
-/* `--suave` reprovaria aqui (2,4:1 no cósmico). Dentro da faixa o
-   corpo é a mesma tinta escura do título, um passo menor e sem peso. */
+/* `--suave` reprovaria aqui (2,3:1 no laranja). Dentro da faixa o
+   corpo é a mesma tinta preta do título, um passo menor e sem peso. */
 .compromissos-grade p {
   font-size: var(--t-sm);
-  color: var(--escuro);
+  color: var(--tinta);
   font-weight: 400;
   margin-inline: auto;
   max-width: 32ch;
 }
 
 .compromissos-cta { text-align: center; margin-top: var(--s8); }
+/* Dentro da faixa cósmica o botão INVERTE: laranja sobre laranja não
+   é botão. Papel cheio com o laranja fundo por cima, 6,7:1. */
+.compromissos .btn { background: var(--papel); color: var(--sobre-claro); }
+.compromissos .btn:hover { background: var(--fundo); }
+.compromissos :focus-visible { outline-color: var(--tinta); }
 
 /* ---------- 12. Rodapé ---------- */
 
@@ -1508,20 +1605,23 @@ section { position: relative; }
   left: clamp(14px, 3vw, 26px);
   background: var(--zap);
   color: oklch(0.995 0.002 80);
+  box-shadow: var(--sombra-alta);
 }
 .wa svg { width: 30px; height: 30px; }
-.wa:hover { background: oklch(0.55 0.15 148); }
+.wa:hover { background: oklch(0.51 0.145 148); }
 .wa:active { transform: scale(0.94); }
 
 /* -- O carrinho --
-   Tinta com ícone branco, sempre. O botão não muda de cor para dizer
-   que tem item dentro: quem diz isso é o número, e um só sinal basta. */
+   Laranja com ícone de papel, sempre. O botão não muda de cor para
+   dizer que tem item dentro: quem diz isso é o número, e um só sinal
+   basta. */
 .fab-sacola {
   right: clamp(14px, 3vw, 26px);
-  background: var(--claro);
-  color: var(--sobre-claro);
+  background: var(--marca);
+  color: var(--forte-tinta);
+  box-shadow: var(--sombra-alta);
 }
-.fab-sacola:hover { background: var(--acao-funda); }
+.fab-sacola:hover { background: var(--marca-funda); }
 .fab-sacola:active { transform: scale(0.94); }
 
 /* A janela por onde o carrinho passa. Sem ela o ícone sairia voando
@@ -1555,13 +1655,16 @@ section { position: relative; }
   padding: 0 6px;
   display: grid; place-items: center;
   border-radius: 980px;
-  background: var(--sobre-claro);
+  background: var(--tinta);
   color: var(--claro);
   font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 0;
   font-variant-numeric: tabular-nums;
-  box-shadow: 0 0 0 2.5px var(--tinta);
+  /* O anel é do CHÃO da página, não da tinta: ele existe para abrir
+     um vão entre o selo e o botão, e um vão só some se for da cor do
+     que está atrás. */
+  box-shadow: 0 0 0 2.5px var(--chao);
   opacity: 0;
   transform: scale(0.4);
   transition: opacity var(--hover) var(--ease), transform 360ms var(--ease);
@@ -1609,8 +1712,8 @@ section { position: relative; }
 .ancora-eco {
   padding: 4px 11px;
   border-radius: 980px;
-  background: var(--acao-tenue);
-  color: var(--acao);
+  background: color-mix(in oklab, var(--acao) 12%, var(--chao));
+  color: var(--sobre-claro);
   font-weight: 600;
 }
 
@@ -1648,10 +1751,11 @@ section { position: relative; }
               border-color var(--hover) var(--ease),
               box-shadow var(--hover) var(--ease);
 }
-.opt:hover { border-color: var(--suave); }
+.opt:hover { border-color: var(--linha-forte); background: var(--fundo); }
 .opt:active { transform: scale(0.985); }
 .opt[aria-pressed='true'] {
   border-color: var(--acao);
+  background: var(--chao-2);
   box-shadow: 0 0 0 1px var(--acao);
 }
 .opt .swatch {
@@ -1689,7 +1793,19 @@ section { position: relative; }
   transform: rotate(-45deg);
 }
 
-.troca { margin-top: var(--s4); font-size: var(--t-sm); }
+/* O link do usado. Ele se chamava `.troca` — o MESMO nome da cortina
+   da troca de ramo, que é um `position: fixed` de tela cheia — e o
+   `margin-top: 16px` daqui vazava para lá.
+
+   O efeito era exato e difícil de ver: uma cortina com `inset: 0` e
+   `margin-top: 16px` nasce 16px abaixo do topo e fica 16px mais
+   baixa. A bola preta crescia até engolir a página inteira MENOS uma
+   faixa de 16px no alto — justamente onde mora a barra de navegação,
+   que continuava aparecendo por cima do preto até a página trocar.
+
+   Duas coisas diferentes não podem dividir um nome. Esta é a menor
+   das duas, então é ela que muda. */
+.troca-usado { margin-top: var(--s4); font-size: var(--t-sm); }
 
 .specs-titulo { font-size: var(--t-lg); margin-bottom: var(--s5); }
 .specs { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--linha); }
@@ -1719,7 +1835,12 @@ section { position: relative; }
   align-items: center;
   gap: var(--s4);
   padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
-  background: var(--fundo);
+  /* Mesmo material da barra do topo: papel translúcido, o conteúdo
+     passando por baixo. As duas chrome flutuantes da página têm de
+     ser a mesma coisa, senão a de baixo lê como um banner. */
+  background: color-mix(in oklab, var(--chao) 80%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
   border-top: 1px solid var(--linha);
   transform: translateY(100%);
   transition: transform 340ms var(--ease);
@@ -1744,7 +1865,7 @@ section { position: relative; }
    aparece — tem alguém agora, onde fica, o que vem junto, como paga. */
 
 .atendimento {
-  background: var(--chao-2);
+  background: var(--papel-2);
   padding: calc(var(--nav) + clamp(56px, 8vw, 104px)) 0 clamp(48px, 7vw, 88px);
 }
 .atendimento h1 { max-width: 14ch; margin-bottom: var(--s5); }
@@ -1803,13 +1924,24 @@ section { position: relative; }
 }
 .loja-dados > div {
   display: grid;
-  grid-template-columns: minmax(88px, 0.4fr) 1fr;
+  /* `minmax(0, 1fr)` na segunda faixa: o valor de cada linha vem do
+     `data.js` e pode ser um CNPJ ou um e-mail — cadeias que não têm
+     onde quebrar. Numa faixa `1fr` normal o min-content delas manda
+     na largura e estoura a página a 320px. */
+  grid-template-columns: minmax(80px, 0.4fr) minmax(0, 1fr);
   gap: var(--s4);
   padding: var(--s4) 0;
   border-bottom: 1px solid var(--linha);
 }
 .loja-dados dt { font-size: var(--t-sm); font-weight: 600; }
-.loja-dados dd { margin: 0; font-size: var(--t-sm); color: var(--suave); }
+.loja-dados dd {
+  margin: 0;
+  font-size: var(--t-sm);
+  color: var(--suave);
+  /* E se não houver onde quebrar, quebra no meio da palavra: um CNPJ
+     cortado ainda se lê; um CNPJ cortado PELA BORDA DA TELA, não. */
+  overflow-wrap: anywhere;
+}
 
 @media (max-width: 860px) {
   .loja-grade { grid-template-columns: 1fr; }
@@ -1818,7 +1950,7 @@ section { position: relative; }
 /* -- O que vai junto -- */
 
 .inclui {
-  background: var(--chao-2);
+  background: var(--papel-2);
   padding: var(--section) 0;
 }
 
@@ -1849,7 +1981,7 @@ section { position: relative; }
   content: '';
   position: absolute; left: 0; top: 0.62em;
   width: 5px; height: 5px; border-radius: 50%;
-  background: color-mix(in oklab, var(--acao) 60%, var(--fundo));
+  background: var(--acao);
 }
 
 .passos { display: grid; gap: var(--s4); margin: 0; padding: 0; list-style: none; }
@@ -1945,7 +2077,10 @@ section { position: relative; }
 .poco--mockup {
   border-radius: var(--r-lg);
   overflow: hidden;
-  background: color-mix(in oklab, var(--poco) 88%, var(--cor));
+  /* Um degrau abaixo do papel, com um fio da própria cor do produto
+     dentro. Sobre um chão claro a mistura precisa ser mais discreta
+     do que era sobre laranja: 94% de poço, 6% de produto. */
+  background: color-mix(in oklab, var(--poco) 94%, var(--cor));
 }
 
 .aparelho {
@@ -1981,9 +2116,10 @@ section { position: relative; }
 
 /* Duas cores que não são derivadas porque não são escolha de cor:
    o LED de carga e o botão de ação do Watch Ultra são laranja no
-   aparelho de verdade. */
-.ap-luz  { fill: var(--acao); }
-.ap-acao { fill: var(--acao); }
+   aparelho de verdade. É o laranja VIVO, não o de ação — um LED é
+   uma luz, e o token de ação está calibrado para ser tinta. */
+.ap-luz  { fill: var(--marca); }
+.ap-acao { fill: var(--marca); }
 
 /* Cross-fade da troca de cor. Só fill e stroke: nada de layout. */
 .ap-corpo, .ap-claro, .ap-escuro, .ap-metal, .ap-faixa, .ap-linha,
@@ -2017,34 +2153,42 @@ section { position: relative; }
 .card:hover .aparelho, .card:hover .foto { transform: translateY(-7px) scale(1.035); }
 
 /* -- Chãos dos destaques --
-   Cinco cards, cinco chãos. A variedade está na superfície;
-   o laranja de ação continua sendo um só. */
-/* As caixas são ilhas claras num chão laranja, então dentro delas a
-   tinta volta a ser escura — `--tinta` virou branco quando o chão
-   virou laranja, e herdá-lo aqui apagaria o nome e o preço. */
-.card--areia  { background: var(--areia-viva);   color: var(--escuro); --olho: oklch(0.45 0.16 52);  --sub: oklch(0.44 0.035 52); }
-.card--bruma  { background: var(--bruma-viva);   color: var(--escuro); --olho: oklch(0.45 0.13 238); --sub: oklch(0.44 0.035 238); }
-.card--argila { background: var(--argila-viva);  color: var(--escuro); --olho: oklch(0.45 0.15 20);  --sub: oklch(0.44 0.035 20); }
-.card--musgo  { background: var(--musgo-vivo);   color: var(--escuro); --olho: oklch(0.45 0.12 158); --sub: oklch(0.44 0.035 158); }
-.card--linho  { background: var(--linho-vivo);   color: var(--escuro); --olho: oklch(0.45 0.12 95);  --sub: oklch(0.44 0.035 95); }
-.card--grafite { background: var(--grafite-vivo); color: var(--escuro); --olho: oklch(0.45 0.14 272); --sub: oklch(0.44 0.035 272); }
+   Seis cards, seis chãos. A variedade está na superfície; o laranja
+   de ação continua sendo um só.
 
-/* No escuro o realce de hover ESCURECE. Clarear derrubaria o texto
-   secundário para 3,5:1 — medido. */
-/* No claro o realce de hover volta a escurecer um degrau. */
-.card--areia:hover   { background: oklch(0.835 0.102 52); }
-.card--bruma:hover   { background: oklch(0.835 0.082 238); }
-.card--argila:hover  { background: oklch(0.835 0.079 20); }
-.card--musgo:hover   { background: oklch(0.835 0.127 158); }
-.card--linho:hover   { background: oklch(0.835 0.127 95); }
-.card--grafite:hover { background: oklch(0.835 0.073 272); }
+   As caixas são manchas de cor num chão de papel, e a tinta dentro
+   delas é a mesma da página — o que muda é o rótulo e o miúdo, que
+   ganham o matiz da própria família para não voltarem ao laranja e
+   competirem com o botão. */
+.card--areia  { background: var(--areia-viva);   color: var(--tinta); --olho: oklch(0.45 0.115 52);  --sub: oklch(0.44 0.035 52); }
+.card--bruma  { background: var(--bruma-viva);   color: var(--tinta); --olho: oklch(0.45 0.099 238); --sub: oklch(0.44 0.035 238); }
+.card--argila { background: var(--argila-viva);  color: var(--tinta); --olho: oklch(0.45 0.15 20);  --sub: oklch(0.44 0.035 20); }
+.card--musgo  { background: var(--musgo-vivo);   color: var(--tinta); --olho: oklch(0.45 0.105 158); --sub: oklch(0.44 0.035 158); }
+.card--linho  { background: var(--linho-vivo);   color: var(--tinta); --olho: oklch(0.45 0.092 95);  --sub: oklch(0.44 0.035 95); }
+.card--grafite { background: var(--grafite-vivo); color: var(--tinta); --olho: oklch(0.45 0.14 272); --sub: oklch(0.44 0.035 272); }
 
-/* O card que puxa o olho é o único com o laranja de superfície. */
+/* Num chão claro o realce de hover ESCURECE um degrau. Clarear
+   derrubaria o rótulo e o miúdo de cada caixa — medido. */
+.card--areia:hover   { background: oklch(0.838 0.082 52); }
+.card--bruma:hover   { background: oklch(0.838 0.074 238); }
+.card--argila:hover  { background: oklch(0.838 0.070 20); }
+.card--musgo:hover   { background: oklch(0.838 0.118 158); }
+.card--linho:hover   { background: oklch(0.838 0.118 95); }
+.card--grafite:hover { background: oklch(0.838 0.066 272); }
+
+/* O card que puxa o olho é o único preenchido com o laranja de ação.
+   Um por vitrine: dois já seriam uma faixa. */
 .card--forte { background: var(--forte); color: var(--forte-tinta); }
 .card--forte:hover { background: var(--acao-funda); }
-.card--forte .card-preco small { color: oklch(0.47 0.055 46); }
-.card--forte .olho { color: var(--sobre-claro); }
-.card--forte .btn { background: var(--sobre-claro); color: var(--claro); }
+/* Uma tinta só: a preta, sem opacidade. O que separa preço de miúdo é
+   peso e tamanho. */
+.card--forte .card-preco small { color: var(--forte-tinta); }
+.card--forte .olho { color: var(--forte-tinta); }
+/* Dentro do card laranja o botão inverte: papel cheio, laranja fundo
+   por cima. */
+.card--forte .btn { background: var(--papel); color: var(--sobre-claro); }
+.card--forte .btn:hover { background: var(--fundo); }
+.card--forte :focus-visible { outline-color: var(--forte-tinta); }
 
 /* O card largo é o único com o aparelho ao lado do texto: ele tem
    largura para isso e ganha um assunto em vez de um bloco de ar. */
@@ -2066,6 +2210,192 @@ section { position: relative; }
     margin-bottom: 0;
     aspect-ratio: 1 / 1.15;
   }
+}
+
+/* ---------- A galeria do produto ----------
+   As setas que passam as vistas do aparelho. Ela ocupa o lugar do
+   mockup na página do produto e obedece às mesmas regras de tudo o
+   que se pega no site: segue o dedo 1:1, resiste nas pontas em vez de
+   travar, e assenta onde o gesto IA parar.
+
+   O palco não tem chão. A foto vem recortada em alpha, e um retângulo
+   atrás dela devolveria exatamente a moldura que o recorte existe
+   para tirar — a mesma regra da vitrine. */
+
+.galeria {
+  position: relative;
+  margin: var(--s8) auto 0;
+  max-width: 560px;
+}
+
+/* A ALTURA MORA NO PALCO, e é ele quem a impõe para baixo.
+
+   Tentar prendê-la no quadro não funciona: uma `aspect-ratio` num
+   item de flex é só um tamanho PREFERIDO, e o tamanho mínimo
+   automático do conteúdo passa por cima dela. A foto do iPhone tem
+   989px de altura intrínseca, e era essa altura que vencia — o palco
+   inteiro esticava e o aparelho ocupava uma tela e meia.
+
+   Com a razão no palco, a cadeia de alturas fica definida de cima
+   para baixo (palco → trilho → quadro → foto) e a imagem passa a
+   caber dentro em vez de mandar. */
+.galeria-palco {
+  position: relative;
+  overflow: hidden;
+  /* A profundidade da inclinação, para quando a galeria tem uma vista
+     só e o quadro volta a girar com o arraste. */
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  aspect-ratio: 1 / 0.92;
+  border-radius: var(--r-lg);
+  /* O dedo continua rolando a página na vertical; só o horizontal é
+     da galeria. Sem isso ela sequestra a rolagem no celular. */
+  touch-action: pan-y;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.galeria[data-uma='true'] .galeria-palco { cursor: default; touch-action: auto; }
+.galeria-palco[data-pegando='true'] { cursor: grabbing; }
+.galeria-palco:focus-visible { outline: 2px solid var(--acao); outline-offset: 4px; }
+
+.galeria-trilho {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  will-change: transform;
+}
+
+.galeria-quadro {
+  flex: 0 0 100%;
+  height: 100%;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  padding: clamp(18px, 4vw, 40px);
+  transform-style: preserve-3d;
+}
+/* Com uma vista só o quadro é o objeto que gira, e ele mesmo avisa
+   disso pelo cursor. */
+.galeria[data-uma='true'] .galeria-quadro { cursor: grab; touch-action: pan-y; }
+.galeria[data-uma='true'] .galeria-quadro[data-pegando='true'] { cursor: grabbing; }
+.galeria-quadro:focus-visible { outline: 2px solid var(--acao); outline-offset: 4px; border-radius: var(--r); }
+/* `max-*` e não `width/height: 100%`: a foto encolhe até caber e para
+   aí, sem esticar um aparelho estreito na largura do palco. */
+.galeria-quadro .foto {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  padding: 0;
+  -webkit-user-drag: none;
+}
+.galeria-quadro[data-sem-foto='true'] .foto { display: none; }
+
+/* O cross-fade da troca de cor: some, troca o arquivo, volta. É a
+   mesma transição que o poço da vitrine sempre fez — a cor não é uma
+   vista ao lado, é a mesma vista com outro arquivo. */
+.galeria-quadro .foto { transition: opacity 260ms var(--ease); }
+.galeria-quadro[data-trocando='true'] .foto { opacity: 0; }
+
+/* -- As setas --
+   Vidro fosco sobre a fotografia, e não um botão sólido: elas passam
+   por cima do aparelho, e um chão opaco cortaria a peça ao meio. É a
+   mesma decisão da barra de preço do Corporate, pelo mesmo motivo.
+
+   Elas DESLIGAM nas pontas em vez de sumirem. Um botão que some move
+   os outros de lugar, e o dedo erra o alvo na segunda vez. */
+.galeria-seta {
+  position: absolute;
+  top: calc(50% - 22px);
+  z-index: 2;
+  width: 44px; height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--chao-2) 72%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.10),
+              0 2px 10px oklch(0.22 0.012 50 / 0.12);
+  color: var(--tinta);
+  cursor: pointer;
+  transition: background-color var(--hover) var(--ease),
+              opacity var(--hover) var(--ease),
+              transform var(--tap) var(--ease);
+}
+.galeria-seta--antes  { left: clamp(-6px, -1vw, 0px); }
+.galeria-seta--depois { right: clamp(-6px, -1vw, 0px); }
+.galeria-seta:hover { background: var(--chao-2); }
+.galeria-seta:active { transform: scale(0.92); }
+.galeria-seta:disabled { opacity: 0.3; cursor: default; }
+.galeria-seta:disabled:active { transform: none; }
+
+/* -- Os pontos --
+   Do tamanho de um ponto e com alvo de 24px em volta: o alvo é
+   invisível e o desenho continua discreto. */
+.galeria-pontos {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-top: var(--s4);
+}
+.galeria-ponto {
+  position: relative;
+  width: 24px; height: 24px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.galeria-ponto::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--tinta) 22%, transparent);
+  transition: background-color var(--hover) var(--ease),
+              transform var(--hover) var(--ease);
+}
+.galeria-ponto:hover::before { background: color-mix(in oklab, var(--tinta) 40%, transparent); }
+.galeria-ponto[aria-current='true']::before { background: var(--marca); transform: scale(1.15); }
+
+.galeria-legenda {
+  margin: var(--s3) auto 0;
+  text-align: center;
+  font-size: var(--t-xs);
+  color: var(--suave);
+  letter-spacing: 0.005em;
+  max-width: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Sem movimento a galeria não desliza: as vistas se cruzam por
+   opacidade, empilhadas no mesmo lugar. O trilho para de ser uma
+   fileira e vira uma pilha. */
+@media (prefers-reduced-motion: reduce) {
+  .galeria-trilho { display: grid; grid-template-rows: 100%; transform: none !important; }
+  .galeria-quadro {
+    grid-area: 1 / 1;
+    flex: none;
+    width: 100%;
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+  .galeria-quadro[data-ativa='true'] { opacity: 1; }
+  .galeria-palco { cursor: default; touch-action: auto; }
+}
+
+@media (max-width: 520px) {
+  /* Numa tela estreita as setas não cabem fora da foto sem encostar
+     na borda da página: elas entram para dentro do palco. */
+  .galeria-seta--antes  { left: 4px; }
+  .galeria-seta--depois { right: 4px; }
 }
 
 /* -- O mockup grande, na página do produto -- */
@@ -2113,10 +2443,15 @@ section { position: relative; }
    Aqui a cor significa alguma coisa: cada pílula do trilho puxa o
    chão da sua própria família, na mesma ordem declarada nos tokens.
    Uma por categoria, sem repetição. */
-/* A pílula acende na cor da própria família. Como o chão é laranja,
-   ela clareia — e a tinta dentro dela vira escura, senão o branco
-   herdado do chão sumiria no claro. */
-.trilho-lista a:hover { color: var(--escuro); }
+/* A pílula acende na cor da própria família. Sobre papel ela ganha
+   COR em vez de ganhar luz: a diferença entre o chip parado e o chip
+   com o dedo em cima é de matiz, não de brilho. O aro acompanha a
+   cor, senão ele fica boiando por cima dela. */
+.trilho-lista a:hover {
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.14),
+              0 2px 6px oklch(0.22 0.012 50 / 0.10);
+}
 .trilho-lista a[href*='cat=iphone']:hover     { background: var(--areia); }
 .trilho-lista a[href*='cat=ipad']:hover       { background: var(--bruma); }
 .trilho-lista a[href*='cat=audio']:hover      { background: var(--musgo); }
@@ -2160,48 +2495,34 @@ section { position: relative; }
   to   { opacity: 1; filter: blur(0) saturate(1); transform: none; }
 }
 
-/* A barra de navegação não tem borda enquanto o conteúdo não passa
-   por baixo dela. O filete aparece quando começa a ter função. */
+/* Enquanto o conteúdo não passa por baixo dela, a barra não tem nem
+   chão nem filete: no topo da capa ela é só a tinta flutuando sobre o
+   corte. O material aparece quando começa a ter função. */
 .nav-topo {
   transition: background-color 320ms var(--ease),
-              border-color 320ms var(--ease);
+              border-color 320ms var(--ease),
+              backdrop-filter 320ms var(--ease);
 }
 .nav-topo:not([data-rolado='true']) {
   background: transparent;
   border-bottom-color: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 
-/* -- Estado 1: rolada --
-   Cósmico chapado e tinta escura. É a mudança de cor mais visível do
-   site quando a pessoa começa a rolar, e é de propósito: a barra
-   deixa de ser um véu e vira um objeto. */
+/* Rolada, ela ganha o vidro. A tinta não muda — não precisa: o chão
+   que se forma é do mesmo papel que o resto da página. */
 .nav-topo[data-rolado='true'] {
-  --nav-tinta: var(--escuro);
-  --nav-contra: var(--papel);
-  background: var(--cosmico);
+  background: color-mix(in oklab, var(--chao) 78%, transparent);
+  border-bottom-color: var(--linha);
+}
+
+/* Com o menu de celular aberto a folha tem chão próprio e opaco, e a
+   barra acompanha: vidro sobre vidro é onde a legibilidade quebra. */
+.nav-topo:has(.nav-links[data-open='true']) {
+  background: var(--chao-2);
   border-bottom-color: transparent;
 }
-
-/* -- Estado 3: no topo, fora do índice --
-   Transparente sobre o laranja de trabalho, tinta branca. */
-.nav-topo:not([data-rolado='true']) {
-  background: transparent;
-  border-bottom-color: transparent;
-}
-
-/* -- Estado 2: no topo do índice --
-   Por baixo da barra passam AS DUAS cores da diagonal. Tinta branca
-   sumiria na metade branca; tinta laranja sumiria na laranja. A única
-   que se lê nas duas é o preto quente — 5,43:1 no laranja vivo,
-   16,6:1 no branco. */
-body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
-  --nav-tinta: var(--escuro);
-  --nav-contra: var(--papel);
-}
-
-/* Com o menu de celular aberto a folha tem chão próprio e escuro, e
-   a tinta volta a ser branca — preto sobre ela daria 2,2:1. */
-.nav-links[data-open='true'] { --nav-tinta: var(--tinta); --nav-contra: var(--escuro); }
 
 .nav-topo :focus-visible { outline-color: var(--nav-tinta); }
 
@@ -2210,24 +2531,24 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
    responderia. Uma pergunta aberta por vez, filete entre elas, e
    nada de card: isto é uma lista de dúvidas, não um mural. */
 
-/* O único chão saturado do site. As dúvidas ganham a cor porque são
-   o momento em que a pessoa está mais perto de desistir — e porque a
-   página precisava de um corte depois de quatro seções claras.
+/* As dúvidas são o momento em que a pessoa está mais perto de
+   desistir, e é por isso que elas têm chão próprio. Só que o chão não
+   pode ser laranja: a faixa dos compromissos já é, e duas superfícies
+   cheias a duas seções de distância transformam o acento em fundo.
 
-   Não é um laranja novo: é o mesmo `--laranja` de sempre, ocupando a
-   superfície em vez do gesto. Tudo em cima dele é branco ou quase, e
-   cada tom foi medido contra o chão. */
+   Aqui o corte é de PAPEL — o degrau mais fundo dos três, o mesmo que
+   os campos e os recuos usam. O que dá cor à seção é a manchete, e o
+   laranja aparece nela e no chevron de cada linha. */
 .perguntas {
-  background: var(--forte);
-  color: var(--forte-tinta);
+  background: var(--papel-2);
+  color: var(--tinta);
   padding: var(--section) 0;
 }
+.perguntas h2 em { color: var(--acao); }
 .perguntas .sec-topo { margin-bottom: var(--s6); }
 
-/* Sobre chão saturado o filete não pode ser o `--linha` cinza: ele
-   sumiria. É o próprio branco, rebaixado. */
-.acordeao { border-top: 1px solid oklch(0.42 0.16 44 / 0.22); }
-.pergunta { border-bottom: 1px solid oklch(0.42 0.16 44 / 0.22); }
+.acordeao { border-top: 1px solid var(--linha); }
+.pergunta { border-bottom: 1px solid var(--linha); }
 
 .pergunta h3 { margin: 0; font-size: inherit; font-weight: inherit; }
 .pergunta button {
@@ -2245,14 +2566,16 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
   font-weight: 600;
   letter-spacing: -0.022em;
   line-height: 1.3;
-  color: var(--forte-tinta);
-  transition: opacity var(--hover) var(--ease);
+  color: var(--tinta);
+  transition: color var(--hover) var(--ease);
 }
-.pergunta button:hover { opacity: 0.8; }
+.pergunta button:hover { color: var(--acao); }
+/* O chevron é a única peça colorida de cada linha: ele diz onde
+   tocar, e é o laranja que o diz. */
 .pergunta button svg {
   width: 19px; height: 19px;
   flex: none;
-  color: oklch(0.52 0.17 46);
+  color: var(--acao);
   transition: transform 320ms var(--ease);
 }
 .pergunta button[aria-expanded='true'] svg { transform: rotate(180deg); }
@@ -2268,7 +2591,7 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
 .resposta > div { overflow: hidden; }
 .resposta p {
   padding-bottom: clamp(18px, 2.2vw, 26px);
-  color: oklch(0.50 0.10 44);   /* 4,6:1 na parada mais clara da faixa */
+  color: var(--suave);
   font-size: var(--t-sm);
   max-width: 64ch;
 }
@@ -2281,7 +2604,7 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
   flex-wrap: wrap;
   margin-top: var(--s6);
   font-size: var(--t-sm);
-  color: oklch(0.50 0.10 44);
+  color: var(--suave);
   max-width: none;
 }
 
@@ -2297,8 +2620,9 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
   color: var(--claro);
   padding: var(--section) 0;
 }
-/* Sobre a noite, o laranja de ação some — precisa subir de luz. */
-.insta .olho { color: oklch(0.80 0.145 50); margin-bottom: var(--s4); }
+/* Sobre a noite o laranja de ação some — precisa subir de luz. É o
+   mesmo laranja, três degraus mais claro. */
+.insta .olho { color: oklch(0.80 0.126 50); margin-bottom: var(--s4); }
 .insta h2 { max-width: 16ch; margin-bottom: var(--s5); }
 .insta-txt { color: oklch(0.85 0.02 60); max-width: 46ch; }
 
@@ -2322,7 +2646,7 @@ body:has(.capa-lado--laranja) .nav-topo:not([data-rolado='true']) {
   transform: translateY(-3px);
   background: oklch(0.995 0.002 80 / 0.15);
 }
-.insta-cartao svg { width: 34px; height: 34px; color: oklch(0.78 0.15 55); }
+.insta-cartao svg { width: 34px; height: 34px; color: oklch(0.78 0.148 55); }
 .insta-arroba { font-size: var(--t-md); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
 .insta-acao { font-size: var(--t-xs); color: oklch(0.80 0.02 60); }
 
@@ -2359,8 +2683,9 @@ html.travado { overflow: hidden; }
   width: min(430px, 100%);
   display: flex;
   flex-direction: column;
-  background: var(--chao-2);
+  background: var(--chao);
   border-left: 1px solid var(--linha);
+  box-shadow: var(--sombra-alta);
   transform: translateX(100%);
   transition: transform 460ms var(--ease);
   will-change: transform;
@@ -2390,7 +2715,7 @@ html.travado { overflow: hidden; }
   cursor: pointer;
   transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease);
 }
-.carrinho-x:hover { background: var(--chao-2); color: var(--tinta); }
+.carrinho-x:hover { background: var(--fundo); color: var(--tinta); }
 .carrinho-x::after { content: ''; position: absolute; inset: -4px; }
 
 .carrinho-corpo {
@@ -2446,7 +2771,7 @@ html.travado { overflow: hidden; }
   transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease),
               transform var(--tap) var(--ease);
 }
-.sac-qtd button:hover { background: var(--chao-2); color: var(--tinta); }
+.sac-qtd button:hover { background: var(--fundo); color: var(--tinta); }
 .sac-qtd button:active { transform: scale(0.9); }
 .sac-qtd span {
   min-width: 18px;
@@ -2499,7 +2824,7 @@ html.travado { overflow: hidden; }
   transition: background-color var(--hover) var(--ease), color var(--hover) var(--ease),
               border-color var(--hover) var(--ease), transform var(--tap) var(--ease);
 }
-.sug-mais:hover { background: var(--acao); color: var(--sobre-claro); border-color: var(--acao); }
+.sug-mais:hover { background: var(--marca); color: var(--forte-tinta); border-color: var(--marca); }
 .sug-mais:active { transform: scale(0.9); }
 
 /* -- O pé da gaveta -- */
@@ -2507,7 +2832,7 @@ html.travado { overflow: hidden; }
 .carrinho-fim {
   padding: var(--s5);
   border-top: 1px solid var(--linha);
-  background: var(--fundo);
+  background: var(--chao-2);
   padding-bottom: calc(var(--s5) + env(safe-area-inset-bottom));
 }
 .carrinho-total {
@@ -2577,7 +2902,7 @@ html.travado { overflow: hidden; }
   max-width: 640px;
   padding: 14px 16px 14px 20px;
   border-radius: var(--r-lg);
-  background: var(--fundo);
+  background: var(--chao-2);
   border: 1px solid var(--linha);
   box-shadow: var(--sombra-alta);
   opacity: 0;
@@ -2669,7 +2994,7 @@ html.travado { overflow: hidden; }
   font-size: 0.9em;
   padding: 1px 5px;
   border-radius: 5px;
-  background: var(--chao-2);
+  background: var(--fundo);
   color: var(--tinta);
 }
 
@@ -2685,7 +3010,7 @@ html.travado { overflow: hidden; }
   content: '';
   position: absolute; left: 0; top: 0.62em;
   width: 6px; height: 6px; border-radius: 50%;
-  background: color-mix(in oklab, var(--acao) 55%, var(--fundo));
+  background: var(--acao);
 }
 
 .priv-apagar .btn { margin-top: var(--s5); }
@@ -2742,17 +3067,37 @@ html.travado { overflow: hidden; }
   .marca:hover .simbolo { transform: none; }
 }
 
-/* Nada aqui é translúcido a não ser o véu do carrinho, que é véu. */
+/* Duas superfícies translúcidas: as barras flutuantes do topo e da
+   compra. Quem pede menos transparência recebe papel cheio — o
+   desfoque sai e o chão fica opaco, que é o mesmo desenho sem o
+   material. */
 @media (prefers-reduced-transparency: reduce) {
   .carrinho-veu { background: oklch(0.24 0.014 50 / 0.7); }
+  .nav-topo[data-rolado='true'], .barra-compra {
+    background: var(--chao);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 @media (prefers-contrast: more) {
-  :root { --suave: oklch(0.99 0.006 80); --linha: oklch(0.99 0.01 78 / 0.55); }
+  /* Num chão claro o reforço de contraste ESCURECE o secundário e o
+     filete. Na versão laranja ele os clareava — é a mesma correção
+     virada do avesso junto com a página. */
+  :root {
+    --suave: oklch(0.38 0.020 55);
+    --linha: oklch(0.22 0.012 50 / 0.32);
+    --acao:  oklch(0.475 0.135 45);
+  }
   .card { outline: 1px solid var(--linha); }
   .btn--vazio { border-width: 2px; }
   /* O botão do catálogo não fica esperando o hover para ter corpo. */
-  .linha-acoes .btn { background: var(--acao); color: var(--sobre-claro); box-shadow: none; }
+  .linha-acoes .btn { background: var(--marca); color: var(--forte-tinta); box-shadow: none; }
+  .nav-topo[data-rolado='true'], .barra-compra {
+    background: var(--chao);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
 }
 
 @media print {

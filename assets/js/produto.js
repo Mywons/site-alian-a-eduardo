@@ -72,12 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="ancora-eco">Você economiza ${brl(p.precoOficial - p.preco)}</span>
         </p>` : ''}
 
-        <!-- A peça segue a cor escolhida na coluna ao lado, e gira
-             com o arraste. -->
+        <!-- A galeria: a foto da cor escolhida e, quando houver, os
+             ângulos extras declarados no data.js. Produto sem foto cai
+             no desenho esquemático de sempre. -->
+        ${galeriaHTML(p, cor) || `
         <div class="produto-mockup cena3d" id="mockup">
           ${aparelhoHTML(p, cor, 'mockup')}
           <p class="mockup-nota">Desenho esquemático, na cor escolhida. Não é foto do aparelho.</p>
-        </div>
+        </div>`}
       </header>
 
       <div class="produto-corpo">
@@ -141,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <li>Em SP, você confere antes de pagar</li>
             </ul>
 
-            <p class="troca">
+            <p class="troca-usado">
               <a class="seta" target="_blank" rel="noopener"
                  href="${waLink(`Olá! Quero avaliar meu aparelho usado na troca do ${p.nome}. Posso mandar o modelo e o estado?`)}">
                 Tenho um usado para dar na troca
@@ -176,11 +178,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   atualizar();
 
-  /* Adicionar ao carrinho. A peça que voa é o próprio mockup, na cor
-     escolhida: é o que a pessoa estava olhando quando decidiu. */
+  /* Adicionar ao carrinho. A peça que voa é a vista que está na tela:
+     é o que a pessoa estava olhando quando decidiu. */
   const btnSacola = raiz.querySelector('#btn-sacola');
   btnSacola?.addEventListener('click', () => {
-    adicionarNaSacola(p, cor, capacidade, raiz.querySelector('#mockup .poco'));
+    const peca = raiz.querySelector('.galeria-quadro:not([aria-hidden]) img')
+              || raiz.querySelector('#mockup .poco');
+    adicionarNaSacola(p, cor, capacidade, peca);
 
     // Confirmação curta no próprio botão, e ele volta ao normal. Um
     // aviso que fica na tela vira sujeira na segunda vez.
@@ -207,14 +211,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  // Escolher a cor troca a foto do aparelho. É o motivo de a peça
-  // existir grande: um pontinho de 15px não mostra o que é
-  // "Azul-profundo", e a foto mostra.
+  // Escolher a cor troca a vista. É o motivo de a peça existir
+  // grande: um pontinho de 15px não mostra o que é "Azul-profundo", e
+  // a foto mostra.
   const mockup = raiz.querySelector('#mockup');
 
-  /* Arraste para girar. O poço vira alvo de gesto: pega o foco por
-     teclado e as setas giram, para não virar um gesto só de quem tem
-     mouse. */
+  /* A galeria mostra a cor escolhida e os ângulos que o produto
+     tiver. Escolher a cor troca a FOTO no lugar; as setas, quando
+     existem, andam entre ângulos. São dois eixos diferentes e nenhum
+     mexe no outro. */
+  const galeria = typeof ligarGaleria === 'function'
+    ? ligarGaleria(raiz, p, cor)
+    : null;
+
+  /* Sem galeria (produto ainda sem foto) o desenho esquemático mantém
+     o arraste para girar, que é o gesto que ele sempre teve. */
   const peca = mockup?.querySelector('.poco');
   if (peca && typeof montarGiro === 'function') {
     peca.tabIndex = 0;
@@ -225,7 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   ligarOpcoes('#lista-cores', '#cor-escolhida', (v) => {
     cor = v;
-    trocarCorAparelho(mockup, v, p);
+    if (galeria) galeria.trocarCor(v);
+    else trocarCorAparelho(mockup, v, p);
   });
   ligarOpcoes('#lista-caps',  '#cap-escolhida', (v) => { capacidade = v; });
 
