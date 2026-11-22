@@ -53,6 +53,16 @@ const NEUTRO_CATEGORIA = {
   acessorios: '#d2cec7'
 };
 
+/* Cores novas cadastradas no painel trazem o próprio tom em `coresHex`
+   ({ "Verde-musgo": "#5b6b4a" }). Quando o nome já existe na tabela
+   acima, a tabela vence: ela foi medida contra a foto oficial. */
+if (typeof PRODUTOS !== 'undefined' && Array.isArray(PRODUTOS)) {
+  PRODUTOS.forEach((p) => Object.entries(p.coresHex || {}).forEach(([nome, hex]) => {
+    const k = String(nome).toLowerCase();
+    if (!CORES_HEX[k] && /^#[0-9a-f]{3,8}$/i.test(hex)) CORES_HEX[k] = hex;
+  }));
+}
+
 const corHex = (nome, categoria) =>
   CORES_HEX[String(nome).toLowerCase()] || NEUTRO_CATEGORIA[categoria] || '#c2bdb6';
 
@@ -371,8 +381,14 @@ const semAcento = (s) => String(s).normalize('NFD').replace(/[\u0300-\u036f]/g, 
 const arquivoDaCor = (cor) =>
   semAcento(cor).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-const fotoProduto = (p, cor) =>
-  `assets/img/produtos/${p.id}/${arquivoDaCor(cor || p.cores?.[0] || '')}.webp`;
+/* Produto cadastrado pelo painel admin guarda o caminho exato de cada
+   foto em `imagens` ({ "Cor": "assets/img/produtos/id/cor.jpg" }), porque
+   o arquivo enviado pode ser .jpg ou .png. Sem esse campo vale a regra
+   do nome: <id>/<cor>.webp. */
+const fotoProduto = (p, cor) => {
+  const c = cor || p.cores?.[0] || '';
+  return p.imagens?.[c] || `assets/img/produtos/${p.id}/${arquivoDaCor(c)}.webp`;
+};
 
 /* Um produto sem `fotos: false` no data.js é tratado como fotografado.
    Quem cria um produto novo e ainda não tem a imagem põe `fotos: false`

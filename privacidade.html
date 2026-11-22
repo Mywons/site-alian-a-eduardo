@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacidade — Aliança One</title>
 <meta name="description" content="O que o site da Aliança One guarda no seu navegador, por que guarda e como apagar. Sem cookie de rastreamento.">
-<meta name="theme-color" content="#f8f4ee">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap">
+<meta name="theme-color" content="#f5f5f7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <script>
   document.documentElement.classList.add('js');
   /* A metade da transição que pertence a esta página. Roda ANTES da
@@ -32,6 +32,29 @@
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
 <nav class="nav-topo" aria-label="Navegação principal">
+  <!-- A faixa de avisos: o que a loja sempre oferece, nunca uma
+       urgência inventada. Passa sozinha; quem pede menos movimento
+       recebe a lista parada. -->
+  <div class="faixa" aria-label="Condições da loja">
+    <div class="faixa-trilho">
+      <ul class="faixa-lista">
+        <li>Até 12x sem juros no cartão</li>
+        <li>Desconto à vista no Pix</li>
+        <li>Nota fiscal no seu nome</li>
+        <li>Entrega no mesmo dia em São Paulo</li>
+        <li>Garantia de 12 meses</li>
+        <li>Enviamos para todo o Brasil</li>
+      </ul>
+      <ul class="faixa-lista" aria-hidden="true">
+        <li>Até 12x sem juros no cartão</li>
+        <li>Desconto à vista no Pix</li>
+        <li>Nota fiscal no seu nome</li>
+        <li>Entrega no mesmo dia em São Paulo</li>
+        <li>Garantia de 12 meses</li>
+        <li>Enviamos para todo o Brasil</li>
+      </ul>
+    </div>
+  </div>
   <div class="shell shell--larga nav-inner">
     <a class="marca" href="index.html" aria-label="Aliança One, página inicial">
       <svg class="simbolo" viewBox="4 2 56 58" aria-hidden="true" focusable="false">
@@ -282,6 +305,7 @@
 </a>
 
 <script src="assets/js/data.js"></script>
+<script src="assets/js/catalogo.js"></script>
 <script src="assets/js/aparelho.js"></script>
 <script src="assets/js/gesto.js"></script>
 <script src="assets/js/transicao.js"></script>

@@ -75,8 +75,10 @@
   const arquivoDaCor = (cor) =>
     semAcento(cor).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-  const fotoDe = (p, cor) =>
-    `assets/img/produtos/${p.id}/${arquivoDaCor(cor || p.cores?.[0] || '')}.webp`;
+  const fotoDe = (p, cor) => {
+    const c = cor || p.cores?.[0] || '';
+    return p.imagens?.[c] || `assets/img/produtos/${p.id}/${arquivoDaCor(c)}.webp`;
+  };
 
   const catalogo = () => (typeof PRODUTOS !== 'undefined' && Array.isArray(PRODUTOS))
     ? PRODUTOS : [];

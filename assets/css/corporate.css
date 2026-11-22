@@ -91,11 +91,11 @@
   /* -- Tipografia --
      A mesma família do varejo. O que separa os dois ramos é a cor e o
      ritmo, não a voz: quem chega vindo do laranja precisa reconhecer
-     a casa. SF Pro do sistema primeiro, Switzer para quem não a tem. */
-  --sans: 'Switzer', 'Switzer-fallback', -apple-system, BlinkMacSystemFont,
-          'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
-  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
-             'Switzer', 'Switzer-fallback', 'Helvetica Neue', Arial, sans-serif;
+     a casa. SF Pro do sistema primeiro, Inter para quem não a tem. */
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter',
+          'Helvetica Neue', Arial, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter',
+             'Helvetica Neue', Arial, sans-serif;
 
   /* A escala da referência. O tracking segue a relação inversa ao
      tamanho: quanto maior o tipo, mais negativo. É o que faz a

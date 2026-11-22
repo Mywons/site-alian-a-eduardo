@@ -15,6 +15,14 @@ um tem a sua porta para o outro, e a passagem de um para o outro é uma transiç
 HTML, CSS e JavaScript puros. Sem build, sem dependência, sem framework, sem servidor.
 Dois cliques em `index.html` e o site abre.
 
+O visual segue o idioma de apple.com — cinza `#f5f5f7` e branco, SF Pro (Inter de
+reserva), manchete centrada, telhas de produto — com o laranja `#FF6200` da marca nos
+botões e nos destaques.
+
+**Painel de administração:** `admin.html` edita preços, produtos e fotos e publica
+direto no GitHub, num commit só; a hospedagem conectada ao repositório publica sozinha.
+Instruções no [LEIA-ME](LEIA-ME.md#0-painel-de-administração-adminhtml).
+
 ---
 
 ## Rodar
@@ -27,7 +35,7 @@ xdg-open index.html
 python3 -m http.server 8000
 ```
 
-Única conexão externa: a fonte Switzer, na Fontshare. Se ela não carregar, o site cai
+Única conexão externa: a fonte Inter, no Google Fonts (só para quem não tem a SF Pro do sistema). Se ela não carregar, o site cai
 para Helvetica/Arial com métricas ajustadas e não pula nem quebra o layout.
 
 ## Publicar
@@ -49,12 +57,15 @@ index.html                capa, destaques, catálogo completo, compromissos
 produto.html              página de produto (abre com ?id=... na URL)
 sobre.html                atendimento: quem é a loja, endereço, horário, pagamento
 privacidade.html          o que fica guardado no navegador, e um botão que apaga
+admin.html                painel: preços, produtos e fotos, publicando no GitHub
 corporate.html            Aliança Corporate — o braço B2B, de folha e voz próprias
 assets/img/               a imagem da capa (webp + png de fallback)
 assets/img/produtos/      a imagem oficial de cada modelo, uma por cor
 assets/css/style.css      a folha do varejo, em 25 seções numeradas
 assets/css/corporate.css  a folha do Corporate, em 18 — nenhum token atravessa
-assets/js/data.js         configuração da loja e catálogo — o arquivo do dono
+assets/js/data.js         configuração da loja: WhatsApp, horários, perguntas
+assets/js/catalogo.js     os produtos — reescrito pelo painel a cada publicação
+assets/js/admin.js        o painel de administração
 assets/js/aparelho.js     desenho SVG dos aparelhos e a tabela de cores reais
 assets/js/app.js          navegação, catálogo, destaques, aviso, estado da loja
 assets/js/gesto.js        mola, rubber-band, projeção de momento e arraste
