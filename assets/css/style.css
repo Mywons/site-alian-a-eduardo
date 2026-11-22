@@ -4046,6 +4046,134 @@ body { background: var(--papel); }
   .btn::before { display: none; }
 }
 
+/* -- Fundo próprio (painel): o tom decide a tinta por cima -- */
+.cartaz[data-fundo][data-tom='escuro'] { color: #f5f5f7; }
+.cartaz[data-fundo][data-tom='escuro'] :is(.cartaz-sub, .cartaz-fatos, .estado) { color: #a1a1a6; }
+.cartaz[data-fundo][data-tom='escuro'] .cartaz-frase { color: #f5f5f7; }
+.cartaz[data-fundo][data-tom='escuro'] .cartaz-titulo em { color: #a1a1a6; }
+.cartaz[data-fundo][data-tom='escuro'] .seta { color: var(--marca-noite); }
+.cartaz[data-fundo][data-tom='escuro'] .cartaz-olho, .cartaz[data-fundo][data-tom='escuro'] .cartaz-novo { color: var(--marca-noite); }
+.cartaz[data-fundo][data-tom='claro'] { color: var(--tinta); }
+.cartaz[data-fundo][data-tom='claro'] :is(.cartaz-sub, .cartaz-fatos, .estado) { color: var(--suave); }
+.cartaz[data-fundo][data-tom='claro'] .cartaz-frase { color: var(--tinta); }
+.cartaz[data-fundo][data-tom='claro'] .cartaz-titulo em { color: var(--suave); }
+.cartaz[data-fundo][data-tom='claro'] .seta { color: var(--acao); }
+.cartaz[data-fundo][data-tom='claro'] .cartaz-olho, .cartaz[data-fundo][data-tom='claro'] .cartaz-novo { color: var(--acao); }
+.cartaz[data-fundo='laranja'] :is(.cartaz-olho, .cartaz-novo, .cartaz-sub, .cartaz-fatos, .seta, .cartaz-titulo em) { color: var(--forte-tinta); }
+.cartaz-arte, .cartaz-foto { transform-origin: 50% 100%; transition: transform 600ms var(--ease); }
+.card-ajuste { height: 100%; transform-origin: 50% 100%; }
+
+/* ---------- 24g. Checkout ---------- */
+
+body:has(#checkout) .fab-sacola { display: none; }
+.checkout { background: var(--chao); padding: calc(var(--nav) + 28px) 0 var(--section); min-height: 80vh; }
+.checkout-titulo { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.035em; margin: 12px 0 28px; }
+.compra-duvida { justify-self: center; font-size: 0.9375rem; margin-top: 4px; }
+
+.ck-grade { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.95fr); gap: 24px; align-items: start; }
+
+.ck-form { display: grid; gap: 16px; }
+.ck-bloco, .ck-cartao {
+  background: var(--papel); border-radius: 22px; padding: clamp(20px, 2.6vw, 30px);
+  animation: entra 600ms var(--ease) both;
+}
+.ck-bloco:nth-child(2) { animation-delay: 60ms; }
+.ck-bloco:nth-child(3) { animation-delay: 120ms; }
+.ck-bloco:nth-child(4) { animation-delay: 180ms; }
+.ck-bloco h2, .ck-cartao h2 { display: flex; align-items: center; gap: 10px; font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 18px; }
+.ck-bloco h2 span {
+  width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--tinta); color: var(--papel); font-size: 0.875rem; font-weight: 700;
+}
+.ck-campos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 14px; }
+.ck-campos .ck-campo:first-child { grid-column: 1 / -1; }
+.ck-campos + .ck-campos, .ck-opcoes + .ck-campos { margin-top: 14px; }
+.ck-campo { display: grid; gap: 6px; }
+.ck-campo span { font-size: 0.8125rem; font-weight: 500; color: var(--suave); }
+.ck-campo input, .ck-campo textarea {
+  width: 100%; min-height: 48px; padding: 12px 14px; font: inherit; font-size: 1rem;
+  border: 1px solid var(--linha-forte); border-radius: 12px; background: var(--papel); color: var(--tinta);
+  transition: border-color var(--hover) var(--ease), box-shadow var(--hover) var(--ease);
+}
+.ck-campo textarea { resize: vertical; min-height: 90px; }
+.ck-campo :is(input, textarea):focus { outline: none; border-color: var(--acao); box-shadow: 0 0 0 3px var(--acao-tenue); }
+
+.ck-opcoes { display: grid; gap: 10px; }
+.ck-opcao {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer;
+  border: 1px solid var(--linha-forte); border-radius: 14px;
+  transition: border-color var(--hover) var(--ease), box-shadow var(--hover) var(--ease), background-color var(--hover) var(--ease);
+}
+.ck-opcao:hover { background: var(--chao); }
+.ck-opcao:has(input:checked) { border-color: var(--acao); box-shadow: 0 0 0 1px var(--acao); }
+.ck-opcao input { width: 20px; height: 20px; accent-color: var(--acao); flex: none; }
+.ck-opcao span { display: grid; }
+.ck-opcao small { color: var(--suave); font-size: 0.8125rem; }
+
+.ck-resumo { position: sticky; top: calc(var(--nav) + 20px); }
+.ck-cartao { animation-delay: 100ms; }
+.ck-itens { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+.ck-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center; animation: entra 500ms var(--ease) both; }
+.ck-poco { width: 64px; height: 64px; border-radius: 14px; background: var(--chao); overflow: hidden; }
+.ck-poco .poco { height: 100%; }
+.ck-item-txt { display: grid; gap: 2px; min-width: 0; }
+.ck-item-txt a b { font-weight: 600; }
+.ck-item-txt small { color: var(--suave); font-size: 0.8125rem; }
+.ck-tag { justify-self: start; font-size: 0.6875rem; font-weight: 700; padding: 2px 8px; border-radius: 980px; background: var(--marca); color: var(--forte-tinta); }
+.ck-qtd { display: inline-flex; align-items: center; gap: 2px; margin-top: 6px; border: 1px solid var(--linha-forte); border-radius: 980px; width: max-content; }
+.ck-qtd button { width: 30px; height: 28px; border: 0; background: none; cursor: pointer; font-size: 1rem; color: var(--tinta); border-radius: 980px; }
+.ck-qtd button:hover { background: var(--chao); }
+.ck-qtd span { min-width: 18px; text-align: center; font-size: 0.875rem; font-weight: 600; }
+.ck-preco { text-align: right; display: grid; }
+.ck-preco s { color: var(--suave); font-size: 0.8125rem; }
+.ck-preco b { font-weight: 600; }
+
+.ck-up { margin: 20px 0 0; padding: 16px; border-radius: 16px; background: var(--chao); }
+.ck-up h3 { font-size: 0.875rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--acao); margin: 0 0 10px; }
+.up {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 12px; align-items: center; padding: 8px 0;
+  animation: entra 520ms var(--ease) both;
+}
+.up + .up { border-top: 1px solid var(--linha); }
+.up-poco { width: 52px; height: 52px; border-radius: 12px; background: var(--papel); overflow: hidden; }
+.up-poco .poco { height: 100%; }
+.up-txt { display: grid; min-width: 0; }
+.up-txt small { font-size: 0.75rem; color: var(--acao); font-weight: 600; }
+.up-txt b { font-size: 0.9375rem; font-weight: 600; }
+.up-txt span { font-size: 0.875rem; }
+.up-txt s { color: var(--suave); }
+
+.ck-contas { margin: 20px 0 18px; padding-top: 16px; border-top: 1px solid var(--linha); display: grid; gap: 6px; }
+.ck-contas div { display: flex; justify-content: space-between; gap: 12px; }
+.ck-contas dt { color: var(--suave); }
+.ck-contas dd { margin: 0; font-variant-numeric: tabular-nums; }
+.ck-desc dd { color: var(--acao); font-weight: 600; }
+.ck-total { margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--linha); }
+.ck-total dt { color: var(--tinta); font-weight: 600; font-size: 1.0625rem; }
+.ck-total dd { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+.ck-parcela dd { color: var(--suave); font-size: 0.8125rem; }
+.ck-erro { min-height: 1.2em; margin: 10px 0 0; color: #c0172b; font-size: 0.875rem; text-align: center; }
+
+.ck-vazio, .ck-feito {
+  background: var(--papel); border-radius: 22px; padding: clamp(40px, 6vw, 72px) 24px; text-align: center;
+  display: grid; justify-items: center; gap: 16px; animation: entra 600ms var(--ease) both;
+}
+.ck-vazio h2, .ck-feito h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -0.03em; margin: 0; }
+.ck-feito p { color: var(--suave); margin: 0; }
+.ck-feito-acoes { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: center; margin-top: 6px; }
+.ck-feito-ok { width: 72px; height: 72px; border-radius: 50%; background: #1d8f3a; display: grid; place-items: center; animation: selo-chega 600ms var(--ease) both; }
+.ck-feito-ok svg { width: 38px; height: 38px; fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: risca 700ms var(--ease) 250ms forwards; }
+@keyframes risca { to { stroke-dashoffset: 0; } }
+
+@media (max-width: 900px) {
+  .ck-grade { grid-template-columns: 1fr; }
+  .ck-resumo { position: static; order: -1; }
+}
+@media (max-width: 560px) {
+  .ck-campos { grid-template-columns: 1fr; }
+}
+
 /* ---------- 25. Preferências do usuário ---------- */
 
 @media (prefers-reduced-motion: reduce) {

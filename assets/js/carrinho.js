@@ -35,8 +35,21 @@ function gravarSacola(itens) {
   guarda.gravar(SACOLA_CHAVE, JSON.stringify(itens));
 }
 
-const totalSacola = (itens) => itens.reduce(
-  (soma, i) => { const p = acharProduto(i.id); return soma + (p ? REGRAS.precoDe(p, i.capacidade).final : 0) * i.qtd; }, 0);
+/* O upsell do checkout (LOJA.checkout.upsells) pode dar um preço especial
+   para o item que entrou por ele. A regra é lida de novo a cada conta: se
+   o dono desligou o upsell, o item volta ao preço normal. */
+const regraUpsell = (id) => ((typeof LOJA !== 'undefined' && LOJA.checkout?.upsells) || [])
+  .find((u) => u.id === id && u.ativo !== false);
+
+function precoItem(i) {
+  const p = acharProduto(i.id);
+  if (!p) return 0;
+  const base = REGRAS.precoDe(p, i.capacidade).final;
+  const r = i.upsell && regraUpsell(i.upsell);
+  return r && r.produto === i.id && Number(r.valor) > 0 ? REGRAS.aplicarOferta(base, r) : base;
+}
+
+const totalSacola = (itens) => itens.reduce((soma, i) => soma + precoItem(i) * i.qtd, 0);
 
 const contarSacola = (itens) => itens.reduce((soma, i) => soma + i.qtd, 0);
 
@@ -49,7 +62,7 @@ function msgSacola(itens) {
     const util = (v) => v && v !== 'Único';
     const detalhe = [i.capacidade, i.cor].filter(util).join(', ');
     const qtd = i.qtd > 1 ? `${i.qtd}× ` : '';
-    return `${n + 1}. ${qtd}${p.nome}${detalhe ? ` (${detalhe})` : ''} — ${brl(REGRAS.precoDe(p, i.capacidade).final * i.qtd)}`;
+    return `${n + 1}. ${qtd}${p.nome}${detalhe ? ` (${detalhe})` : ''} — ${brl(precoItem(i) * i.qtd)}`;
   });
 
   const total = totalSacola(itens);
@@ -77,8 +90,8 @@ function itemHTML(i) {
       <h3><a href="produto.html?id=${encodeURIComponent(p.id)}">${escapar(p.nome)}</a></h3>
       ${detalhe ? `<p class="sac-variante">${escapar(detalhe)}</p>` : ''}
       <p class="sac-preco">
-        ${brl(REGRAS.precoDe(p, i.capacidade).final * i.qtd)}
-        <small>${parcela(REGRAS.precoDe(p, i.capacidade).final * i.qtd)}</small>
+        ${brl(precoItem(i) * i.qtd)}
+        <small>${parcela(precoItem(i) * i.qtd)}</small>
       </p>
     </div>
 
@@ -177,8 +190,7 @@ function pintarSacola() {
     ? `${parcela(totalSacola(itens))} sem juros`
     : '';
 
-  const enviar = document.querySelector('#carrinho-enviar');
-  if (enviar && itens.length) enviar.href = waLink(msgSacola(itens));
+  // O botão da gaveta leva ao checkout; a mensagem de WhatsApp sai de lá.
 
   // Contador na navegação. Zero não é um número que precise aparecer.
   const n = contarSacola(itens);

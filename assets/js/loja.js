@@ -211,5 +211,76 @@ const LOJA = {
     ],
     "perguntas": [],
     "contato": {}
+  },
+  "checkout": {
+    "pedirCpf": false,
+    "pagamentos": [
+      {
+        "id": "pix",
+        "nome": "Pix",
+        "detalhe": "À vista",
+        "desconto": 0,
+        "ativo": true
+      },
+      {
+        "id": "cartao",
+        "nome": "Cartão de crédito",
+        "detalhe": "Até 12x sem juros",
+        "desconto": 0,
+        "ativo": true
+      }
+    ],
+    "entregas": [
+      {
+        "id": "combinar",
+        "nome": "Combinar pelo WhatsApp",
+        "detalhe": "",
+        "endereco": false,
+        "ativo": true
+      },
+      {
+        "id": "endereco",
+        "nome": "Receber no meu endereço",
+        "detalhe": "Frete e prazo combinados na conversa",
+        "endereco": true,
+        "ativo": false
+      }
+    ],
+    "upsells": [
+      {
+        "id": "up-magsafe",
+        "ativo": true,
+        "produto": "magsafe-charger",
+        "titulo": "Para o seu iPhone",
+        "quando": [
+          "iphone"
+        ],
+        "tipo": "%",
+        "valor": 0
+      },
+      {
+        "id": "up-airpods",
+        "ativo": true,
+        "produto": "airpods-pro-3",
+        "titulo": "Combina com o seu pedido",
+        "quando": [
+          "iphone",
+          "mac"
+        ],
+        "tipo": "%",
+        "valor": 0
+      },
+      {
+        "id": "up-pencil",
+        "ativo": true,
+        "produto": "apple-pencil-pro",
+        "titulo": "Para o seu iPad",
+        "quando": [
+          "ipad"
+        ],
+        "tipo": "%",
+        "valor": 0
+      }
+    ]
   }
 };

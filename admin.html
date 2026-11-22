@@ -95,6 +95,7 @@
       <button role="tab" type="button" data-aba="produtos" aria-selected="true">Produtos</button>
       <button role="tab" type="button" data-aba="ofertas" aria-selected="false">Ofertas e eventos</button>
       <button role="tab" type="button" data-aba="site" aria-selected="false">Site</button>
+      <button role="tab" type="button" data-aba="checkout" aria-selected="false">Checkout</button>
       <button role="tab" type="button" data-aba="precos" aria-selected="false">Preço automático</button>
     </nav>
 
@@ -216,6 +217,7 @@
           <h2>Destaques da capa</h2>
           <span class="dica" id="dest-conta"></span>
         </div>
+        <div class="card-principal" id="card-principal"></div>
         <ol class="destaques-lista" id="destaques-lista"></ol>
         <div class="linha-add">
           <select id="dest-add" aria-label="Produto para destacar"></select>
@@ -257,6 +259,45 @@
           <label class="campo"><span>Instagram (@)</span><input data-ct="arroba" placeholder="@aliancaone"></label>
           <label class="campo"><span>CNPJ</span><input data-ct="cnpj"></label>
         </div>
+      </section>
+    </section>
+
+    <!-- ============ Checkout ============ -->
+    <section class="aba" id="aba-checkout" role="tabpanel" hidden>
+      <div class="cabeca">
+        <div><h1>Checkout</h1></div>
+        <a class="btn" href="checkout.html" target="_blank" rel="noopener">Abrir o checkout</a>
+      </div>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Leve junto</h2>
+          <button class="btn btn--cheio" type="button" id="btn-novo-upsell">+ Novo</button>
+        </div>
+        <div class="upsells" id="upsells"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Pagamento</h2>
+          <button class="btn btn--leve" type="button" data-nova-opcao="pagamentos">+ Forma</button>
+        </div>
+        <div class="opcoes-ck" id="ck-pagamentos"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Entrega</h2>
+          <button class="btn btn--leve" type="button" data-nova-opcao="entregas">+ Forma</button>
+        </div>
+        <div class="opcoes-ck" id="ck-entregas"></div>
+      </section>
+
+      <section class="bloco">
+        <label class="linha-chave">
+          <span><b>Pedir CPF</b></span>
+          <span class="chave"><input type="checkbox" id="ck-cpf"><span></span></span>
+        </label>
       </section>
     </section>
 

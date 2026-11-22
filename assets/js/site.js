@@ -76,6 +76,16 @@
     laranja: 'cartaz--laranja', escuro: 'cartaz--corp'
   };
   const BOTAO = { estreia: 'btn--claro', laranja: 'btn--tinta' };
+  const TOM_DO_ESTILO = { estreia: 'escuro', escuro: 'escuro', perola: 'claro', claro: 'claro', laranja: 'claro' };
+
+  /* As duas artes de lançamento têm fundo chapado (preto e cinza): a
+     mistura faz esse fundo sumir no card. Com outro fundo, sem mistura. */
+  const misturaDe = (img, tom) => (/iphone-18-pro\.webp$/.test(img) && tom === 'escuro' ? 'lighten'
+    : /iphone-duo\.webp$/.test(img) && tom === 'claro' ? 'darken' : 'normal');
+  const transformDe = (a) => {
+    const x = Number(a?.x) || 0, y = Number(a?.y) || 0, e = (Number(a?.escala) || 100) / 100;
+    return x || y || e !== 1 ? `transform: translate(${x}%, ${y}%) scale(${e});` : '';
+  };
 
   const acao = (b, classe) => {
     if (!b || !tem(b.texto)) return '';
@@ -91,27 +101,30 @@
     const primeiro = i === 0;
     const estilo = CLASSE[c.estilo] ? c.estilo : 'claro';
     const arte = estilo === 'estreia' || estilo === 'perola';
+    const fundo = REGRAS.fundoDe(c.fundo);
+    const tom = fundo ? fundo.tom : TOM_DO_ESTILO[estilo];
     const entra = primeiro ? ' data-entra' : '';
     const h = primeiro ? 'h1' : 'h2';
-    const metal = estilo === 'estreia' ? 'titulo-metal' : estilo === 'perola' ? 'titulo-perola' : '';
+    const metal = arte ? (tom === 'escuro' ? 'titulo-metal' : 'titulo-perola') : '';
     const titulo = metal
       ? `<span class="${metal}">${esc(c.titulo)}${tem(c.fecho) ? ` ${esc(c.fecho)}` : ''}</span>`
       : `${esc(c.titulo)}${tem(c.fecho) ? ` <em>${esc(c.fecho)}</em>` : ''}`;
     const fatos = String(c.fatos || '').split('|').map((s) => s.trim()).filter(Boolean);
     const img = tem(c.imagem) ? `
-          <figure class="${arte ? 'cartaz-arte' : 'cartaz-foto cartaz-foto--alta'}">
+          <figure class="${arte ? 'cartaz-arte' : 'cartaz-foto cartaz-foto--alta'}" style="${transformDe(c.ajuste)} mix-blend-mode:${misturaDe(c.imagem, tom)}">
             <img src="${esc(c.imagem)}" alt="${esc(c.alt || c.titulo)}" decoding="async"
                  ${primeiro ? 'fetchpriority="high"' : 'loading="lazy"'}>
           </figure>` : '';
+    const botao = fundo ? (fundo.id === 'laranja' ? 'btn--tinta' : '') : (BOTAO[estilo] || '');
     return `
-        <article class="cartaz ${CLASSE[estilo]}" aria-roledescription="slide">
+        <article class="cartaz ${CLASSE[estilo]}" aria-roledescription="slide" data-tom="${tom}"${fundo ? ` data-fundo="${esc(fundo.id)}" style="background:${esc(fundo.css)}"` : ''}>
           <div class="cartaz-txt">
             ${tem(c.olho) ? `<p class="${arte ? 'cartaz-novo' : 'cartaz-olho'}"${entra}>${esc(c.olho)}</p>` : ''}
             <${h} class="cartaz-titulo"${entra}>${titulo}</${h}>
             ${tem(c.frase) ? `<p class="${arte ? 'cartaz-frase' : 'cartaz-sub'}"${entra}>${esc(c.frase)}</p>` : ''}
             ${fatos.length ? `<ul class="cartaz-fatos"${entra}>${fatos.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>` : ''}
             <div class="cartaz-acoes"${entra}>
-              ${acao(c.botao, `btn btn--grande ${BOTAO[estilo] || ''}`)}
+              ${acao(c.botao, `btn btn--grande ${botao}`)}
               ${acao(c.link, 'seta')}
             </div>
             ${primeiro ? `<p class="estado" id="estado-loja" data-entra data-aberta="false">

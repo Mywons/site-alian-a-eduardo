@@ -130,13 +130,17 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>` : ''}
 
           <div class="compra">
+            ${status === 'esgotado' ? `
             <a class="btn btn--grande btn--largo" id="btn-comprar" target="_blank" rel="noopener" href="#">
-              ${ICONE_WA} ${status === 'esgotado' ? 'Avise-me quando chegar' : status === 'encomenda' ? 'Encomendar pelo WhatsApp' : 'Comprar pelo WhatsApp'}
-            </a>
-            ${status === 'esgotado' ? '' : `
+              ${ICONE_WA} Avise-me quando chegar
+            </a>` : `
+            <button class="btn btn--grande btn--largo" type="button" id="btn-comprar-ja">
+              ${status === 'encomenda' ? 'Encomendar' : 'Comprar'}
+            </button>
             <button class="btn btn--vazio btn--grande btn--largo" type="button" id="btn-sacola">
               Adicionar ao carrinho
-            </button>`}
+            </button>
+            <a class="seta compra-duvida" id="btn-comprar" target="_blank" rel="noopener" href="#">Tirar dúvida no WhatsApp</a>`}
 
             <!-- O que a pessoa precisa saber no segundo em que decide,
                  e não três rolagens depois do botão. -->
@@ -208,12 +212,24 @@ document.addEventListener('DOMContentLoaded', () => {
         : msgProduto(p, cor, capacidade);
     const href = waLink(msg);
     btn.href = href;
-    if (btnBarra) btnBarra.href = href;
+    if (btnBarra && status === 'esgotado') btnBarra.href = href;
   };
   atualizar();
 
   /* Adicionar ao carrinho. A peça que voa é a vista que está na tela:
      é o que a pessoa estava olhando quando decidiu. */
+  /* Comprar: entra no carrinho e segue direto para o checkout. */
+  const comprarJa = () => {
+    adicionarNaSacola(p, cor, capacidade, null);
+    location.href = 'checkout.html';
+  };
+  raiz.querySelector('#btn-comprar-ja')?.addEventListener('click', comprarJa);
+  if (btnBarra && status !== 'esgotado') {
+    btnBarra.removeAttribute('target');
+    btnBarra.textContent = status === 'encomenda' ? 'Encomendar' : 'Comprar';
+    btnBarra.addEventListener('click', (e) => { e.preventDefault(); comprarJa(); });
+  }
+
   const btnSacola = raiz.querySelector('#btn-sacola');
   btnSacola?.addEventListener('click', () => {
     const peca = raiz.querySelector('.galeria-quadro:not([aria-hidden]) img')
@@ -294,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (barra && 'IntersectionObserver' in window) {
     new IntersectionObserver(([entrada]) => {
       barra.dataset.visible = String(!entrada.isIntersecting && entrada.boundingClientRect.top < 0);
-    }, { threshold: 0 }).observe(btn);
+    }, { threshold: 0 }).observe(raiz.querySelector('#btn-comprar-ja') || btn);
   }
 
   // O aviso de armazenamento sobe para cima da barra, e para isso o

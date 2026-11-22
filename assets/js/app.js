@@ -269,9 +269,18 @@ function montarWhatsApp() {
    é só leitura: o selo conta o que já está lá dentro e a gaveta abre
    com a lista, venha ela de onde vier. */
 
-function cardHTML(p, classes = 'card--terco card--peq') {
+function cardHTML(p, classes = 'card--terco card--peq', cfg = null) {
+  // O card principal pode ter foto, posição e fundo próprios (painel → Site).
+  const fundo = cfg && REGRAS.fundoDe(cfg.fundo);
+  if (fundo) classes = classes.replace(' card--noite', '') + (fundo.tom === 'escuro' ? ' card--noite' : '');
+  const a = cfg?.ajuste || {};
+  const ajuste = (Number(a.x) || Number(a.y) || (Number(a.escala) || 100) !== 100)
+    ? ` style="transform: translate(${Number(a.x) || 0}%, ${Number(a.y) || 0}%) scale(${(Number(a.escala) || 100) / 100})"` : '';
+  const poco = cfg?.imagem
+    ? `<div class="poco poco--card poco--foto"><img class="foto" src="${escapar(cfg.imagem)}" alt="${escapar(p.nome)}" decoding="async"></div>`
+    : aparelhoHTML(p, p.cores?.[0], 'card');
   return `
-  <article class="card ${classes}${REGRAS.ofertaAtiva(p) ? ' card--oferta' : ''}" data-reveal>
+  <article class="card ${classes}${REGRAS.ofertaAtiva(p) ? ' card--oferta' : ''}" data-reveal${fundo ? ` style="background:${escapar(fundo.css)}"` : ''}>
     <div class="card-txt">
       ${seloOferta(p, REGRAS.precoMinimo(p)) || seloStatus(p)}
       ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
@@ -286,7 +295,7 @@ function cardHTML(p, classes = 'card--terco card--peq') {
         <span class="seta card-mais" aria-hidden="true">Saiba mais</span>
       </div>
     </div>
-    <div class="card-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
+    <div class="card-poco"><div class="card-ajuste"${ajuste}>${poco}</div></div>
   </article>`;
 }
 
@@ -343,7 +352,8 @@ function montarDestaques() {
   ];
 
   grade.innerHTML = escolhidos
-    .map((p, i) => cardHTML(p, formas[i] || 'card--metade'))
+    .map((p, i) => cardHTML(p, formas[i] || 'card--metade',
+      i === 0 && typeof LOJA !== 'undefined' ? LOJA.site?.cardPrincipal : null))
     .join('');
 
   grade.querySelectorAll('[data-reveal]').forEach((el, i) =>

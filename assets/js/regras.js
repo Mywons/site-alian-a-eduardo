@@ -227,7 +227,44 @@
     return d;
   }
 
+  /* ---------- Fundos dos cards ----------
+     Padrões prontos para os banners e o card principal. `tom` diz se
+     o fundo é escuro (texto claro por cima) ou claro (texto escuro). */
+  const FUNDOS = [
+    { id: 'preto', nome: 'Preto', css: '#000', tom: 'escuro' },
+    { id: 'grafite', nome: 'Grafite', css: 'linear-gradient(160deg, #2c2c2e, #0b0b0c)', tom: 'escuro' },
+    { id: 'vinho', nome: 'Vinho', css: 'radial-gradient(45% 65% at 72% 78%, rgba(150,52,70,.55), transparent 72%), #0d0406', tom: 'escuro' },
+    { id: 'meia-noite', nome: 'Meia-noite', css: 'radial-gradient(50% 70% at 70% 70%, rgba(70,110,190,.45), transparent 72%), #04070f', tom: 'escuro' },
+    { id: 'brilho', nome: 'Brilho laranja', css: 'radial-gradient(50% 70% at 72% 72%, rgba(255,98,0,.40), transparent 72%), #050505', tom: 'escuro' },
+    { id: 'pontos', nome: 'Pontos', css: 'radial-gradient(circle, rgba(255,255,255,.14) 1.2px, transparent 1.7px) 0 0 / 22px 22px, #0b0b0c', tom: 'escuro' },
+    { id: 'listras', nome: 'Listras', css: 'repeating-linear-gradient(-45deg, transparent 0 18px, rgba(255,255,255,.05) 18px 36px), #0b0b0c', tom: 'escuro' },
+    { id: 'cinza', nome: 'Cinza', css: '#f5f5f7', tom: 'claro' },
+    { id: 'branco', nome: 'Branco', css: '#ffffff', tom: 'claro' },
+    { id: 'areia', nome: 'Areia', css: 'linear-gradient(160deg, #f7f1e8, #ece2d3)', tom: 'claro' },
+    { id: 'ceu', nome: 'Céu', css: 'linear-gradient(160deg, #eef4ff, #cfe0f7)', tom: 'claro' },
+    { id: 'rosa', nome: 'Rosa', css: 'linear-gradient(160deg, #fff0f4, #f6d5df)', tom: 'claro' },
+    { id: 'laranja', nome: 'Laranja', css: '#ff6200', tom: 'claro' },
+    { id: 'por-do-sol', nome: 'Pôr do sol', css: 'linear-gradient(135deg, #ffb36b, #ff6200 55%, #ff3d6e)', tom: 'claro' }
+  ];
+
+  /* O fundo de um card: um padrão pelo id, ou uma cor #hex. */
+  function fundoDe(valor) {
+    if (!valor) return null;
+    const pronto = FUNDOS.find((f) => f.id === valor);
+    if (pronto) return pronto;
+    if (/^#[0-9a-f]{6}$/i.test(valor)) {
+      const n = parseInt(valor.slice(1), 16);
+      const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+        v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+      });
+      const L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+      return { id: valor, nome: valor, css: valor, tom: L > 0.4 ? 'claro' : 'escuro' };
+    }
+    return null;
+  }
+
   raiz.REGRAS = {
+    FUNDOS, fundoDe,
     hoje, arredondar, capacidadesDe, precoTabela, ofertaAtiva, aplicarOferta, precoDe,
     precoMinimo, esgotada, statusDe, visivel, custoEmReais, precoCalculado, recalcular,
     sincronizarPreco, TEMAS, temaDe, eventoAtivo, datasSugeridas

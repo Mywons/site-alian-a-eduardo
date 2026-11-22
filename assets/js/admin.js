@@ -206,7 +206,8 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
 
     const usadas = new Set([
       ...estado.produtos.flatMap((p) => Object.values(p.imagens || {})),
-      ...(estado.loja.site?.cartazes || []).map((c) => c.imagem)
+      ...(estado.loja.site?.cartazes || []).map((c) => c.imagem),
+      estado.loja.site?.cardPrincipal?.imagem
     ]);
     // A marca `destaque` no catálogo acompanha a lista da capa (a página
     // de produto ainda usa a marca para sugerir relacionados).
@@ -297,6 +298,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const lj = { ...clone(LOJA_PADRAO), ...loja };
     lj.precificacao = { ...LOJA_PADRAO.precificacao, ...(loja.precificacao || {}) };
     lj.site = completarSite(lj.site, lista);
+    lj.checkout = completarCheckout(lj.checkout);
     estado.original = clone(lista);
     estado.produtos = clone(lista);
     estado.lojaOriginal = clone(lj);
@@ -341,6 +343,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
     if (estado.aba === 'site') desenharSite();
+    if (estado.aba === 'checkout') desenharCheckout();
   }));
 
   /* ---------- Diferenças ---------- */
@@ -1462,9 +1465,9 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const lista = estado.loja.site.cartazes;
     const imgs = galeria();
     $('#banners').innerHTML = (lista.length ? lista.map((c, i) => `
-      <article class="banner banner--${esc(c.estilo || 'claro')}${c.ativo === false ? ' banner--off' : ''}" data-i="${i}">
-        <div class="banner-previa">
-          ${c.imagem ? `<img src="${esc(verImagem(c.imagem))}" alt="" loading="lazy">` : ''}
+      <article class="banner banner--${esc(c.estilo || 'claro')}${c.ativo === false ? ' banner--off' : ''}" data-i="${i}"${fundoAttr(c.fundo)}>
+        <div class="banner-previa"${REGRAS.fundoDe(c.fundo) ? ` style="background:${esc(REGRAS.fundoDe(c.fundo).css)}"` : ''}>
+          ${c.imagem ? `<img src="${esc(verImagem(c.imagem))}" alt="" loading="lazy" style="${estiloAjuste(c.ajuste)}">` : ''}
           <div class="banner-previa-txt">
             <small>${esc(c.olho || '')}</small>
             <b>${esc(c.titulo || 'Sem título')} <em>${esc(c.fecho || '')}</em></b>
@@ -1495,6 +1498,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
               </select></label>
             <label class="btn btn--leve btn--peq banner-enviar">Enviar imagem<input type="file" accept="image/png,image/jpeg,image/webp" data-banner-foto hidden></label>
           </div>
+          ${ajusteHTML(c)}
           <div class="banner-acoes">
             <button class="btn btn--perigo btn--peq" type="button" data-apagar-banner>Apagar banner</button>
           </div>
@@ -1509,6 +1513,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   }
 
   function desenharDestaques() {
+    desenharCardPrincipal();
     const lista = estado.loja.site.destaques;
     const prod = (id) => estado.produtos.find((p) => p.id === id);
     $('#dest-conta').textContent = `${lista.length} de 5`;
@@ -1580,7 +1585,23 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (!card || !k) return;
     const c = estado.loja.site.cartazes[+card.dataset.i];
     if (k === 'ativo') c.ativo = e.target.checked;
-    else if (k.includes('.')) { const [o, campo] = k.split('.'); c[o] = c[o] || { texto: '', tipo: 'link', valor: '' }; c[o][campo] = e.target.value; }
+    else if (k.startsWith('ajuste.')) {
+      c.ajuste = { escala: 100, x: 0, y: 0, ...(c.ajuste || {}) };
+      c.ajuste[k.split('.')[1]] = Number(e.target.value);
+      const img = card.querySelector('.banner-previa img');
+      if (img) img.style.cssText = estiloAjuste(c.ajuste);
+      const saida = e.target.closest('.ajuste-linha')?.querySelector('output');
+      if (saida) saida.textContent = e.target.value + (k.endsWith('escala') ? '%' : '');
+      mudouSite();
+      return;
+    } else if (k === 'fundo-cor') {
+      c.fundo = e.target.value;
+      card.querySelector('.banner-previa').style.background = e.target.value;
+      e.target.closest('.fundo-op').style.background = e.target.value;
+      card.querySelectorAll('.fundo-op').forEach((b) => b.setAttribute('aria-pressed', String(b.classList.contains('fundo-op--cor'))));
+      mudouSite();
+      return;
+    } else if (k.includes('.')) { const [o, campo] = k.split('.'); c[o] = c[o] || { texto: '', tipo: 'link', valor: '' }; c[o][campo] = e.target.value; }
     else c[k] = e.target.value;
     const t = card.querySelector('.banner-previa-txt');
     t.querySelector('small').textContent = c.olho || '';
@@ -1608,6 +1629,9 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const lista = estado.loja.site.cartazes; const i = +card.dataset.i;
     const m = e.target.closest('[data-mover-banner]');
     if (m && trocar(lista, i, +m.dataset.moverBanner)) { desenharBanners(); mudouSite(); }
+    const f = e.target.closest('[data-fundo]');
+    if (f) { lista[i].fundo = f.dataset.fundo; desenharBanners(); mudouSite(); }
+    if (e.target.closest('[data-centralizar]')) { lista[i].ajuste = { escala: 100, x: 0, y: 0 }; desenharBanners(); mudouSite(); }
     if (e.target.closest('[data-apagar-banner]') && confirm('Apagar este banner?')) { lista.splice(i, 1); desenharBanners(); mudouSite(); }
   });
   $('#btn-novo-banner').addEventListener('click', () => {
@@ -1671,6 +1695,231 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     mudouSite();
   });
 
+  /* ---------- Ajuste de imagem e fundo (banners e card principal) ---------- */
+
+  const estiloAjuste = (a) => {
+    const x = Number(a?.x) || 0, y = Number(a?.y) || 0, e = (Number(a?.escala) || 100) / 100;
+    return `transform: translate(${x}%, ${y}%) scale(${e}); transform-origin: 50% 100%;`;
+  };
+  const fundoAttr = () => '';
+
+  function ajusteHTML(c) {
+    const a = { escala: 100, x: 0, y: 0, ...(c.ajuste || {}) };
+    const atual = c.fundo || '';
+    const cor = /^#[0-9a-f]{6}$/i.test(atual) ? atual : '#1d1d1f';
+    return `
+      <div class="ajuste">
+        <div class="ajuste-linha"><span>Tamanho</span><input type="range" min="50" max="170" step="1" value="${a.escala}" data-b="ajuste.escala" aria-label="Tamanho da imagem"><output>${a.escala}%</output></div>
+        <div class="ajuste-linha"><span>Horizontal</span><input type="range" min="-50" max="50" step="1" value="${a.x}" data-b="ajuste.x" aria-label="Posição horizontal"><output>${a.x}</output></div>
+        <div class="ajuste-linha"><span>Vertical</span><input type="range" min="-50" max="50" step="1" value="${a.y}" data-b="ajuste.y" aria-label="Posição vertical"><output>${a.y}</output></div>
+        <button class="btn btn--leve btn--peq" type="button" data-centralizar>Centralizar</button>
+      </div>
+      <div class="fundos" role="group" aria-label="Fundo">
+        <button type="button" class="fundo-op fundo-op--padrao" data-fundo="" aria-pressed="${!atual}" title="Padrão do estilo">Aa</button>
+        ${REGRAS.FUNDOS.map((f) => `<button type="button" class="fundo-op" data-fundo="${f.id}" aria-pressed="${atual === f.id}" title="${esc(f.nome)}" style="background:${esc(f.css)}"></button>`).join('')}
+        <label class="fundo-op fundo-op--cor" title="Outra cor" aria-pressed="${/^#/.test(atual)}" style="background:${esc(cor)}">
+          <input type="color" value="${esc(cor)}" data-b="fundo-cor" aria-label="Outra cor de fundo">
+        </label>
+      </div>`;
+  }
+
+  /* Card principal: o primeiro de "Os favoritos". */
+  function desenharCardPrincipal() {
+    const S = estado.loja.site;
+    const cp = S.cardPrincipal = S.cardPrincipal || {};
+    const id = S.destaques[0];
+    const p = estado.produtos.find((x) => x.id === id);
+    const caixa = $('#card-principal');
+    if (!p) { caixa.innerHTML = ''; return; }
+    const img = cp.imagem || urlFoto(p, p.cores?.[0]);
+    const fundo = REGRAS.fundoDe(cp.fundo) || REGRAS.fundoDe('preto');
+    const imgs = galeria();
+    caixa.innerHTML = `
+      <div class="cp">
+        <div class="cp-previa" data-tom="${fundo.tom}" style="background:${esc(fundo.css)}">
+          <div class="cp-txt"><small>${esc(p.linha || '')}</small><b>${esc(p.nome)}</b></div>
+          <div class="cp-img">${img ? `<img src="${esc(verImagem(img))}" alt="" style="${estiloAjuste(cp.ajuste)}">` : ''}</div>
+        </div>
+        <div class="cp-campos">
+          <h3>Card principal · ${esc(p.nome)}</h3>
+          <div class="banner-img">
+            <label class="campo"><span>Imagem</span>
+              <select data-cp="imagem">
+                <option value="">Foto do produto</option>
+                ${imgs.map(([u, n]) => `<option value="${esc(u)}" ${cp.imagem === u ? 'selected' : ''}>${esc(n)}</option>`).join('')}
+              </select></label>
+            <label class="btn btn--leve btn--peq banner-enviar">Enviar imagem<input type="file" accept="image/png,image/jpeg,image/webp" data-cp-foto hidden></label>
+          </div>
+          ${ajusteHTML(cp)}
+        </div>
+      </div>`;
+  }
+
+  $('#card-principal').addEventListener('input', (e) => {
+    const cp = estado.loja.site.cardPrincipal;
+    const k = e.target.dataset.b;
+    if (k && k.startsWith('ajuste.')) {
+      cp.ajuste = { escala: 100, x: 0, y: 0, ...(cp.ajuste || {}) };
+      cp.ajuste[k.split('.')[1]] = Number(e.target.value);
+      const img = $('#card-principal .cp-img img');
+      if (img) img.style.cssText = estiloAjuste(cp.ajuste);
+      const saida = e.target.closest('.ajuste-linha')?.querySelector('output');
+      if (saida) saida.textContent = e.target.value + (k.endsWith('escala') ? '%' : '');
+      mudouSite();
+    }
+    if (k === 'fundo-cor') {
+      cp.fundo = e.target.value;
+      const prev = $('#card-principal .cp-previa');
+      prev.style.background = e.target.value;
+      prev.dataset.tom = REGRAS.fundoDe(e.target.value).tom;
+      e.target.closest('.fundo-op').style.background = e.target.value;
+      $$('#card-principal .fundo-op').forEach((b) => b.setAttribute('aria-pressed', String(b.classList.contains('fundo-op--cor'))));
+      mudouSite();
+    }
+  });
+  $('#card-principal').addEventListener('change', async (e) => {
+    const cp = estado.loja.site.cardPrincipal;
+    if (e.target.dataset.cp === 'imagem') { cp.imagem = e.target.value; desenharCardPrincipal(); mudouSite(); }
+    if (e.target.matches('[data-cp-foto]') && e.target.files[0]) {
+      try {
+        const blob = await prepararFoto(e.target.files[0]);
+        const ext = blob.type === 'image/webp' ? 'webp' : blob.type === 'image/png' ? 'png' : 'jpg';
+        const caminho = `assets/img/banners/card-principal-${Date.now().toString(36)}.${ext}`;
+        estado.fotos.set(caminho, { blob, url: URL.createObjectURL(blob) });
+        cp.imagem = caminho;
+        desenharCardPrincipal(); mudouSite();
+      } catch { toast('Não consegui ler essa imagem.', 'erro'); }
+    }
+  });
+  $('#card-principal').addEventListener('click', (e) => {
+    const cp = estado.loja.site.cardPrincipal;
+    const f = e.target.closest('[data-fundo]');
+    if (f) { cp.fundo = f.dataset.fundo; desenharCardPrincipal(); mudouSite(); }
+    if (e.target.closest('[data-centralizar]')) { cp.ajuste = { escala: 100, x: 0, y: 0 }; desenharCardPrincipal(); mudouSite(); }
+  });
+
+  /* ---------- Checkout: leve junto, pagamento, entrega ---------- */
+
+  function completarCheckout(ck) {
+    const base = (typeof LOJA !== 'undefined' && LOJA.checkout) ? clone(LOJA.checkout) : {};
+    const c = { ...base, ...(ck || {}) };
+    c.upsells = Array.isArray(c.upsells) ? c.upsells : [];
+    c.pagamentos = Array.isArray(c.pagamentos) && c.pagamentos.length ? c.pagamentos
+      : [{ id: 'pix', nome: 'Pix', detalhe: 'À vista', desconto: 0, ativo: true }, { id: 'cartao', nome: 'Cartão de crédito', detalhe: 'Até 12x sem juros', desconto: 0, ativo: true }];
+    c.entregas = Array.isArray(c.entregas) && c.entregas.length ? c.entregas
+      : [{ id: 'combinar', nome: 'Combinar pelo WhatsApp', detalhe: '', endereco: false, ativo: true }];
+    c.pedirCpf = !!c.pedirCpf;
+    return c;
+  }
+
+  const CK = () => estado.loja.checkout;
+
+  function desenharCheckout() {
+    const ck = CK();
+    const opcoesProd = (sel) => estado.produtos.map((p) => `<option value="${esc(p.id)}" ${p.id === sel ? 'selected' : ''}>${esc(p.nome)}</option>`).join('');
+    $('#upsells').innerHTML = ck.upsells.length ? ck.upsells.map((u, i) => {
+      const p = estado.produtos.find((x) => x.id === u.produto);
+      const cap = p ? (p.capacidades || [])[0] : '';
+      const base = p ? R.precoTabela(p, cap) : 0;
+      const por = Number(u.valor) > 0 ? R.aplicarOferta(base, u) : base;
+      const foto = p ? urlFoto(p, p.cores?.[0]) : '';
+      return `
+      <article class="upsell${u.ativo === false ? ' upsell--off' : ''}" data-i="${i}">
+        <span class="miniatura">${foto ? `<img src="${esc(foto)}" alt="" onerror="this.remove()">` : ''}</span>
+        <div class="upsell-campos">
+          <div class="grade-2">
+            <label class="campo"><span>Produto</span><select data-u="produto">${opcoesProd(u.produto)}</select></label>
+            <label class="campo"><span>Título</span><input data-u="titulo" value="${esc(u.titulo || '')}" placeholder="Leve junto"></label>
+          </div>
+          <div class="upsell-linha">
+            <label class="campo"><span>Desconto</span>
+              <span class="junto"><input data-u="valor" type="number" min="0" step="1" value="${Number(u.valor) || ''}" placeholder="0">
+              <select data-u="tipo"><option value="%" ${u.tipo !== 'R$' ? 'selected' : ''}>%</option><option value="R$" ${u.tipo === 'R$' ? 'selected' : ''}>R$</option></select></span></label>
+            <div class="upsell-preco">${por < base ? `<s>${brl(base)}</s> ` : ''}<b>${brl(por)}</b></div>
+          </div>
+          <div class="campo"><span>Aparece com</span>
+            <div class="fichas fichas--toque">
+              ${CATS.map((c) => `<button type="button" class="ficha ficha--toque ficha--sim" data-quando="${c.id}" aria-pressed="${(u.quando || []).includes(c.id)}">${esc(c.nome)}</button>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="upsell-acoes">
+          <label class="chave" title="Ligado"><input type="checkbox" data-u="ativo" ${u.ativo !== false ? 'checked' : ''} aria-label="Ligado"><span></span></label>
+          <button class="seta" type="button" data-mover-up="-1" aria-label="Subir" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
+          <button class="seta" type="button" data-mover-up="1" aria-label="Descer" ${i === ck.upsells.length - 1 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="x" type="button" data-tirar-up aria-label="Apagar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+      </article>`;
+    }).join('') : '<p class="vazio-mini">Nenhum.</p>';
+
+    const linhaOpcao = (lista, o, i) => `
+      <div class="opcao-ck" data-lista="${lista}" data-i="${i}">
+        <input data-o="nome" value="${esc(o.nome)}" aria-label="Nome">
+        <input data-o="detalhe" value="${esc(o.detalhe || '')}" placeholder="Detalhe" aria-label="Detalhe">
+        ${lista === 'pagamentos'
+          ? `<label class="mini-campo"><input data-o="desconto" type="number" min="0" max="50" step="0.5" value="${Number(o.desconto) || ''}" placeholder="0" aria-label="Desconto em %"><span>% desc.</span></label>`
+          : `<label class="mini-check"><input type="checkbox" data-o="endereco" ${o.endereco ? 'checked' : ''}><span>Pede endereço</span></label>`}
+        <label class="chave" title="Ligado"><input type="checkbox" data-o="ativo" ${o.ativo !== false ? 'checked' : ''} aria-label="Ligado"><span></span></label>
+        <button class="x" type="button" data-tirar-op aria-label="Apagar"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>`;
+    $('#ck-pagamentos').innerHTML = ck.pagamentos.map((o, i) => linhaOpcao('pagamentos', o, i)).join('');
+    $('#ck-entregas').innerHTML = ck.entregas.map((o, i) => linhaOpcao('entregas', o, i)).join('');
+    $('#ck-cpf').checked = ck.pedirCpf;
+  }
+
+  $('#btn-novo-upsell').addEventListener('click', () => {
+    const p = estado.produtos.find((x) => x.categoria === 'acessorios') || estado.produtos[0];
+    CK().upsells.push({ id: `up-${Date.now().toString(36)}`, ativo: true, produto: p?.id, titulo: 'Leve junto', quando: [], tipo: '%', valor: 0 });
+    desenharCheckout(); atualizarBarra();
+  });
+  $('#upsells').addEventListener('input', (e) => {
+    const card = e.target.closest('.upsell'); const k = e.target.dataset.u;
+    if (!card || !k) return;
+    const u = CK().upsells[+card.dataset.i];
+    if (k === 'ativo') u.ativo = e.target.checked;
+    else if (k === 'valor') u.valor = Number(e.target.value) || 0;
+    else u[k] = e.target.value;
+    atualizarBarra();
+    if (k !== 'titulo') desenharCheckout();
+  });
+  $('#upsells').addEventListener('click', (e) => {
+    const card = e.target.closest('.upsell'); if (!card) return;
+    const lista = CK().upsells; const i = +card.dataset.i;
+    const q = e.target.closest('[data-quando]');
+    if (q) {
+      const u = lista[i]; const set = new Set(u.quando || []);
+      if (set.has(q.dataset.quando)) set.delete(q.dataset.quando); else set.add(q.dataset.quando);
+      u.quando = [...set]; q.setAttribute('aria-pressed', String(set.has(q.dataset.quando))); atualizarBarra();
+    }
+    const m = e.target.closest('[data-mover-up]');
+    if (m && trocar(lista, i, +m.dataset.moverUp)) { desenharCheckout(); atualizarBarra(); }
+    if (e.target.closest('[data-tirar-up]') && confirm('Apagar?')) { lista.splice(i, 1); desenharCheckout(); atualizarBarra(); }
+  });
+  $$('[data-nova-opcao]').forEach((b) => b.addEventListener('click', () => {
+    const lista = CK()[b.dataset.novaOpcao];
+    lista.push({ id: `op-${Date.now().toString(36)}`, nome: 'Nova forma', detalhe: '', ativo: true, ...(b.dataset.novaOpcao === 'pagamentos' ? { desconto: 0 } : { endereco: false }) });
+    desenharCheckout(); atualizarBarra();
+  }));
+  ['#ck-pagamentos', '#ck-entregas'].forEach((sel) => {
+    $(sel).addEventListener('input', (e) => {
+      const row = e.target.closest('.opcao-ck'); const k = e.target.dataset.o;
+      if (!row || !k) return;
+      const o = CK()[row.dataset.lista][+row.dataset.i];
+      if (k === 'ativo' || k === 'endereco') o[k] = e.target.checked;
+      else if (k === 'desconto') o[k] = Number(e.target.value) || 0;
+      else o[k] = e.target.value;
+      atualizarBarra();
+    });
+    $(sel).addEventListener('click', (e) => {
+      const row = e.target.closest('.opcao-ck');
+      if (!row || !e.target.closest('[data-tirar-op]')) return;
+      const lista = CK()[row.dataset.lista];
+      if (lista.length <= 1) { toast('Deixe pelo menos uma forma.', 'erro'); return; }
+      lista.splice(+row.dataset.i, 1); desenharCheckout(); atualizarBarra();
+    });
+  });
+  $('#ck-cpf').addEventListener('change', (e) => { CK().pedirCpf = e.target.checked; atualizarBarra(); });
+
   /* ---------- Salvar / descartar ---------- */
 
   $('#btn-descartar').addEventListener('click', () => {
@@ -1682,6 +1931,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
     if (estado.aba === 'site') desenharSite();
+    if (estado.aba === 'checkout') desenharCheckout();
   });
 
   const baixar = (nome, texto) => {
