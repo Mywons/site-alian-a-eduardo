@@ -755,9 +755,18 @@ function montarPalco() {
     trilho.scrollTo({ left: cartazes[atual].offsetLeft, behavior: suave && !semMovimento() ? 'smooth' : 'auto' });
   };
 
+  let anterior = -1;
   const marcar = () => {
     const i = Math.round(trilho.scrollLeft / trilho.clientWidth);
     atual = Math.max(0, Math.min(total - 1, i));
+    // O cartaz que chega entra em cena: texto em cascata, foto
+    // assentando. Na primeira pintura quem cuida é a entrada da página.
+    if (anterior !== -1 && anterior !== atual && !semMovimento()) {
+      cartazes.forEach((c) => c.classList.remove('entrou'));
+      void cartazes[atual].offsetWidth;
+      cartazes[atual].classList.add('entrou');
+    }
+    anterior = atual;
     botoes.forEach((b, k) => b.setAttribute('aria-current', String(k === atual)));
     cartazes.forEach((c, k) => {
       const fora = k !== atual;
@@ -786,11 +795,16 @@ function montarPalco() {
   const INTERVALO = 6500;
   let timer = null;
   let parado = semMovimento();
-  const parar = () => { clearInterval(timer); timer = null; };
+  janela.style.setProperty('--intervalo', `${INTERVALO}ms`);
+  const parar = () => { clearInterval(timer); timer = null; janela.dataset.tocando = 'false'; };
   const tocar = () => {
     parar();
     if (parado || document.hidden) return;
     timer = setInterval(() => ir(atual + 1), INTERVALO);
+    // O ponto ativo enche como um relógio até a próxima troca.
+    janela.dataset.tocando = 'false';
+    void janela.offsetWidth;
+    janela.dataset.tocando = 'true';
   };
   const reiniciar = () => { if (timer) tocar(); };
 

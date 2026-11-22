@@ -188,6 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
       <span>${parcela(info.final)} sem juros · à vista com desconto no Pix</span>
       ${info.oferta && info.oferta.fim ? `<span class="preco-validade">Oferta válida até ${info.oferta.fim.split('-').reverse().join('/')}</span>` : ''}`;
     document.querySelector('#barra-valor').textContent = brl(info.final);
+    // O número novo "assenta" no lugar quando a capacidade muda.
+    if (caixaPreco.dataset.valor && caixaPreco.dataset.valor !== String(info.final)) {
+      caixaPreco.classList.remove('mudou');
+      void caixaPreco.offsetWidth;
+      caixaPreco.classList.add('mudou');
+    }
+    caixaPreco.dataset.valor = String(info.final);
   };
   pintarPreco();
 

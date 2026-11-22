@@ -3918,6 +3918,134 @@ body { background: var(--papel); }
   .palco-janela:hover .cartaz-arte img { transform: none; }
 }
 
+/* ---------- 24f. Movimento da vitrine ----------
+   Gestos curtos, na mesma curva da folha inteira, cada um contando
+   alguma coisa: o cartaz que chegou, quanto falta para o próximo,
+   o preço que mudou, o item que acabou de aparecer. Tudo desliga com
+   prefers-reduced-motion (seção 25). */
+
+/* -- O cartaz que chega entra em cena -- */
+.cartaz.entrou .cartaz-txt > * {
+  animation: entra 720ms var(--ease) both;
+}
+.cartaz.entrou .cartaz-txt > :nth-child(2) { animation-delay: 60ms; }
+.cartaz.entrou .cartaz-txt > :nth-child(3) { animation-delay: 120ms; }
+.cartaz.entrou .cartaz-txt > :nth-child(4) { animation-delay: 180ms; }
+.cartaz.entrou .cartaz-txt > :nth-child(5) { animation-delay: 240ms; }
+.cartaz.entrou .cartaz-txt > :nth-child(n+6) { animation-delay: 300ms; }
+.cartaz.entrou .cartaz-arte img,
+.cartaz.entrou .cartaz-foto img {
+  animation: sobe-foto 1100ms var(--ease) both;
+  animation-delay: 80ms;
+}
+@keyframes sobe-foto {
+  from { opacity: 0; transform: translateY(40px) scale(0.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Na primeira visita, a foto de estreia assenta como a da capa
+   antiga: chega desfocada e encontra o foco. */
+.js.pronto .cartaz--estreia .cartaz-arte img {
+  animation: assenta 1400ms var(--ease) both;
+  animation-delay: 260ms;
+}
+
+/* A foto de estreia respira devagar enquanto está na tela. */
+.cartaz--estreia:not(.entrou) .cartaz-arte picture {
+  animation: respira 9s ease-in-out 1.8s infinite alternate;
+}
+@keyframes respira {
+  to { transform: translateY(-6px) scale(1.012); }
+}
+
+/* -- O relógio do palco: o ponto ativo enche até a próxima troca -- */
+.palco-pontos span { position: relative; overflow: hidden; }
+.palco-pontos [aria-current='true'] span { background: rgb(255 255 255 / 0.45); }
+.palco-pontos [aria-current='true'] span::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: #fff;
+  transform-origin: left center;
+}
+.palco-janela[data-tocando='true'] .palco-pontos [aria-current='true'] span::after {
+  animation: enche var(--intervalo, 6500ms) linear both;
+}
+@keyframes enche { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* -- O texto metálico ganha um brilho que passa uma vez -- */
+.titulo-metal, .titulo-perola { background-size: 100% 100%; }
+.js.pronto .cartaz--estreia .titulo-metal {
+  background-image:
+    linear-gradient(105deg, transparent 40%, rgb(255 255 255 / 0.65) 50%, transparent 60%),
+    linear-gradient(175deg, #fbe9ec 0%, #e2a9b4 38%, #b5606f 70%, #7c3343 100%);
+  background-size: 250% 100%, 100% 100%;
+  background-repeat: no-repeat;
+  animation: brilho 2.4s var(--ease) 900ms both;
+}
+@keyframes brilho {
+  from { background-position: 120% 0, 0 0; }
+  to   { background-position: -120% 0, 0 0; }
+}
+
+/* -- Os selos se desenham quando aparecem -- */
+.selos-grade svg :is(path, circle) { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.selos-grade li[data-reveal] svg :is(path, circle) { stroke-dashoffset: 1; transition: stroke-dashoffset 1100ms var(--ease) 250ms; }
+.selos-grade li.vis svg :is(path, circle) { stroke-dashoffset: 0; }
+.selos-grade li { transition: transform 400ms var(--ease), box-shadow 400ms var(--ease); }
+.selos-grade li:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgb(0 0 0 / 0.25); }
+
+/* -- O preço que mudou assenta no lugar -- */
+.produto-preco.mudou > b { animation: preco-novo 520ms var(--ease) both; }
+@keyframes preco-novo {
+  from { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+
+/* -- Botões: um brilho passa no hover do botão cheio -- */
+.btn:not(.btn--vazio)::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.35) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 130% 0;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (hover: hover) {
+  .btn:not(.btn--vazio):hover::before {
+    opacity: 1;
+    transition: background-position 700ms var(--ease);
+    background-position: -30% 0;
+  }
+}
+
+/* -- Cartões do catálogo e telhas: a foto sobe um pouco no hover -- */
+@media (hover: hover) {
+  .linha:hover .linha-poco .foto { transform: translateY(-6px) scale(1.04); }
+  .vitrine:hover .vitrine-nome { transform: translateX(3px); }
+}
+.vitrine-nome { transition: transform 400ms var(--ease); }
+.selo-oferta { animation: selo-chega 600ms var(--ease) both 200ms; }
+@keyframes selo-chega { from { opacity: 0; transform: translateY(-4px) scale(0.92); } }
+
+/* -- Carrinho: a gaveta e os itens -- */
+.carrinho[data-aberto='true'] .sac-item { animation: entra 520ms var(--ease) both; }
+.carrinho[data-aberto='true'] .sac-item:nth-child(2) { animation-delay: 50ms; }
+.carrinho[data-aberto='true'] .sac-item:nth-child(3) { animation-delay: 100ms; }
+.carrinho[data-aberto='true'] .sac-item:nth-child(n+4) { animation-delay: 150ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cartaz.entrou .cartaz-txt > *, .cartaz.entrou .cartaz-arte img, .cartaz.entrou .cartaz-foto img,
+  .js.pronto .cartaz--estreia .cartaz-arte img, .cartaz--estreia .cartaz-arte picture,
+  .js.pronto .cartaz--estreia .titulo-metal, .produto-preco.mudou > b, .selo-oferta,
+  .carrinho[data-aberto='true'] .sac-item { animation: none !important; }
+  .selos-grade li[data-reveal] svg :is(path, circle) { stroke-dashoffset: 0; transition: none; }
+  .palco-janela .palco-pontos [aria-current='true'] span::after { animation: none !important; transform: none; }
+  .btn::before { display: none; }
+}
+
 /* ---------- 25. Preferências do usuário ---------- */
 
 @media (prefers-reduced-motion: reduce) {

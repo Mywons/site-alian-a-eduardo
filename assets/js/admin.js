@@ -42,6 +42,31 @@
   const slug = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
     .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const clone = (o) => JSON.parse(JSON.stringify(o));
+  const semMovimento = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Fecha um diálogo com a animação de saída antes do close de
+     verdade. Sem movimento, fecha na hora. */
+  function fechar(dlg, valor) {
+    if (!dlg.open) return;
+    if (semMovimento()) { dlg.close(valor); return; }
+    dlg.classList.add('fechando');
+    setTimeout(() => { dlg.classList.remove('fechando'); dlg.close(valor); }, 180);
+  }
+
+  /* Números que contam até o valor novo, em vez de trocar de repente. */
+  function contar(el, alvo) {
+    const de = Number(el.dataset.valor || 0);
+    el.dataset.valor = String(alvo);
+    if (semMovimento() || de === alvo) { el.textContent = alvo; return; }
+    const t0 = performance.now(), dur = 600;
+    const passo = (t) => {
+      const k = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - k, 3);
+      el.textContent = Math.round(de + (alvo - de) * e);
+      if (k < 1) requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+  }
 
   const CATS = (typeof CATEGORIAS !== 'undefined' ? CATEGORIAS : []).filter((c) => c.id !== 'todos');
   const nomeCat = (id) => CATS.find((c) => c.id === id)?.nome || id;
@@ -271,12 +296,15 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     estado.loja = clone(lj);
     $('#entrada').hidden = true;
     $('#painel').hidden = false;
+    $('#painel').classList.add('chegando');
+    setTimeout(() => $('#painel').classList.remove('chegando'), 900);
     $('#topo-modo').textContent = estado.modo === 'github'
       ? `${estado.repo} · ${estado.ramo}` : 'Modo de teste — nada é publicado';
     $('#topo-modo').dataset.modo = estado.modo;
     $('#btn-salvar').textContent = estado.modo === 'github' ? 'Publicar no site' : 'Baixar arquivos';
-    desenhar();
+    desenhar(true);
     preencherRegra();
+    requestAnimationFrame(moverIndicador);
   }
 
   $('#btn-sair').addEventListener('click', () => {
@@ -287,10 +315,22 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
 
   /* ---------- Abas ---------- */
 
+  /* A pílula escura desliza até a aba escolhida. */
+  function moverIndicador() {
+    const ativa = $('[data-aba][aria-selected="true"]');
+    const ind = $('.abas-indicador');
+    if (!ativa || !ind) return;
+    ind.style.width = `${ativa.offsetWidth}px`;
+    ind.style.transform = `translateX(${ativa.offsetLeft - 3}px)`;
+  }
+  window.addEventListener('resize', moverIndicador);
+
   $$('[data-aba]').forEach((b) => b.addEventListener('click', () => {
     estado.aba = b.dataset.aba;
     $$('[data-aba]').forEach((x) => x.setAttribute('aria-selected', String(x === b)));
+    moverIndicador();
     $$('.aba').forEach((s) => { s.hidden = s.id !== `aba-${estado.aba}`; });
+    if (estado.aba === 'produtos') desenharLinhas(true);
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
   }));
@@ -318,7 +358,13 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   function atualizarBarra() {
     const n = mudancas();
     $('#barra').dataset.visivel = n ? 'true' : 'false';
-    $('#barra-txt').textContent = n === 1 ? '1 alteração não publicada' : `${n} alterações não publicadas`;
+    const txt = n === 1 ? '1 alteração não publicada' : `${n} alterações não publicadas`;
+    if (n && $('#barra-txt').textContent !== txt && !semMovimento()) {
+      $('#barra').classList.remove('pulou');
+      void $('#barra').offsetWidth;
+      $('#barra').classList.add('pulou');
+    }
+    $('#barra-txt').textContent = txt;
   }
 
   window.addEventListener('beforeunload', (e) => {
@@ -337,10 +383,10 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
 
   /* ---------- Produtos: resumo, filtros, tabela ---------- */
 
-  function desenhar() {
+  function desenhar(animar = false) {
     desenharNumeros();
     desenharFiltros();
-    desenharLinhas();
+    desenharLinhas(animar);
     atualizarBarra();
   }
 
@@ -351,12 +397,21 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const esgot = noSite.filter((p) => R.statusDe(p) === 'esgotado').length;
     const dest = noSite.filter((p) => p.destaque === 'principal').length;
     $('#cabeca-sub').textContent = `${noSite.length} no site · ${ps.length - noSite.length} escondidos`;
-    $('#numeros').innerHTML = [
-      ['No site', `${noSite.length}<small> de ${ps.length}</small>`],
-      ['Em oferta hoje', ofertas],
-      ['Esgotados', esgot],
-      ['Em destaque', `${dest}<small> / 5 na capa</small>`]
-    ].map(([t, v]) => `<div class="numero"><span>${t}</span><b>${v}</b></div>`).join('');
+    const dados = [
+      ['No site', noSite.length, ` de ${ps.length}`],
+      ['Em oferta hoje', ofertas, ''],
+      ['Esgotados', esgot, ''],
+      ['Em destaque', dest, ' / 5 na capa']
+    ];
+    const caixa = $('#numeros');
+    if (!caixa.children.length) {
+      caixa.innerHTML = dados.map(([t]) => `<div class="numero"><span>${t}</span><b><i data-n>0</i><small></small></b></div>`).join('');
+    }
+    dados.forEach(([, n, extra], k) => {
+      const card = caixa.children[k];
+      contar(card.querySelector('[data-n]'), n);
+      card.querySelector('small').textContent = extra;
+    });
   }
 
   function desenharFiltros() {
@@ -401,10 +456,12 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       <b>${v}</b><small>${ativa ? quando : futura ? `começa ${dataBR(p.oferta.inicio)}` : 'encerrada'}</small></button>`;
   }
 
-  function desenharLinhas() {
+  function desenharLinhas(animar = false) {
     const lista = visiveis();
     $('#vazio').hidden = lista.length > 0;
-    $('#linhas').innerHTML = lista.map((p) => {
+    const corpo = $('#linhas');
+    corpo.classList.toggle('anima', animar && !semMovimento());
+    corpo.innerHTML = lista.map((p, n) => {
       const idx = estado.produtos.indexOf(p);
       const foto = urlFoto(p, p.cores?.[0]);
       const marca = alterado(p);
@@ -415,7 +472,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
                   data-campo="preco" aria-label="Preço de ${esc(p.nome)}">`
         : `<button class="preco-faixa" type="button" data-editar="preco">${brl(Math.min(...valores))}<small>até ${brl(Math.max(...valores))}</small></button>`;
       return `
-      <tr data-id="${esc(p.id)}" data-alterado="${marca}" data-oculto="${!!p.oculto}">
+      <tr data-id="${esc(p.id)}" data-alterado="${marca}" data-oculto="${!!p.oculto}" style="--i:${Math.min(n, 14)}">
         <td class="c-ordem">
           <button class="seta" type="button" data-mover="-1" aria-label="Subir ${esc(p.nome)}" ${idx === 0 ? 'disabled' : ''}>
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg></button>
@@ -452,10 +509,17 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
 
   const produtoDaLinha = (el) => estado.produtos.find((p) => p.id === el.closest('tr')?.dataset.id);
 
-  function mudouProduto() {
+  function pulsar(id) {
+    if (semMovimento()) return;
+    const tr = $(`tr[data-id="${CSS.escape(id)}"]`);
+    if (tr) tr.classList.add('pulsa');
+  }
+
+  function mudouProduto(id) {
     desenharNumeros();
     desenharLinhas();
     atualizarBarra();
+    if (id) pulsar(id);
   }
 
   $('#linhas').addEventListener('change', (e) => {
@@ -471,7 +535,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       p.preco = v;
       delete p.precos;
     }
-    mudouProduto();
+    mudouProduto(p.id);
   });
 
   $('#linhas').addEventListener('click', (e) => {
@@ -496,7 +560,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (!b) return;
     estado.filtro = b.dataset.cat;
     desenharFiltros();
-    desenharLinhas();
+    desenharLinhas(true);
   });
 
   $('#busca').addEventListener('input', (e) => { estado.termo = e.target.value; desenharLinhas(); });
@@ -524,7 +588,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       if (precoUnico(p)) { p.preco = novos[caps[0]]; delete p.precos; }
       else { p.precos = novos; R.sincronizarPreco(p); }
     });
-    desenhar();
+    desenhar(true);
     toast(`${lista.length} produtos ${pct > 0 ? 'aumentados' : 'reduzidos'} em ${Math.abs(pct)}%. Revise e publique.`);
   });
 
@@ -558,7 +622,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const b = e.target.closest('[data-bib]');
     if (!b) return;
     const modelo = BIBLIOTECA.find((m) => m.id === b.dataset.bib);
-    dlgBib.close();
+    fechar(dlgBib);
     abrirEditor(null, 'preco', { ...clone(modelo), preco: 0, fotos: false });
   });
 
@@ -637,7 +701,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   });
   fed.status.addEventListener('change', () => { $('#campo-prazo').hidden = fed.status.value !== 'encomenda'; });
 
-  ed.querySelector('[data-fechar]').addEventListener('click', () => ed.close('cancelar'));
+  ed.querySelector('[data-fechar]').addEventListener('click', () => fechar(ed, 'cancelar'));
   ed.addEventListener('cancel', () => { ed.returnValue = 'cancelar'; });
 
   /* -- Preço por capacidade -- */
@@ -946,7 +1010,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   $('#ed-apagar').addEventListener('click', () => {
     if (!alvo || !confirm(`Apagar “${alvo.nome}” do catálogo? Para só tirar do site por um tempo, desligue “Aparece no site”.\n\nIsso só vale depois de publicar.`)) return;
     estado.produtos = estado.produtos.filter((p) => p !== alvo);
-    ed.close('apagado');
+    fechar(ed, 'apagado');
     desenhar();
     toast('Produto apagado. Publique para valer no site.');
   });
@@ -1023,11 +1087,12 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (alvo) estado.produtos[estado.produtos.indexOf(alvo)] = limpo;
     else estado.produtos.unshift(limpo);
 
-    ed.close('ok');
+    fechar(ed, 'ok');
     desenhar();
     if (estado.aba === 'ofertas') desenharOfertas();
     requestAnimationFrame(() => {
       $(`tr[data-id="${CSS.escape(limpo.id)}"]`)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      pulsar(limpo.id);
     });
     toast(alvo ? 'Produto atualizado. Publique para valer no site.' : 'Produto criado. Publique para valer no site.');
   });
@@ -1149,9 +1214,11 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       tema: t.id, titulo: t.titulo, subtitulo: t.subtitulo, faixa: t.faixa,
       inicio: d.inicio, fim: d.fim, ativo: true
     });
-    $('#temas').close();
+    fechar($('#temas'));
     desenharOfertas();
     atualizarBarra();
+    const novo = $$('#eventos .evento').at(-1);
+    if (novo && !semMovimento()) { novo.classList.add('novo'); novo.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
     toast(`${t.nome} criado. Confira as datas e publique.`);
   });
 
@@ -1304,7 +1371,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     estado.produtos = clone(estado.original);
     estado.loja = clone(estado.lojaOriginal);
     preencherRegra();
-    desenhar();
+    desenhar(true);
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
   });
