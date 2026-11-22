@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aliança One — iPhone, Mac, iPad e Apple Watch</title>
 <meta name="description" content="Loja Aliança One: iPhone 17, Mac, iPad, Apple Watch e AirPods com nota fiscal, garantia de 12 meses e atendimento direto no WhatsApp.">
-<meta name="theme-color" content="#f8f4ee">
+<meta name="theme-color" content="#f5f5f7">
 <meta property="og:title" content="Aliança One">
 <meta property="og:description" content="A melhor forma de comprar Apple em São Paulo. Nota fiscal, garantia e um consultor no WhatsApp.">
 <meta property="og:type" content="website">
-<link rel="preconnect" href="https://api.fontshare.com">
-<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <script>
   document.documentElement.classList.add('js');
   /* A metade da transição que pertence a esta página. Roda ANTES da
@@ -95,83 +95,59 @@
 <main id="conteudo">
 
 <!-- ============ Capa ============ -->
-<!-- A capa é partida ao meio: laranja vivo à esquerda com o
-     argumento, branco à direita com o aparelho. As duas metades são
-     colunas de verdade, não um fundo pintado por baixo — assim a
-     divisa não sai do lugar quando a manchete quebra numa linha a
-     mais. No celular elas viram duas faixas, uma sobre a outra. -->
-<section class="capa">
+<!-- No idioma de uma página de produto da Apple: o nome do aparelho,
+     uma frase, as duas ações e a foto grande embaixo, tudo centrado.
+     O laranja aparece no olho e no botão — e na própria foto. -->
+<section class="heroi">
+  <div class="shell heroi-txt">
+    <p class="heroi-olho" data-entra>Originais e lacrados</p>
+    <h1 class="heroi-titulo" data-entra>iPhone 17 Pro</h1>
+    <p class="heroi-sub" data-entra>Seu próximo iPhone, <em>sem dúvida.</em></p>
 
-  <div class="capa-lado capa-lado--laranja">
-    <div class="capa-txt">
-      <!-- Sem ícone. O escudo com o certinho dentro era o gesto de
-           selo de confiança que toda loja duvidosa usa, e usá-lo
-           aqui punha a Aliança no mesmo balcão. A frase sozinha
-           afirma mais do que a frase carimbada. -->
-      <p class="selo" data-entra>iPhones originais e lacrados</p>
-
-      <h1 data-entra>Seu próximo iPhone, <em>sem dúvida.</em></h1>
-
-      <p class="sub" data-entra>Produtos originais, lacrados e com procedência.
-        A experiência premium que a sua compra merece.</p>
-
-      <div class="capa-acoes" data-entra>
-        <a class="btn btn--grande" target="_blank" rel="noopener"
-           data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Ver ofertas no WhatsApp</a>
-        <a class="seta" href="sobre.html">Como funciona</a>
-      </div>
-
-      <p class="estado" id="estado-loja" data-entra data-aberta="false">
-        <span class="estado-luz" aria-hidden="true"></span>
-        <span class="estado-txt"></span>
-      </p>
-
-      <!-- Os quatro fatos que respondem "e se for golpe?". -->
-      <dl class="capa-fatos" data-entra>
-        <div data-cnpj-bloco><dt>CNPJ</dt><dd data-cnpj></dd></div>
-        <div><dt>Nota fiscal</dt><dd>No seu nome, sempre</dd></div>
-        <div><dt>Garantia de 12 meses</dt><dd>Respondida por nós</dd></div>
-        <div><dt>Lacre conferido</dt><dd>Aberto por você</dd></div>
-      </dl>
+    <div class="heroi-acoes" data-entra>
+      <a class="btn btn--grande" target="_blank" rel="noopener"
+         data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Comprar no WhatsApp</a>
+      <a class="btn btn--grande btn--vazio" href="produto.html?id=iphone-17-pro">Saiba mais</a>
     </div>
+
+    <p class="estado" id="estado-loja" data-entra data-aberta="false">
+      <span class="estado-luz" aria-hidden="true"></span>
+      <span class="estado-txt"></span>
+    </p>
   </div>
 
-  <div class="capa-lado capa-lado--branco">
-    <!-- A foto dos três acabamentos do iPhone 17 Pro. É o aparelho
-         anunciado, na cor anunciada, recortado em alpha: o branco é o
-         único fundo em que ele não precisa fingir chão nem sombra. -->
-    <figure class="capa-foto" data-entra>
-      <picture>
-        <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
-        <img src="assets/img/iphone-17-pro.png" width="988" height="1122"
-             fetchpriority="high" decoding="async"
-             alt="Três iPhone 17 Pro vistos por trás, lado a lado: Prata Profundo, Laranja-cósmico e Azul-profundo.">
-      </picture>
+  <figure class="heroi-foto" data-entra>
+    <picture>
+      <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
+      <img src="assets/img/iphone-17-pro.png" width="988" height="1122"
+           fetchpriority="high" decoding="async"
+           alt="Três iPhone 17 Pro vistos por trás, lado a lado: Prata Profundo, Laranja-cósmico e Azul-profundo.">
+    </picture>
+  </figure>
+</section>
 
-      <figcaption class="capa-etiqueta">
-        <a href="produto.html?id=iphone-17-pro">
-          <span>Destaque da semana</span>
-          <b>iPhone 17 Pro</b>
-        </a>
-      </figcaption>
-    </figure>
-  </div>
-
-  <a class="capa-desce" href="#destaques" aria-label="Ver os destaques">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-  </a>
+<!-- Os quatro fatos que respondem "e se for golpe?". -->
+<section class="fatos" aria-label="Por que comprar aqui">
+  <dl class="shell shell--larga fatos-grade">
+    <div data-cnpj-bloco><dt>CNPJ</dt><dd data-cnpj></dd></div>
+    <div><dt>Nota fiscal</dt><dd>No seu nome, sempre.</dd></div>
+    <div><dt>Garantia de 12 meses</dt><dd>Respondida por nós.</dd></div>
+    <div><dt>Lacre conferido</dt><dd>Aberto por você na entrega.</dd></div>
+  </dl>
 </section>
 
 <!-- ============ Trilho de categorias ============ -->
+<!-- Como a vitrine da Apple Store: uma foto pequena de cada família
+     em cima do nome. -->
 <section class="trilho" aria-label="Comprar por categoria">
   <div class="shell shell--larga">
     <div class="trilho-lista">
-      <a href="index.html?cat=iphone#catalogo">iPhone</a>
-      <a href="index.html?cat=mac#catalogo">Mac</a>
-      <a href="index.html?cat=ipad#catalogo">iPad</a>
-      <a href="index.html?cat=watch#catalogo">Apple Watch</a>
-      <a href="index.html?cat=audio#catalogo">Áudio</a>
-      <a href="index.html?cat=acessorios#catalogo">Acessórios</a>
+      <a href="index.html?cat=iphone#catalogo"><img src="assets/img/produtos/iphone-17/preto.webp" alt="" loading="lazy" width="80" height="80"><span>iPhone</span></a>
+      <a href="index.html?cat=mac#catalogo"><img src="assets/img/produtos/macbook-air-13-m4/azul-ceu.webp" alt="" loading="lazy" width="80" height="80"><span>Mac</span></a>
+      <a href="index.html?cat=ipad#catalogo"><img src="assets/img/produtos/ipad-air-11-m3/azul.webp" alt="" loading="lazy" width="80" height="80"><span>iPad</span></a>
+      <a href="index.html?cat=watch#catalogo"><img src="assets/img/produtos/watch-ultra-3/titanio-natural.webp" alt="" loading="lazy" width="80" height="80"><span>Apple Watch</span></a>
+      <a href="index.html?cat=audio#catalogo"><img src="assets/img/produtos/airpods-pro-3/branco.webp" alt="" loading="lazy" width="80" height="80"><span>AirPods</span></a>
+      <a href="index.html?cat=acessorios#catalogo"><img src="assets/img/produtos/magsafe-charger/branco.webp" alt="" loading="lazy" width="80" height="80"><span>Acessórios</span></a>
     </div>
   </div>
 </section>
@@ -180,7 +156,7 @@
 <section class="destaques" id="destaques">
   <div class="shell shell--larga">
     <div class="sec-topo" data-reveal>
-      <h2 class="t-xl">O melhor da Apple, <em class="rampa">confiança da Aliança One.</em></h2>
+      <h2 class="t-xl">Os principais. <em class="rampa">Com a confiança da Aliança One.</em></h2>
     </div>
 
     <div class="grade-destaques" id="grade-destaques"></div>
@@ -191,7 +167,7 @@
 <section class="catalogo" id="catalogo">
   <div class="shell shell--larga">
     <div class="sec-topo" data-reveal>
-      <h2 class="t-xl">Toda a loja.</h2>
+      <h2 class="t-xl">Toda a loja. <em class="rampa">Escolha o seu.</em></h2>
     </div>
 
     <div class="filtros" data-reveal>
@@ -392,6 +368,7 @@
 </a>
 
 <script src="assets/js/data.js"></script>
+<script src="assets/js/catalogo.js"></script>
 <script src="assets/js/aparelho.js"></script>
 <script src="assets/js/gesto.js"></script>
 <script src="assets/js/transicao.js"></script>

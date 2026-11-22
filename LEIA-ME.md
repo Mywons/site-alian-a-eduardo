@@ -25,7 +25,55 @@ PRODUCT.md                quem é a marca e por que o site é assim
 DESIGN.md                 cores, tipografia, espaçamento e movimento
 ```
 
-Só um arquivo precisa da sua atenção no dia a dia: **`assets/js/data.js`**.
+Preço, produto e foto você muda pelo **painel**: abra `admin.html` no site publicado
+(ex.: `https://seusite.com.br/admin.html`). Veja a seção 0 logo abaixo.
+
+O resto — WhatsApp, horários, perguntas — fica em **`assets/js/data.js`**.
+
+---
+
+## 0. Painel de administração (`admin.html`)
+
+O painel mostra todos os produtos numa tabela e deixa você:
+
+- **mudar o preço** direto na linha (e o preço do varejo oficial, que gera o "você economiza");
+- **reajustar vários preços de uma vez** por percentual, com arredondamento para terminar em 9;
+- **ligar/desligar o destaque** de "Os principais" e **mudar a ordem** com as setas;
+- **cadastrar produto novo** e **editar** nome, categoria, texto, cores, capacidades e especificações;
+- **enviar a foto de cada cor** (PNG, JPG ou WEBP — o painel reduz e converte sozinho);
+- **apagar** um produto.
+
+Nada vai para o site até você tocar em **Publicar no site**. Aí o painel grava tudo
+num commit só no GitHub, e a hospedagem publica sozinha em cerca de 1 minuto.
+
+### Primeiro acesso: a chave do GitHub
+
+O site não tem servidor, então o painel salva direto no repositório. Para isso ele
+precisa de uma chave (token) **sua**:
+
+1. GitHub → **Settings → Developer settings → Personal access tokens → Fine-grained tokens**.
+2. **Generate new token**. Nome: "Painel da loja". Escolha a validade.
+3. **Repository access → Only select repositories** → o repositório do site.
+4. **Permissions → Repository permissions → Contents: Read and write**.
+5. Gere, copie e cole no painel. Marque "Lembrar neste aparelho" para não pedir de novo.
+
+A chave fica só no navegador de quem entrou. Não mande para ninguém; quem tiver a
+chave consegue mudar o site. Para cortar o acesso, apague o token no GitHub.
+
+Em **Repositório e ramo** você confere para onde o painel grava. O padrão é o ramo
+`main` — tem de ser o mesmo ramo que a hospedagem publica.
+
+### Modo de teste
+
+"Abrir em modo de teste" deixa mexer em tudo sem chave. Em vez de publicar, o botão
+baixa um `catalogo.js` novo, que você pode subir à mão em `assets/js/`.
+
+### Onde fica o catálogo
+
+Os produtos moram em `assets/js/catalogo.js`, que o painel reescreve inteiro a cada
+publicação. Dá para editar à mão, mas mantenha o formato JSON (aspas duplas, sem
+comentários dentro da lista). As fotos enviadas vão para
+`assets/img/produtos/<id-do-produto>/<cor>.webp`.
 
 ---
 
@@ -66,7 +114,7 @@ edite a função `msgProduto` no topo de `assets/js/app.js`.
 
 ## 3. Adicionar, editar ou remover um produto
 
-Tudo em `assets/js/data.js`, dentro de `PRODUTOS`. Copie um bloco inteiro e edite:
+O jeito fácil é o painel (seção 0). À mão: tudo em `assets/js/catalogo.js`, dentro de `PRODUTOS`. Copie um bloco inteiro e edite (em JSON, com aspas duplas):
 
 ```js
 {
@@ -329,8 +377,9 @@ Se a hospedagem pedir uma "pasta pública" ou "raiz do site", aponte para esta p
 
 ## Decisões que valem saber
 
-- **Fonte**: Switzer, uma família só, carregada da Fontshare. Se a internet do visitante
-  bloquear, o site cai para Helvetica/Arial sem quebrar o layout.
+- **Fonte**: a SF Pro do próprio aparelho (iPhone, Mac) e, para quem não tem, a Inter do
+  Google Fonts. Se a internet do visitante bloquear, o site cai para Helvetica/Arial sem
+  quebrar o layout.
 - **A bolha do WhatsApp** é só uma bolinha verde com o ícone. Não abre cartão, não
   aparece sozinha e não interrompe ninguém: é um botão. Na página do produto ela já
   carrega a mensagem daquele produto.

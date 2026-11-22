@@ -37,16 +37,16 @@
      um cartão se levanta sem precisar de borda — a sombra confirma o
      que a luz já disse.
      --------------------------------------------------------------- */
-  --chao:    oklch(0.968 0.009 74);  /* #f8f4ee · o chão da página     */
-  --chao-2:  oklch(0.993 0.004 78);  /* #fefcfa · cartão, campo, chip  */
-  --fundo:   oklch(0.945 0.011 70);  /* #f2ece5 · recuo, hover, poço   */
+  --chao:    #f5f5f7;  /* o cinza da Apple · o chão da página */
+  --chao-2:  #ffffff;  /* cartão, campo, chip */
+  --fundo:   #e8e8ed;  /* recuo, hover */
 
   /* Os mesmos três, com os nomes que o resto da folha já usava. As
      ilhas claras deixaram de ser exceção: agora a página inteira é
      ilha, e `--papel` é o papel mais alvo, para o que precisa saltar
      um degrau acima do chão. */
-  --papel:   oklch(0.988 0.006 76);
-  --papel-2: oklch(0.945 0.011 70);
+  --papel:   #ffffff;
+  --papel-2: #f5f5f7;
 
   /* ---------------------------------------------------------------
      O LARANJA DA MARCA É `#FF6200`, e ele tem um limite físico que
@@ -109,25 +109,25 @@
      pede — foi exatamente o contrário na versão laranja, e é a única
      regra do site que a inversão virou de cabeça para baixo.
      --------------------------------------------------------------- */
-  --tinta:   oklch(0.22 0.012 50);   /* #1f1916 · 15,9:1 no chão */
-  --escuro:  oklch(0.22 0.012 50);   /* o mesmo, pelo nome antigo */
-  --suave:   oklch(0.475 0.020 55);  /* #665952 · 6,15:1 no chão  */
+  --tinta:   #1d1d1f;   /* 15,4:1 no chão */
+  --escuro:  #1d1d1f;   /* o mesmo, pelo nome antigo */
+  --suave:   #6e6e73;   /* 4,9:1 no chão, 5,1:1 no branco */
 
   /* O `--claro` é o papel visto de dentro de uma superfície escura:
      a tinta da faixa do Instagram, do botão preto da capa, do selo
      do carrinho. Ele não é mais o gesto do site — o gesto é o
      laranja. */
-  --claro:   oklch(0.988 0.006 76);
+  --claro:   #ffffff;
 
   /* O filete. Sobre papel ele é a tinta rebaixada, não o branco. */
-  --linha:   oklch(0.22 0.012 50 / 0.12);
-  --linha-forte: oklch(0.22 0.012 50 / 0.22);
+  --linha:   rgb(0 0 0 / 0.1);
+  --linha-forte: rgb(0 0 0 / 0.2);
 
   /* A faixa forte e o botão: `#FF6200` cheio com a tinta preta por
      cima. É a mesma dupla em toda a folha, e é o único preenchimento
      cromático que o site tem. */
   --forte: var(--marca);
-  --forte-tinta: oklch(0.22 0.012 50);
+  --forte-tinta: #1d1d1f;
 
   /* Sem degradê em lugar nenhum: o token continua para o resto da
      folha não quebrar, mas é uma cor só. */
@@ -152,12 +152,12 @@
      um chão de papel um pálido some. Croma baixo mesmo assim — quem
      sinaliza ação é o laranja, e esses aqui são só chão.
      --------------------------------------------------------------- */
-  --areia:   oklch(0.925 0.042 52);   /* iPhone     */
-  --bruma:   oklch(0.925 0.036 238);  /* iPad       */
-  --musgo:   oklch(0.925 0.038 158);  /* Áudio      */
-  --argila:  oklch(0.925 0.034 20);   /* Watch      */
-  --linho:   oklch(0.925 0.034 92);   /* Acessórios */
-  --grafite: oklch(0.925 0.034 268);  /* Mac        */
+  --areia:   #f5f5f7;   /* iPhone     */
+  --bruma:   #f5f5f7;  /* iPad       */
+  --musgo:   #f5f5f7;  /* Áudio      */
+  --argila:   #f5f5f7;   /* Watch      */
+  --linho:   #f5f5f7;   /* Acessórios */
+  --grafite:   #f5f5f7;  /* Mac        */
 
   /* ---------------------------------------------------------------
      As caixas dos destaques usam a versão SATURADA da mesma família.
@@ -170,13 +170,13 @@
      reprova aqui, então dentro da caixa ele escurece e ganha o matiz
      da própria família.
      --------------------------------------------------------------- */
-  --areia-viva:   oklch(0.875 0.072 52);
-  --bruma-viva:   oklch(0.875 0.065 238);
-  --musgo-vivo:   oklch(0.875 0.105 158);
-  --argila-viva:  oklch(0.875 0.062 20);
-  --linho-vivo:   oklch(0.875 0.105 95);
-  --grafite-vivo: oklch(0.875 0.058 272);
-  --laranja-vivo: oklch(0.872 0.076 50);
+  --areia-viva: #ffffff;
+  --bruma-viva: #ffffff;
+  --musgo-vivo: #ffffff;
+  --argila-viva: #ffffff;
+  --linho-vivo: #ffffff;
+  --grafite-vivo: #ffffff;
+  --laranja-vivo: #ffffff;
 
   /* A noite: o único chão escuro do site, na faixa do Instagram.
      Social é outro lugar, e parecer outro lugar ajuda a pessoa a
@@ -189,15 +189,15 @@
 
   /* O poço da peça na página do produto: um degrau abaixo do papel,
      com um fio do laranja dentro. */
-  --poco:    oklch(0.935 0.014 62);
+  --poco:    #f5f5f7;
 
   /* O aro de 1px: o que separa um chip do chão quando a diferença de
      tom entre os dois é de 1,07:1 e uma sombra seria pesada demais
      para uma peça de 42px. */
-  --aro: inset 0 0 0 1px oklch(0.22 0.012 50 / 0.10);
+  --aro: inset 0 0 0 1px rgb(0 0 0 / 0.08);
 
-  --sans: 'Switzer', 'Switzer-fallback', -apple-system, BlinkMacSystemFont,
-          'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter',
+          'Helvetica Neue', Arial, sans-serif;
 
   /* Manchetes: a SF Pro de verdade quando a pessoa está num aparelho
      Apple — que é a maioria de quem compra aqui. A Apple não licencia
@@ -205,8 +205,8 @@
      dá para fazer é pedi-la ao sistema primeiro. Quem não a tem cai na
      Switzer, escolhida justamente por ser a mais próxima dela em
      proporção e desenho — a manchete muda de arquivo, não de voz. */
-  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
-             'Switzer', 'Switzer-fallback', 'Helvetica Neue', Arial, sans-serif;
+  --display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter',
+             'Helvetica Neue', Arial, sans-serif;
 
   --t-hero:  clamp(2.75rem, 6.4vw, 5.5rem);
   --t-xl:    clamp(2rem, 4vw, 3.25rem);
@@ -251,10 +251,8 @@
      Ela vive apenas na vitrine e nas peças que se levantam. Seções,
      faixas e linhas de catálogo continuam separadas por cor e por
      filete, como sempre foram. */
-  --sombra-card:  0 4px 6px -1px oklch(0.22 0.012 50 / 0.10),
-                  0 2px 4px -2px oklch(0.22 0.012 50 / 0.10);
-  --sombra-alta:  0 12px 28px -8px oklch(0.22 0.012 50 / 0.22),
-                  0 4px 8px -4px oklch(0.22 0.012 50 / 0.14);
+  --sombra-card:  0 2px 12px rgb(0 0 0 / 0.06);
+  --sombra-alta:  0 10px 34px rgb(0 0 0 / 0.12);
 
   /* A cor DESTE ramo, usada pela cortina da troca. É o CHÃO da
      página, não o acento: a bola tem de chegar do outro lado já
@@ -3020,6 +3018,282 @@ html.travado { overflow: hidden; }
 
 @media (max-width: 620px) {
   .priv-tabela > div { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* ---------- 24b. A camada Apple ----------
+   O site passou a falar o idioma visual de apple.com: cinza #f5f5f7
+   de chão e branco puro de cartão, tinta #1d1d1f, SF Pro (Inter para
+   quem não tem), manchete centrada, cartões sem moldura e muito ar.
+   O laranja da marca continua com o mesmo trabalho de antes — botão,
+   olho, link — e é a única cor da loja na página. As regras abaixo
+   vencem as das seções anteriores por virem depois; os tokens da
+   seção 1 já foram trocados para a paleta neutra. */
+
+body { background: var(--papel); }
+
+/* -- Navegação: a barra fina da Apple -- */
+:root { --nav: 48px; }
+.nav-topo {
+  background: rgb(251 251 253 / 0.8);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--hover) var(--ease), background-color var(--hover) var(--ease);
+}
+.nav-topo[data-rolado='true'] { border-bottom-color: var(--linha); }
+.nav-links { font-size: 0.8125rem; letter-spacing: -0.01em; }
+.nav-links a { opacity: 0.8; }
+.nav-destaque { background: none; padding: 0; margin: 0; font-weight: 400; opacity: 0.8; }
+.nav-destaque:hover { background: none; }
+.nav-corp { min-height: 30px; padding: 0 13px; font-size: 0.75rem; font-weight: 500; }
+.marca .simbolo { fill: var(--marca); width: 17px; }
+.marca { font-weight: 600; }
+
+/* -- Botões: a pílula da Apple, mais baixa e mais leve -- */
+.btn { min-height: 44px; padding: 0 22px; font-size: 1.0625rem; font-weight: 400; letter-spacing: -0.022em; }
+.btn--grande { min-height: 50px; padding: 0 28px; font-size: 1.0625rem; }
+.btn--peq { min-height: 32px; padding: 0 15px; font-size: 0.875rem; }
+.btn--vazio {
+  background: transparent;
+  color: var(--acao);
+  border: 1px solid var(--acao);
+}
+.btn--vazio:hover { background: var(--acao); color: var(--claro); }
+.seta { font-size: 1.0625rem; font-weight: 400; }
+
+/* -- Manchetes de seção: centradas, como na Apple -- */
+.t-xl { font-size: clamp(2.1rem, 4.4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.07; }
+.sec-topo { justify-content: center; text-align: center; margin-bottom: clamp(36px, 5vw, 60px); }
+.sec-topo h2 { max-width: 24ch; margin-inline: auto; }
+.rampa { color: var(--suave); }
+
+/* -- A capa -- */
+.heroi {
+  background: var(--papel);
+  padding-top: calc(var(--nav) + clamp(40px, 6vw, 72px));
+  text-align: center;
+  overflow: hidden;
+}
+.heroi-txt { display: grid; justify-items: center; }
+.heroi-olho {
+  margin: 0 0 10px;
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--acao);
+}
+.heroi-titulo {
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 5.75rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.heroi-sub {
+  margin: 12px 0 0;
+  max-width: none;
+  font-family: var(--display);
+  font-size: clamp(1.35rem, 2.6vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.heroi-sub em { font-style: normal; font-weight: 600; }
+.heroi-acoes { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: clamp(24px, 3vw, 34px); }
+.heroi .estado { margin-top: 18px; justify-content: center; font-size: 0.875rem; color: var(--suave); }
+.heroi-foto {
+  margin: clamp(32px, 5vw, 56px) auto 0;
+  width: min(760px, 88vw);
+  aspect-ratio: 988 / 900;
+  overflow: hidden;
+}
+.heroi-foto img { display: block; width: 100%; height: auto; }
+
+/* -- Os quatro fatos -- */
+.fatos { background: var(--chao); padding: clamp(28px, 4vw, 44px) 0; }
+.fatos-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 20px clamp(16px, 3vw, 40px);
+  margin: 0 auto;
+  text-align: center;
+}
+.fatos-grade dt { font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.02em; }
+.fatos-grade dd { margin: 4px 0 0; font-size: 0.875rem; color: var(--suave); }
+
+/* -- O trilho: a fileira de categorias da Apple Store -- */
+.trilho { background: var(--papel); border-bottom: 0; padding: clamp(36px, 5vw, 56px) 0 clamp(20px, 3vw, 32px); }
+.trilho-lista { gap: clamp(14px, 3vw, 44px); padding: 4px 2px 10px; }
+.trilho-lista a {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.trilho-lista img {
+  width: clamp(64px, 8vw, 92px);
+  height: clamp(64px, 8vw, 92px);
+  object-fit: contain;
+  transition: transform var(--hover) var(--ease);
+}
+.trilho-lista a:hover { background: none; color: var(--acao); }
+.trilho-lista a:hover img { transform: translateY(-3px); }
+
+/* -- Os principais: as telhas da capa da Apple -- */
+.destaques { background: var(--papel); padding-top: clamp(48px, 7vw, 96px); }
+.grade-destaques { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.card {
+  padding: clamp(36px, 4vw, 52px) clamp(22px, 3vw, 40px) 0;
+  border-radius: 0;
+  background: var(--chao);
+  box-shadow: none;
+  text-align: center;
+  overflow: hidden;
+  min-height: 0;
+}
+@media (hover: hover) { .card:hover { transform: none; box-shadow: none; } }
+.card:active { transform: none; }
+.card-txt { position: relative; display: grid; justify-items: center; }
+.card .olho { margin-bottom: 6px; font-size: 0.875rem; font-weight: 600; letter-spacing: 0; color: var(--acao); }
+.card-nome, .card--peq .card-nome { font-size: clamp(2rem, 3.4vw, 2.75rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; }
+.card-chamada { margin: 8px auto 0; font-size: clamp(1.05rem, 1.5vw, 1.3rem); letter-spacing: -0.015em; line-height: 1.3; max-width: 30ch; }
+.card-preco, .card--peq .card-preco { margin: 10px 0 0; padding: 0; font-size: 1.0625rem; font-weight: 400; letter-spacing: -0.02em; }
+.card-preco small { display: inline; margin-left: 6px; color: var(--suave); font-size: 0.875rem; }
+.card-acoes { justify-content: center; gap: 22px; margin-top: 18px; }
+.card-acoes .btn { min-height: 36px; padding: 0 18px; font-size: 0.9375rem; }
+.card-mais { position: relative; z-index: 0; }
+.card-poco, .card--peq .card-poco, .card--largo .card-poco {
+  height: clamp(240px, 26vw, 360px);
+  margin: clamp(20px, 3vw, 32px) auto 0;
+  width: 100%;
+  border-radius: 0;
+  aspect-ratio: auto;
+}
+.card .foto { padding: 0 0 clamp(14px, 2vw, 24px); object-position: center bottom; }
+.card:hover .aparelho, .card:hover .foto { transform: scale(1.03); }
+.card--metade { grid-column: span 1; }
+.card--largo { grid-column: 1 / -1; display: block !important; }
+.card--largo .card-poco { height: clamp(300px, 34vw, 480px); }
+.card--largo .card-nome { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+
+/* A telha preta: a dos modelos Pro na capa da Apple. */
+.card--noite { background: #000; color: #f5f5f7; }
+.card--noite .olho { color: var(--marca); }
+.card--noite .card-preco small { color: #a1a1a6; }
+.card--noite .seta { color: var(--marca); }
+.card--noite :focus-visible { outline-color: var(--marca); }
+
+/* "Também na loja", na página do produto: três telhas iguais. */
+.relacionados .card, .card--terco { grid-column: span 1; }
+.relacionados .grade-destaques { grid-template-columns: repeat(3, 1fr); }
+.relacionados .card-nome { font-size: clamp(1.5rem, 2.2vw, 2rem); }
+.relacionados .card-chamada { font-size: 1rem; }
+.relacionados .card-poco { height: clamp(200px, 20vw, 280px); }
+
+@media (max-width: 900px) {
+  .grade-destaques { grid-template-columns: 1fr; }
+  .card--largo, .card--alto, .card--terco, .card--metade { grid-column: 1 / -1; }
+  .grade-destaques { margin-inline: calc(var(--gutter) * -1); }
+  .relacionados .grade-destaques { grid-template-columns: 1fr; }
+}
+
+/* -- Toda a loja: a prateleira da Apple Store -- */
+.catalogo { background: var(--chao); border-top: 0; }
+.filtros { justify-content: center; }
+.chips { margin-right: 0; padding: 2px; }
+.chip { box-shadow: none; background: transparent; min-height: 36px; padding: 0 16px; font-size: 0.9375rem; color: var(--tinta); }
+.chip:hover { background: rgb(0 0 0 / 0.05); }
+.chip[aria-pressed='true'] { background: var(--tinta); color: var(--claro); }
+.busca input { background: var(--papel); border-color: transparent; min-height: 38px; }
+
+.lista {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+  gap: 20px;
+  border-top: 0;
+}
+.linha {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 26px 26px 24px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--papel);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.04);
+  transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+}
+.linha:hover { background: var(--papel); transform: scale(1.015); box-shadow: 0 4px 24px rgb(0 0 0 / 0.1); }
+.linha-poco { width: 100%; height: 210px; aspect-ratio: auto; margin-bottom: 16px; }
+.linha:hover .aparelho, .linha:hover .foto { transform: scale(1.04); }
+.contagem { text-align: center; }
+.linha-poco .foto { padding: 0; }
+.linha-cores { display: flex; justify-content: center; gap: 7px; list-style: none; margin: 0 0 14px; padding: 0; }
+.linha-cores li { width: 11px; height: 11px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.15); }
+.linha .olho { font-size: 0.75rem; font-weight: 600; color: var(--acao); margin-bottom: 4px; }
+.linha-nome { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.linha-preco { text-align: left; margin-top: auto; padding-top: 18px; white-space: normal; }
+.linha-preco b { display: block; font-size: 1.0625rem; font-weight: 400; }
+.linha-preco small { display: block; margin-top: 2px; }
+.linha-acoes { margin-top: 14px; }
+@media (hover: hover) {
+  .linha-acoes .btn { background: var(--marca); color: var(--forte-tinta); box-shadow: none; }
+  .linha:hover .linha-acoes .btn, .linha-acoes .btn:focus-visible { background: var(--marca-funda); }
+}
+@media (max-width: 760px) {
+  .lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .linha { padding: 18px 14px 16px; border-radius: 16px; }
+  .linha::after { display: none; }
+  .linha-poco { height: 130px; grid-row: auto; margin-bottom: 12px; }
+  .linha-cores { margin-bottom: 10px; }
+  .linha-nome { font-size: 1.0625rem; }
+  .linha-preco { padding-top: 10px; }
+  .linha-preco b { display: block; font-size: 0.9375rem; }
+  .linha-preco small { font-size: 0.75rem; }
+  .linha-acoes { display: none; }
+}
+
+.lista > .mais, .lista > .vazio { grid-column: 1 / -1; }
+.mais .btn { min-height: 44px; }
+
+/* -- Perguntas e Instagram -- */
+.perguntas { background: var(--papel); }
+.perguntas h2 em { color: var(--suave); }
+
+/* -- Compromissos: sai a faixa laranja, entra o bloco de três passos
+   da Apple, em cartões brancos sobre o cinza. -- */
+.compromissos { background: var(--chao); color: var(--tinta); }
+.compromissos-grade div { background: var(--papel); border-radius: 18px; padding: clamp(28px, 3vw, 40px) 24px; }
+.compromissos-grade .n { color: var(--marca); font-size: 2rem; font-weight: 600; }
+.compromissos-grade p { color: var(--suave); }
+.compromissos .btn { background: var(--marca); color: var(--forte-tinta); }
+.compromissos .btn:hover { background: var(--marca-funda); }
+.compromissos :focus-visible { outline-color: var(--acao); }
+
+/* -- Rodapé: o rodapé miúdo e cinza da Apple -- */
+.rodape { background: var(--chao); border-top: 0; font-size: 0.75rem; color: var(--suave); padding-top: 32px; }
+.rodape-marca { border-bottom-color: rgb(0 0 0 / 0.12); }
+.rodape-marca .simbolo { fill: var(--marca); width: 20px; }
+.rodape-cols { border-bottom-color: rgb(0 0 0 / 0.12); }
+.rodape h4 { font-size: 0.75rem; }
+.rodape ul { gap: 8px; }
+
+/* -- Página de produto -- */
+.produto-capa > p { margin-inline: auto; }
+.produto-nome { font-size: clamp(2.6rem, 6vw, 4.5rem); letter-spacing: -0.035em; }
+.produto-preco b { font-weight: 600; }
+.poco--mockup { background: var(--chao); border-radius: 28px; }
+
+/* -- Celular -- */
+@media (max-width: 700px) {
+  .heroi-acoes { gap: 10px; }
+  .heroi-acoes .btn { min-height: 46px; padding: 0 22px; font-size: 1rem; }
+  .fatos-grade { grid-template-columns: repeat(2, 1fr); text-align: left; }
+  .trilho-lista { justify-content: flex-start; }
 }
 
 /* ---------- 25. Preferências do usuário ---------- */

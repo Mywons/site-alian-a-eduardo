@@ -1,5 +1,22 @@
 # Design
 
+## A camada Apple
+
+O varejo foi redesenhado no idioma de apple.com, por cima da folha que já existia (seção
+**24b** de `style.css`, e os tokens da seção 1 trocados para a paleta neutra):
+
+- **Chão** `#f5f5f7` e **cartão** `#ffffff`, tinta `#1d1d1f`, secundário `#6e6e73`.
+- **Capa centrada**: olho laranja, nome do aparelho grande, uma frase, as duas ações e a
+  foto embaixo. A diagonal saiu.
+- **Trilho de categorias** com a foto de cada família, como na Apple Store.
+- **Os principais** são telhas sem raio, centradas, com a foto embaixo; a primeira ocupa a
+  largura inteira e é **preta** — a telha dos modelos Pro na Apple.
+- **Toda a loja** virou prateleira: cartões brancos de 18px com as bolinhas de cor.
+- **Compromissos** deixou de ser a faixa laranja: três cartões brancos sobre o cinza.
+- O laranja `#FF6200` continua preenchendo o botão (tinta preta, 5,6:1) e `--acao`
+  continua escrevendo link e olho. As notas abaixo sobre papel off-white descrevem a
+  versão anterior e valem como histórico.
+
 ## Duas marcas, duas folhas
 
 O projeto tem **dois ramos**, e cada um tem folha de estilo própria:
@@ -422,12 +439,12 @@ Com `prefers-reduced-motion`, a bola vira um fade de 180ms.
 
 ## Typography
 
-**Switzer** (Fontshare) nos pesos 400/500/600/700 carrega o site inteiro, e as manchetes
-grandes pedem a **SF Pro do sistema** antes dela (`--display`). A Apple não licencia a SF
+O site pede primeiro a **SF Pro do sistema** (`-apple-system`), em texto e em manchete, e
+cai na **Inter** (Google Fonts, 400/500/600/700) para quem não a tem. Antes era a Switzer;
+a troca veio com a camada Apple (seção 24b de `style.css`). A Apple não licencia a SF
 Pro para servir na web, então ela não pode ser baixada; o que dá para fazer é pedi-la ao
 sistema operacional, e a maior parte de quem compra aqui está num aparelho Apple. Quem
-não a tem cai na Switzer — escolhida justamente por ser a mais próxima dela em proporção
-e desenho. A manchete troca de arquivo, não de voz, e continua sendo uma família só na
+não a tem cai na Inter — a mais próxima dela em proporção e desenho entre as livres. A manchete troca de arquivo, não de voz, e continua sendo uma família só na
 percepção de quem lê.
 
 Regras de escala:

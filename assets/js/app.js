@@ -237,23 +237,37 @@ function montarWhatsApp() {
 function cardHTML(p, classes = 'card--terco card--peq') {
   return `
   <article class="card ${classes}" data-reveal>
-    <div class="card-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
-    ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
-    <h3 class="card-nome">
-      <a class="card-link" href="${linkProduto(p)}">${escapar(p.nome)}</a>
-    </h3>
-    <p class="card-preco">${brl(p.preco)}<small>${parcela(p.preco)}</small></p>
-    <div class="card-acoes">
-      <a class="btn" href="${linkProduto(p)}"
-         aria-label="Comprar ${escapar(p.nome)}">Comprar</a>
+    <div class="card-txt">
+      ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
+      <h3 class="card-nome">
+        <a class="card-link" href="${linkProduto(p)}">${escapar(p.nome)}</a>
+      </h3>
+      ${p.chamada ? `<p class="card-chamada">${escapar(p.chamada)}</p>` : ''}
+      <p class="card-preco">${brl(p.preco)}<small>${parcela(p.preco)}</small></p>
+      <div class="card-acoes">
+        <a class="btn" href="${linkProduto(p)}"
+           aria-label="Comprar ${escapar(p.nome)}">Comprar</a>
+        <span class="seta card-mais" aria-hidden="true">Saiba mais</span>
+      </div>
     </div>
+    <div class="card-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
   </article>`;
+}
+
+/* As bolinhas de cor do cartão da loja: no máximo seis, como na Apple
+   Store, e só quando existe escolha de verdade. */
+function bolinhasHTML(p) {
+  const cores = p.cores || [];
+  if (cores.length < 2) return '';
+  return `<ul class="linha-cores" aria-label="${cores.length} cores">${cores.slice(0, 6).map((c) =>
+    `<li style="--c:${corHex(c, p.categoria)}" title="${escapar(c)}"></li>`).join('')}</ul>`;
 }
 
 function linhaHTML(p) {
   return `
   <article class="linha" data-reveal>
-    <div class="linha-poco">${aparelhoHTML(p, p.cores?.[0], 'linha')}</div>
+    <div class="linha-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
+    ${bolinhasHTML(p)}
     <div class="linha-txt">
       ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
       <h3 class="linha-nome">
@@ -279,22 +293,18 @@ function montarDestaques() {
 
   const escolhidos = PRODUTOS.filter((p) => p.destaque === 'principal').slice(0, 5);
 
-  // Tamanho e fundo variam de propósito: 4+2 na primeira linha, 2+2+2 na
-  // segunda. Cinco cards idênticos seriam o caminho fácil e o errado.
-  //
-  // As cinco caixas usam a versão SATURADA de cada família, e a ordem
-  // espalha os matizes: laranja, azul, manteiga, verde, rosa. O damasco
-  // saiu da lista quando o chão virou laranja — ele sumia dentro dele.
+  // Como a capa da Apple: o primeiro ocupa a largura inteira em preto,
+  // os outros quatro em pares, em branco.
   const formas = [
-    'card--largo card--forte',
-    'card--alto card--bruma',
-    'card--terco card--linho card--peq',
-    'card--terco card--musgo card--peq',
-    'card--terco card--argila card--peq'
+    'card--largo card--noite',
+    'card--metade',
+    'card--metade',
+    'card--metade',
+    'card--metade'
   ];
 
   grade.innerHTML = escolhidos
-    .map((p, i) => cardHTML(p, formas[i] || 'card--terco card--peq'))
+    .map((p, i) => cardHTML(p, formas[i] || 'card--metade'))
     .join('');
 
   grade.querySelectorAll('[data-reveal]').forEach((el, i) =>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel — Aliança One</title>
+<meta name="theme-color" content="#f5f5f7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/css/admin.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%231d1d1f'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23FF6200'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23FF6200'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23FF6200'/></svg>">
+</head>
+<body>
+
+<!-- ============ Entrada ============ -->
+<section class="entrada" id="entrada">
+  <div class="entrada-cartao">
+    <svg class="entrada-marca" viewBox="4 2 56 58" aria-hidden="true">
+      <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+      <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+      <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+    </svg>
+    <h1>Painel da loja</h1>
+    <p class="entrada-sub">Preços, produtos e fotos. Tudo que você salvar aqui vai para o site.</p>
+
+    <form id="form-entrada" autocomplete="off">
+      <label class="campo">
+        <span>Chave de acesso (token do GitHub)</span>
+        <input id="in-token" type="password" required placeholder="github_pat_…" spellcheck="false">
+      </label>
+
+      <details class="entrada-mais">
+        <summary>Repositório e ramo</summary>
+        <div class="grade-2">
+          <label class="campo">
+            <span>Repositório</span>
+            <input id="in-repo" type="text" placeholder="dono/repositorio" spellcheck="false">
+          </label>
+          <label class="campo">
+            <span>Ramo publicado</span>
+            <input id="in-ramo" type="text" placeholder="main" spellcheck="false">
+          </label>
+        </div>
+      </details>
+
+      <label class="check">
+        <input id="in-lembrar" type="checkbox" checked>
+        <span>Lembrar neste aparelho</span>
+      </label>
+
+      <button class="btn btn--cheio btn--largo" type="submit">Entrar</button>
+      <p class="entrada-erro" id="entrada-erro" role="alert"></p>
+    </form>
+
+    <button class="link" type="button" id="btn-teste">Abrir em modo de teste, sem salvar</button>
+
+    <details class="ajuda">
+      <summary>Como criar a chave de acesso</summary>
+      <ol>
+        <li>Entre no GitHub e abra <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>.</li>
+        <li>Toque em <b>Generate new token</b>. Dê um nome, como “Painel da loja”, e escolha a validade.</li>
+        <li>Em <b>Repository access</b>, marque <b>Only select repositories</b> e escolha o repositório do site.</li>
+        <li>Em <b>Permissions → Repository permissions</b>, coloque <b>Contents</b> em <b>Read and write</b>.</li>
+        <li>Gere, copie e cole aqui. A chave fica só neste navegador.</li>
+      </ol>
+    </details>
+  </div>
+</section>
+
+<!-- ============ Painel ============ -->
+<div class="painel" id="painel" hidden>
+
+  <header class="topo">
+    <div class="topo-inner">
+      <a class="topo-marca" href="index.html" target="_blank" rel="noopener" title="Abrir o site">
+        <svg viewBox="4 2 56 58" aria-hidden="true">
+          <path d="M32 4 L48.67 40 L37.25 40 L32 26 L26.75 40 L15.33 40 Z"/>
+          <path d="M13.5 44 L25.25 44 L20 58 L7 58 Z"/>
+          <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
+        </svg>
+        <span>Aliança One <b>Painel</b></span>
+      </a>
+      <span class="topo-modo" id="topo-modo"></span>
+      <div class="topo-acoes">
+        <a class="link" href="index.html" target="_blank" rel="noopener">Ver site</a>
+        <button class="link" type="button" id="btn-sair">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="conteudo">
+    <div class="cabeca">
+      <div>
+        <h1>Produtos</h1>
+        <p class="cabeca-sub" id="cabeca-sub"></p>
+      </div>
+      <button class="btn btn--cheio" type="button" id="btn-novo">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        Novo produto
+      </button>
+    </div>
+
+    <section class="numeros" id="numeros" aria-label="Resumo do catálogo"></section>
+
+    <section class="caixa">
+      <div class="ferramentas">
+        <div class="segmentos" id="filtro-cat" role="group" aria-label="Categoria"></div>
+        <div class="ferramentas-dir">
+          <label class="busca">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span class="sr-only">Procurar</span>
+            <input id="busca" type="search" placeholder="Procurar produto">
+          </label>
+          <button class="btn" type="button" id="btn-reajuste">Reajustar preços</button>
+        </div>
+      </div>
+
+      <div class="tabela-rolo">
+        <table class="tabela">
+          <thead>
+            <tr>
+              <th class="c-ordem"><span class="sr-only">Ordem</span></th>
+              <th>Produto</th>
+              <th class="c-cat">Categoria</th>
+              <th class="c-preco">Preço (R$)</th>
+              <th class="c-preco">Preço oficial (R$)</th>
+              <th class="c-dest">Destaque</th>
+              <th class="c-acoes"><span class="sr-only">Ações</span></th>
+            </tr>
+          </thead>
+          <tbody id="linhas"></tbody>
+        </table>
+      </div>
+      <p class="vazio" id="vazio" hidden>Nenhum produto encontrado.</p>
+    </section>
+
+    <p class="rodape-nota">“Destaque” coloca o produto em <b>Os principais</b> na capa — aparecem os cinco primeiros
+      marcados, na ordem da lista. Use as setas para mudar a ordem.</p>
+  </main>
+
+  <!-- Barra de salvar -->
+  <div class="barra" id="barra" data-visivel="false" role="region" aria-label="Alterações pendentes">
+    <p id="barra-txt">Alterações não salvas</p>
+    <div class="barra-acoes">
+      <button class="btn btn--escuro" type="button" id="btn-descartar">Descartar</button>
+      <button class="btn btn--cheio" type="button" id="btn-salvar">Publicar no site</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Editor ============ -->
+<dialog class="editor" id="editor" aria-labelledby="editor-titulo">
+  <form method="dialog" id="form-editor" novalidate>
+    <header class="editor-topo">
+      <button class="link" type="button" data-fechar>Cancelar</button>
+      <h2 id="editor-titulo">Produto</h2>
+      <button class="link link--forte" type="submit" value="ok">Concluir</button>
+    </header>
+
+    <div class="editor-corpo">
+      <fieldset class="grupo">
+        <legend>Básico</legend>
+        <label class="campo">
+          <span>Nome</span>
+          <input name="nome" type="text" required placeholder="iPhone 17 Pro">
+        </label>
+        <div class="grade-2">
+          <label class="campo">
+            <span>Categoria</span>
+            <select name="categoria" id="ed-categoria"></select>
+          </label>
+          <label class="campo">
+            <span>Endereço da página</span>
+            <input name="id" type="text" required pattern="[a-z0-9-]+" placeholder="iphone-17-pro" spellcheck="false">
+            <small class="dica">produto.html?id=<b data-id-preview>…</b></small>
+          </label>
+        </div>
+        <label class="campo">
+          <span>Linha de cima <small>(2 a 3 palavras, opcional)</small></span>
+          <input name="linha" type="text" placeholder="Cosmic Orange">
+        </label>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Preço</legend>
+        <div class="grade-2">
+          <label class="campo">
+            <span>Preço à vista (R$)</span>
+            <input name="preco" type="number" min="0" step="1" required inputmode="numeric">
+          </label>
+          <label class="campo">
+            <span>Preço no varejo oficial <small>(opcional)</small></span>
+            <input name="precoOficial" type="number" min="0" step="1" inputmode="numeric">
+            <small class="dica">Mostra “você economiza” na página do produto.</small>
+          </label>
+        </div>
+        <label class="check">
+          <input name="destaque" type="checkbox">
+          <span>Mostrar em <b>Os principais</b>, na capa</span>
+        </label>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Texto</legend>
+        <label class="campo">
+          <span>Chamada <small>(uma frase)</small></span>
+          <input name="chamada" type="text" placeholder="A peça central da vitrine.">
+        </label>
+        <label class="campo">
+          <span>Descrição</span>
+          <textarea name="resumo" rows="3"></textarea>
+        </label>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Cores e fotos</legend>
+        <p class="dica">Uma foto por cor, de preferência com fundo transparente ou branco. Se não houver foto, o site
+          desenha o aparelho na cor escolhida.</p>
+        <div class="cores" id="ed-cores"></div>
+        <button class="btn btn--leve" type="button" id="ed-add-cor">+ Adicionar cor</button>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Capacidades / tamanhos</legend>
+        <div class="fichas" id="ed-caps"></div>
+        <div class="linha-add">
+          <input type="text" id="ed-cap-nova" placeholder="256GB, 46mm, Único…">
+          <button class="btn btn--leve" type="button" id="ed-add-cap">Adicionar</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Especificações</legend>
+        <div class="specs" id="ed-specs"></div>
+        <button class="btn btn--leve" type="button" id="ed-add-spec">+ Adicionar linha</button>
+      </fieldset>
+
+      <div class="perigo" id="ed-perigo">
+        <button class="btn btn--perigo" type="button" id="ed-apagar">Apagar produto</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- ============ Reajuste ============ -->
+<dialog class="mini" id="reajuste" aria-labelledby="reajuste-titulo">
+  <form method="dialog">
+    <h2 id="reajuste-titulo">Reajustar preços</h2>
+    <p class="dica" id="reajuste-alvo"></p>
+    <label class="campo">
+      <span>Percentual (use negativo para baixar)</span>
+      <input id="reajuste-pct" type="number" step="0.5" value="5">
+    </label>
+    <label class="check">
+      <input id="reajuste-arred" type="checkbox" checked>
+      <span>Arredondar para terminar em 9 (ex.: 9.999)</span>
+    </label>
+    <div class="mini-acoes">
+      <button class="btn" value="cancelar">Cancelar</button>
+      <button class="btn btn--cheio" value="ok" id="reajuste-ok">Aplicar</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/catalogo.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>
