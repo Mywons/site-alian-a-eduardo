@@ -8,14 +8,167 @@
    ============================================================= */
 const PRODUTOS = [
   {
+    "id": "iphone-18-pro",
+    "nome": "iPhone 18 Pro",
+    "categoria": "iphone",
+    "linha": "Novo",
+    "preco": 11999,
+    "precos": {
+      "256GB": 11999,
+      "512GB": 13499,
+      "1TB": 15499,
+      "2TB": 18499
+    },
+    "status": "encomenda",
+    "chamada": "Chip A20 Pro e câmera de 48 MP com abertura variável.",
+    "resumo": "Tela de 6,3\" a 120 Hz, chip A20 Pro e sistema de câmera Fusion Pro de 48 MP. Quatro cores, de 256 GB a 2 TB. Lacrado, com nota fiscal e até 12x sem juros.",
+    "cores": [
+      "Bordô",
+      "Preto",
+      "Prateado",
+      "Glacial"
+    ],
+    "coresHex": {
+      "Bordô": "#6b2a35",
+      "Preto": "#2b2b2d",
+      "Prateado": "#d9d9d6",
+      "Glacial": "#a9c3dc"
+    },
+    "imagens": {
+      "Bordô": "assets/img/produtos/iphone-18-pro/bordo.webp",
+      "Preto": "assets/img/produtos/iphone-18-pro/preto.webp",
+      "Prateado": "assets/img/produtos/iphone-18-pro/prateado.webp",
+      "Glacial": "assets/img/produtos/iphone-18-pro/glacial.webp"
+    },
+    "capacidades": [
+      "256GB",
+      "512GB",
+      "1TB",
+      "2TB"
+    ],
+    "specs": [
+      [
+        "Tela",
+        "6,3\" Super Retina XDR · ProMotion até 120 Hz"
+      ],
+      [
+        "Chip",
+        "A20 Pro"
+      ],
+      [
+        "Câmeras",
+        "Fusion Pro de 48 MP · abertura variável"
+      ],
+      [
+        "Bateria",
+        "Até 34h de reprodução de vídeo"
+      ],
+      [
+        "Estrutura",
+        "Alumínio unibody · Ceramic Shield 2"
+      ],
+      [
+        "Resistência",
+        "IP68"
+      ]
+    ],
+    "vistas": [
+      {
+        "src": "assets/img/produtos/iphone-18-pro/frente-e-verso.webp",
+        "legenda": "Frente e verso"
+      }
+    ]
+  },
+  {
+    "id": "iphone-duo",
+    "nome": "iPhone Duo",
+    "categoria": "iphone",
+    "linha": "Novo · dobrável",
+    "preco": 15999,
+    "precos": {
+      "256GB": 15999,
+      "512GB": 17499,
+      "1TB": 19499,
+      "2TB": 22499
+    },
+    "status": "encomenda",
+    "chamada": "O primeiro iPhone dobrável. Tela de 7,6\" que cabe no bolso.",
+    "resumo": "Aberto, uma tela de 7,6\"; fechado, um iPhone de 5,4\". Chip A20 Pro, câmera dupla de 48 MP e estrutura em titânio. Lacrado, com nota fiscal e até 12x sem juros.",
+    "cores": [
+      "Branco-estrela",
+      "Céu noturno"
+    ],
+    "coresHex": {
+      "Branco-estrela": "#ecebe6",
+      "Céu noturno": "#2f3b52"
+    },
+    "imagens": {
+      "Branco-estrela": "assets/img/produtos/iphone-duo/branco-estrela.webp",
+      "Céu noturno": "assets/img/produtos/iphone-duo/ceu-noturno.webp"
+    },
+    "capacidades": [
+      "256GB",
+      "512GB",
+      "1TB",
+      "2TB"
+    ],
+    "specs": [
+      [
+        "Telas",
+        "Interna 7,6\" dobrável · externa 5,4\""
+      ],
+      [
+        "Chip",
+        "A20 Pro"
+      ],
+      [
+        "Câmeras",
+        "Dupla Fusion de 48 MP"
+      ],
+      [
+        "Bateria",
+        "Até 44h de vídeo na tela externa"
+      ],
+      [
+        "Estrutura",
+        "Titânio · 5,2 mm aberto"
+      ],
+      [
+        "Resistência",
+        "IP68"
+      ]
+    ],
+    "vistas": [
+      {
+        "src": "assets/img/produtos/iphone-duo/fechado.webp",
+        "legenda": "Fechado"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/retrato.webp",
+        "legenda": "Aberto"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/notebook.webp",
+        "legenda": "Modo notebook"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/tenda.webp",
+        "legenda": "Modo tenda"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/paisagem.webp",
+        "legenda": "Duas telas"
+      }
+    ]
+  },
+  {
     "id": "iphone-17-pro-max",
     "nome": "iPhone 17 Pro Max",
     "categoria": "iphone",
     "linha": "Cosmic Orange",
     "preco": 11499,
-    "destaque": "principal",
-    "chamada": "A peça central da vitrine.",
-    "resumo": "Titânio, tela de 6,9 polegadas a 120Hz e a maior autonomia que a Apple já colocou em um iPhone. O laranja Cosmic é a cor da temporada e a que mais sai daqui.",
+    "chamada": "A maior tela e a maior bateria da linha 17.",
+    "resumo": "Titânio, tela de 6,9\" a 120Hz e câmera tripla de 48MP com teleobjetiva 8x. Lacrado, com nota fiscal no seu nome e até 12x sem juros.",
     "cores": [
       "Laranja-cósmico",
       "Azul-profundo",
@@ -47,7 +200,8 @@ const PRODUTOS = [
         "Material",
         "Titânio de grau aeroespacial"
       ]
-    ]
+    ],
+    "destaque": "principal"
   },
   {
     "id": "iphone-17-pro",
@@ -55,9 +209,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "Cosmic Orange",
     "preco": 9999,
-    "destaque": "principal",
-    "chamada": "Tudo do Pro Max, no tamanho de uma mão.",
-    "resumo": "O mesmo chip A19 Pro e o mesmo sistema de câmeras do Pro Max em um corpo de 6,3 polegadas. Para quem quer o topo de linha sem abrir mão de usar o telefone com uma mão só.",
+    "chamada": "O Pro completo em 6,3 polegadas.",
+    "resumo": "Chip A19 Pro e a mesma câmera tripla do Pro Max, num tamanho confortável para usar com uma mão. Lacrado, com nota fiscal e garantia de 12 meses.",
     "cores": [
       "Laranja-cósmico",
       "Azul-profundo",
@@ -97,9 +250,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "Linha 2025",
     "preco": 7499,
-    "destaque": "principal",
-    "chamada": "O ponto exato entre preço e desejo.",
-    "resumo": "Tela de 120Hz que antes era exclusividade do Pro, câmera principal de 48MP e o chip A19. É o modelo que mais recomendamos para quem está trocando de um iPhone 12 ou 13.",
+    "chamada": "Tela de 120Hz e câmera de 48MP sem pagar preço de Pro.",
+    "resumo": "Chip A19, tela ProMotion de 120Hz e câmera principal de 48MP. A troca ideal para quem está no iPhone 12, 13 ou 14.",
     "cores": [
       "Lavanda",
       "Azul-névoa",
@@ -140,8 +292,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "5,6 mm de espessura",
     "preco": 8999,
-    "chamada": "5,6 milímetros.",
-    "resumo": "O iPhone mais fino já feito, em titânio, sem parecer frágil na mão. Quem pega uma vez costuma não querer devolver.",
+    "chamada": "O iPhone mais fino já feito.",
+    "resumo": "Titânio, 5,6 mm de espessura e tela de 6,5\". Leve no bolso, resistente na mão. Lacrado, com nota fiscal e até 12x sem juros.",
     "cores": [
       "Azul-céu",
       "Dourado-claro",
@@ -182,8 +334,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "Geração anterior",
     "preco": 6999,
-    "chamada": "O topo de linha do ano passado, pelo preço de um intermediário.",
-    "resumo": "Continua sendo um telefone excepcional: titânio, 120Hz, câmera de 48MP com teleobjetiva. A geração anterior é sempre a compra mais inteligente da vitrine.",
+    "chamada": "Topo de linha por preço de intermediário.",
+    "resumo": "Titânio, tela de 120Hz e câmera de 48MP com teleobjetiva. Desempenho de sobra por anos, por bem menos que o lançamento.",
     "cores": [
       "Titânio-deserto",
       "Titânio-natural",
@@ -224,8 +376,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "Geração anterior",
     "preco": 5299,
-    "chamada": "Entrada na linha atual sem parecer entrada.",
-    "resumo": "Botão de Controle da Câmera, chip A18 e as cores mais bonitas que a Apple lançou em anos. Uma escolha segura para presente.",
+    "chamada": "Chip A18 e Controle da Câmera com ótimo preço.",
+    "resumo": "Botão de Controle da Câmera, chip A18 e cinco cores. Ótima escolha para presente ou primeiro iPhone.",
     "cores": [
       "Ultramarino",
       "Azul-petróleo",
@@ -266,8 +418,8 @@ const PRODUTOS = [
     "categoria": "iphone",
     "linha": "Custo-benefício",
     "preco": 4199,
-    "chamada": "O primeiro iPhone com USB-C.",
-    "resumo": "Ainda recebe atualizações por anos, já usa USB-C e tem a Dynamic Island. O melhor primeiro iPhone que existe hoje.",
+    "chamada": "iPhone com USB-C e Dynamic Island pelo menor preço.",
+    "resumo": "USB-C, Dynamic Island e atualizações garantidas por anos. O jeito mais barato de entrar no iPhone com nota fiscal e garantia.",
     "cores": [
       "Azul",
       "Rosa",
@@ -308,8 +460,8 @@ const PRODUTOS = [
     "categoria": "mac",
     "linha": "Trabalho pesado",
     "preco": 18999,
-    "chamada": "A máquina de quem edita, compila e renderiza.",
-    "resumo": "Tela Liquid Retina XDR com nano-textura opcional, silêncio absoluto em uso normal e bateria que atravessa o dia inteiro de trabalho fora de casa.",
+    "chamada": "Para editar, programar e renderizar sem esperar.",
+    "resumo": "Tela Liquid Retina XDR, chip M5 e bateria para um dia inteiro de trabalho fora de casa. Nota fiscal no seu nome ou no CNPJ da empresa.",
     "cores": [
       "Preto-espacial",
       "Prateado"
@@ -348,9 +500,8 @@ const PRODUTOS = [
     "categoria": "mac",
     "linha": "Sem ventoinha",
     "preco": 10499,
-    "destaque": "principal",
-    "chamada": "Leve o suficiente para você esquecer que está na mochila.",
-    "resumo": "Sem ventoinha, sem barulho, 18 horas de bateria e potência de sobra para tudo que não seja edição de vídeo profissional. É o Mac que mais vendemos.",
+    "chamada": "O Mac mais vendido da loja.",
+    "resumo": "Chip M4, 18 horas de bateria e zero barulho, porque não tem ventoinha. Leve para a faculdade, para o trabalho e para viagem.",
     "cores": [
       "Azul-céu",
       "Estelar",
@@ -383,7 +534,8 @@ const PRODUTOS = [
         "Refrigeração",
         "Passiva, sem ventoinha"
       ]
-    ]
+    ],
+    "destaque": "principal"
   },
   {
     "id": "imac-24-m4",
@@ -391,8 +543,8 @@ const PRODUTOS = [
     "categoria": "mac",
     "linha": "Sete cores",
     "preco": 13499,
-    "chamada": "Um computador que você deixa à mostra.",
-    "resumo": "Sete cores, 11,5 milímetros de espessura e uma tela 4,5K que faz qualquer sala de casa parecer um estúdio.",
+    "chamada": "Tudo-em-um com tela 4,5K e 11,5 mm de espessura.",
+    "resumo": "Chip M4, tela 4,5K e sete cores. É só ligar na tomada: teclado e mouse já vêm na caixa.",
     "cores": [
       "Laranja",
       "Azul",
@@ -435,8 +587,8 @@ const PRODUTOS = [
     "categoria": "mac",
     "linha": "Cabe na palma",
     "preco": 6299,
-    "chamada": "O Mac mais barato é também o mais surpreendente.",
-    "resumo": "Cabe na palma da mão, usa o mesmo chip do MacBook Air e liga no monitor que você já tem. Entrada perfeita no ecossistema.",
+    "chamada": "O Mac de menor preço, com o chip do MacBook Air.",
+    "resumo": "Chip M4 num corpo do tamanho da palma da mão. Ligue no monitor, teclado e mouse que você já tem.",
     "cores": [
       "Prateado"
     ],
@@ -474,8 +626,8 @@ const PRODUTOS = [
     "categoria": "ipad",
     "linha": "Tela tandem OLED",
     "preco": 14999,
-    "chamada": "A melhor tela que a Apple já fabricou.",
-    "resumo": "Duas camadas de OLED sobrepostas para um preto real com brilho de HDR. Fino a ponto de parecer impossível, potente a ponto de substituir o notebook de muita gente.",
+    "chamada": "A melhor tela que a Apple já colocou num iPad.",
+    "resumo": "Tela OLED tandem de 13\" com preto real e brilho de HDR, chip M5 e corpo finíssimo. Com o Magic Keyboard, substitui o notebook.",
     "cores": [
       "Preto-espacial",
       "Prateado"
@@ -514,8 +666,8 @@ const PRODUTOS = [
     "categoria": "ipad",
     "linha": "O equilíbrio",
     "preco": 7299,
-    "chamada": "Potência de Mac em uma prancheta.",
-    "resumo": "Roda tudo com folga, aceita Apple Pencil Pro e custa metade do Pro. Para desenho, estudo e consumo de conteúdo, é mais iPad do que a maioria precisa.",
+    "chamada": "Chip M3 e Apple Pencil Pro por metade do preço do Pro.",
+    "resumo": "Desempenho de sobra para estudo, desenho e trabalho, compatível com Apple Pencil Pro e Magic Keyboard.",
     "cores": [
       "Azul",
       "Roxo",
@@ -556,8 +708,8 @@ const PRODUTOS = [
     "categoria": "ipad",
     "linha": "Entrada",
     "preco": 3799,
-    "chamada": "O tablet da casa.",
-    "resumo": "Para a criança estudar, para assistir na cama, para a receita na cozinha. Simples, resistente e barato o suficiente para circular pela casa sem susto.",
+    "chamada": "O iPad para a família inteira.",
+    "resumo": "Para estudar, assistir e jogar. Tela de 11\", quatro cores e o menor preço da linha iPad.",
     "cores": [
       "Azul",
       "Rosa",
@@ -597,9 +749,8 @@ const PRODUTOS = [
     "categoria": "watch",
     "linha": "Titânio 49mm",
     "preco": 9299,
-    "destaque": "principal",
-    "chamada": "Feito para o mar, usado no escritório.",
-    "resumo": "Mergulho até 100 metros, satélite para emergência fora de área e 42 horas de bateria. O relógio mais bonito da linha, mesmo para quem nunca vai mergulhar.",
+    "chamada": "O Apple Watch mais resistente e com mais bateria.",
+    "resumo": "Titânio, mergulho até 100 metros, SOS via satélite e até 42 horas de bateria.",
     "cores": [
       "Titânio natural",
       "Titânio preto"
@@ -636,8 +787,8 @@ const PRODUTOS = [
     "categoria": "watch",
     "linha": "O clássico",
     "preco": 5199,
-    "chamada": "Saúde no pulso, o dia inteiro.",
-    "resumo": "Monitoramento de sono, alerta de hipertensão, ECG e uma tela que não apaga. É o relógio que mais muda o hábito de quem compra.",
+    "chamada": "Saúde e treino no pulso, o dia inteiro.",
+    "resumo": "Sono, ECG, alerta de hipertensão e tela sempre ligada. O Apple Watch mais escolhido.",
     "cores": [
       "Preto brilhante",
       "Ouro rosé",
@@ -677,8 +828,8 @@ const PRODUTOS = [
     "categoria": "watch",
     "linha": "Primeiro relógio",
     "preco": 2899,
-    "chamada": "Tudo que importa, metade do preço.",
-    "resumo": "Notificações, treinos, detecção de queda e Apple Pay. Falta pouca coisa em relação ao Series e sobra diferença no bolso.",
+    "chamada": "Apple Watch completo pelo menor preço.",
+    "resumo": "Notificações, treinos, detecção de queda e Apple Pay. Tudo o que importa no dia a dia.",
     "cores": [
       "Meia-noite",
       "Estelar",
@@ -717,9 +868,8 @@ const PRODUTOS = [
     "categoria": "audio",
     "linha": "Cancelamento de ruído",
     "preco": 2499,
-    "destaque": "principal",
-    "chamada": "O silêncio virou item de luxo.",
-    "resumo": "O melhor cancelamento de ruído do mercado, medição de batimentos durante o treino e tradução ao vivo. Cabem no bolso da calça e mudam o metrô inteiro.",
+    "chamada": "O melhor cancelamento de ruído da Apple.",
+    "resumo": "Cancelamento de ruído ativo, medição de batimentos no treino e tradução ao vivo. Resistentes a suor e chuva.",
     "cores": [
       "Branco"
     ],
@@ -747,7 +897,8 @@ const PRODUTOS = [
         "Extra",
         "Tradução ao vivo"
       ]
-    ]
+    ],
+    "destaque": "principal"
   },
   {
     "id": "airpods-4",
@@ -755,8 +906,8 @@ const PRODUTOS = [
     "categoria": "audio",
     "linha": "Formato aberto",
     "preco": 1499,
-    "chamada": "Para quem odeia ponteira de silicone.",
-    "resumo": "Formato aberto, agora com cancelamento de ruído — coisa que ninguém achava possível sem vedação. Áudio espacial incluso.",
+    "chamada": "Confortável o dia todo, sem ponteira de silicone.",
+    "resumo": "Formato aberto com opção de cancelamento de ruído, áudio espacial e estojo USB-C.",
     "cores": [
       "Branco"
     ],
@@ -793,8 +944,8 @@ const PRODUTOS = [
     "categoria": "audio",
     "linha": "Headphone over-ear",
     "preco": 4999,
-    "chamada": "Alumínio, malha e uma cúpula de silêncio.",
-    "resumo": "Peso e acabamento de equipamento profissional, com a conveniência da Apple. Para quem escuta música sentado, de olhos fechados.",
+    "chamada": "Som de estúdio com cancelamento de ruído.",
+    "resumo": "Alumínio, almofadas em malha, áudio espacial e cancelamento de ruído. Cinco cores.",
     "cores": [
       "Meia-noite",
       "Estelar",
@@ -834,8 +985,8 @@ const PRODUTOS = [
     "categoria": "acessorios",
     "linha": "Para iPad",
     "preco": 1399,
-    "chamada": "Gira na mão como um pincel de verdade.",
-    "resumo": "Sensor de rotação, aperto para trocar de ferramenta e resposta tátil. Quem desenha percebe a diferença nos primeiros dez segundos.",
+    "chamada": "Precisão de caneta de verdade no iPad.",
+    "resumo": "Sensor de rotação, aperto para trocar de ferramenta e resposta tátil. Ideal para desenho e anotações.",
     "cores": [
       "Branco"
     ],
@@ -871,8 +1022,8 @@ const PRODUTOS = [
     "categoria": "acessorios",
     "linha": "Teclado com trackpad",
     "preco": 3199,
-    "chamada": "Transforma o iPad em notebook em um clique.",
-    "resumo": "Trackpad com clique real, fileira de teclas de função e apoio flutuante em alumínio. A conversão mais rápida de tablet para máquina de trabalho.",
+    "chamada": "Transforma o iPad Pro em notebook.",
+    "resumo": "Trackpad de vidro, teclas retroiluminadas e fileira de funções. Protege frente e verso.",
     "cores": [
       "Preto"
     ],
@@ -909,8 +1060,8 @@ const PRODUTOS = [
     "categoria": "acessorios",
     "linha": "Original Apple",
     "preco": 499,
-    "chamada": "Encaixa sozinho, no lugar certo.",
-    "resumo": "Ímã na posição exata, carga rápida de 25W nos modelos compatíveis e cabo trançado de dois metros. O acessório que todo cliente acaba levando junto.",
+    "chamada": "Carregamento rápido de 25W, encaixe magnético.",
+    "resumo": "Original Apple, lacrado. Encaixa sozinho no lugar certo e carrega até 25W nos modelos compatíveis.",
     "cores": [
       "Branco"
     ],

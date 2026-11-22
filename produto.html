@@ -21,6 +21,9 @@
     }
   } catch (e) { /* navegador sem sessionStorage: entra sem cortina */ }
 </script>
+<script src="assets/js/loja.js"></script>
+<script src="assets/js/regras.js"></script>
+<script src="assets/js/evento.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f8f4ee'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23FF6200'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23FF6200'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23FF6200'/></svg>">
 </head>
@@ -41,17 +44,15 @@
         <li>Até 12x sem juros no cartão</li>
         <li>Desconto à vista no Pix</li>
         <li>Nota fiscal no seu nome</li>
-        <li>Entrega no mesmo dia em São Paulo</li>
         <li>Garantia de 12 meses</li>
-        <li>Enviamos para todo o Brasil</li>
+        <li>Aparelhos lacrados</li>
       </ul>
       <ul class="faixa-lista" aria-hidden="true">
         <li>Até 12x sem juros no cartão</li>
         <li>Desconto à vista no Pix</li>
         <li>Nota fiscal no seu nome</li>
-        <li>Entrega no mesmo dia em São Paulo</li>
         <li>Garantia de 12 meses</li>
-        <li>Enviamos para todo o Brasil</li>
+        <li>Aparelhos lacrados</li>
       </ul>
     </div>
   </div>
@@ -200,10 +201,9 @@
         <b id="carrinho-total"></b>
       </div>
       <p class="carrinho-parcelado" id="carrinho-parcelado"></p>
-      <a class="btn btn--grande btn--largo" id="carrinho-enviar" target="_blank" rel="noopener" href="#">
-        Fechar pedido no WhatsApp
+      <a class="btn btn--grande btn--largo" id="carrinho-enviar" href="checkout.html">
+        Finalizar compra
       </a>
-      <p class="carrinho-nota">A lista inteira já vai escrita na mensagem, com cor e capacidade.</p>
     </footer>
   </aside>
 </div>
@@ -235,6 +235,7 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/catalogo.js"></script>
+<script src="assets/js/site.js"></script>
 <script src="assets/js/aparelho.js"></script>
 <script src="assets/js/gesto.js"></script>
 <script src="assets/js/transicao.js"></script>

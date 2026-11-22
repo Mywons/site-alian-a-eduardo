@@ -34,17 +34,53 @@ O resto — WhatsApp, horários, perguntas — fica em **`assets/js/data.js`**.
 
 ## 0. Painel de administração (`admin.html`)
 
-O painel mostra todos os produtos numa tabela e deixa você:
+O painel tem três abas.
 
-- **mudar o preço** direto na linha (e o preço do varejo oficial, que gera o "você economiza");
-- **reajustar vários preços de uma vez** por percentual, com arredondamento para terminar em 9;
-- **ligar/desligar o destaque** de "Os principais" e **mudar a ordem** com as setas;
-- **cadastrar produto novo** e **editar** nome, categoria, texto, cores, capacidades e especificações;
-- **enviar a foto de cada cor** (PNG, JPG ou WEBP — o painel reduz e converte sozinho);
-- **apagar** um produto.
+### Produtos
 
-Nada vai para o site até você tocar em **Publicar no site**. Aí o painel grava tudo
-num commit só no GitHub, e a hospedagem publica sozinha em cerca de 1 minuto.
+- **Preço por capacidade**: 256GB, 512GB e 1TB podem ter preços diferentes. Quando
+  todas custam igual, o preço se edita direto na linha da tabela.
+- **Custo do fornecedor** (em dólar ou em reais) e **margem** própria por produto,
+  se quiser fugir da margem padrão. O editor mostra o preço "pela regra" ao lado.
+- **Disponibilidade**: Em estoque, **Sob encomenda** (com prazo) ou **Esgotado**, e
+  quais cores/capacidades acabaram — elas aparecem riscadas e não dá para escolher.
+  Produto esgotado troca o botão por "Avise-me quando chegar".
+- **No site** liga e desliga o produto sem apagar. **Apagar** tira de vez.
+- **Adicionar da biblioteca**: modelos Apple prontos (iPhone 16e, MacBook Air 15",
+  iPad mini, Apple TV, AirTag…) com especificações, cores e capacidades. Você só põe
+  preço e estoque. A lista mora em `assets/js/biblioteca.js`.
+- Os 23 produtos que já estavam no site continuam lá, com fotos e especificações.
+
+### Ofertas e eventos
+
+- **Oferta** em um produto (no editor) ou **em lote** (todos, uma categoria ou os
+  destaques): desconto em % ou em R$, com data de início e fim. O site mostra
+  "de R$ X por R$ Y", o selo com o desconto e um filtro "Ofertas" no catálogo. A
+  mensagem do WhatsApp já sai com o preço da oferta.
+- **Eventos** mudam a cara do site: cor dos botões, faixa do topo, selo das ofertas
+  e um cartaz próprio abrindo a capa. Temas prontos: Black Friday, Cyber Monday,
+  Natal, Ano Novo, Volta às aulas, Semana do Consumidor, Dia das Mães, Dia dos
+  Namorados, Dia dos Pais, Lançamento Apple, Dia das Crianças e Aniversário da loja.
+- Cada evento tem datas: dá para deixar o ano inteiro programado. Fica no ar o
+  primeiro evento **ligado** cujas datas incluem o dia de hoje.
+- **Pré-visualizar** abre o site com o tema (`index.html?evento=natal`), só para você.
+  "sair", no aviso embaixo da tela, volta ao normal.
+
+### Preço automático (o robô do dólar)
+
+Liga em "Atualizar os preços todo dia". A regra é:
+
+> preço = custo × dólar (+ ajuste) + frete/impostos % + margem, arredondado (ex.: 9.999)
+
+Todo dia às 7h17 (Brasília) o GitHub roda `scripts/atualizar-precos.mjs`: pega o
+dólar PTAX do Banco Central, recalcula quem tem custo cadastrado e publica sozinho.
+
+- Produto sem custo, ou marcado como **preço manual**, não é tocado.
+- **Trava de segurança**: se um preço for mudar mais que X% num dia, o robô não
+  aplica e mostra o aviso no painel para você decidir.
+- **Simular agora** mostra o que mudaria antes de aplicar.
+- Para rodar na hora: no GitHub, aba **Actions → Preços do dia → Run workflow**.
+- Ofertas valem por cima do preço do robô: se o dólar mexer, o desconto acompanha.
 
 ### Primeiro acesso: a chave do GitHub
 

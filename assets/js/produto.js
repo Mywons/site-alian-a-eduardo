@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const p = acharProduto(idAtual);
 
-  if (!p) {
+  if (!p || p.oculto) {
     raiz.innerHTML = `
       <div class="shell">
         <div class="vazio" style="max-width:620px;margin-inline:auto;border:0">
@@ -39,10 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.title = `${p.nome} — ${CONFIG.nome}`;
   const meta = document.querySelector('meta[name="description"]');
   if (meta) meta.setAttribute('content',
-    `${p.nome} na ${CONFIG.nome}: ${p.chamada} ${brl(p.preco)}, com nota fiscal e garantia.`);
+    `${p.nome} na ${CONFIG.nome}: ${p.chamada || ''} A partir de ${brl(REGRAS.precoMinimo(p).final)}, com nota fiscal e garantia.`);
 
-  let cor = p.cores?.[0] || '';
-  let capacidade = p.capacidades?.[0] || '';
+  // Abre na primeira opção que ainda está à venda.
+  const primeiraLivre = (lista) => (lista || []).find((v) => !REGRAS.esgotada(p, v)) || lista?.[0] || '';
+  let cor = primeiraLivre(p.cores);
+  let capacidade = primeiraLivre(p.capacidades);
+  const status = REGRAS.statusDe(p);
+  const evento = window.EVENTO_ATIVO;
 
   const temCores = p.cores?.length > 1;
   const temCaps  = p.capacidades?.length > 1;
@@ -61,15 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
         <h1 class="produto-nome">${escapar(p.nome)}</h1>
         <p class="produto-resumo">${escapar(p.resumo || p.chamada || '')}</p>
-        <p class="produto-preco">
-          <b>${brl(p.preco)}</b>
-          <span>${parcela(p.preco)} sem juros · à vista com desconto no Pix</span>
-        </p>
+        <p class="produto-preco" id="produto-preco" aria-live="polite"></p>
+        ${status === 'encomenda' ? `<p class="produto-status">Sob encomenda${p.prazo ? ` · chega em ${escapar(p.prazo)}` : ''}</p>` : ''}
+        ${status === 'esgotado' ? '<p class="produto-status produto-status--esgotado">Esgotado no momento</p>' : ''}
 
-        ${p.precoOficial && p.precoOficial > p.preco ? `
+        ${p.precoOficial && p.precoOficial > REGRAS.precoMinimo(p).final ? `
         <p class="ancora">
           <span class="ancora-de">${brl(p.precoOficial)} no varejo oficial</span>
-          <span class="ancora-eco">Você economiza ${brl(p.precoOficial - p.preco)}</span>
+          <span class="ancora-eco">Você economiza ${brl(p.precoOficial - REGRAS.precoMinimo(p).final)}</span>
         </p>` : ''}
 
         <!-- A galeria: a foto da cor escolhida e, quando houver, os
@@ -78,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ${galeriaHTML(p, cor) || `
         <div class="produto-mockup cena3d" id="mockup">
           ${aparelhoHTML(p, cor, 'mockup')}
-          <p class="mockup-nota">Desenho esquemático, na cor escolhida. Não é foto do aparelho.</p>
         </div>`}
       </header>
 
@@ -91,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><span class="k">${escapar(k)}</span><span class="v">${escapar(v)}</span></li>`).join('')}
             <li><span class="k">Garantia</span><span class="v">12 meses</span></li>
             <li><span class="k">Nota fiscal</span><span class="v">Emitida em todo aparelho</span></li>
-            <li><span class="k">Entrega</span><span class="v">Mesmo dia em São Paulo</span></li>
           </ul>
         </div>
 
@@ -104,8 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="opcao-lista" id="lista-cores" role="group" aria-label="Escolher cor">
               ${p.cores.map((c, i) => `
-                <button class="opt" type="button" data-v="${escapar(c)}" aria-pressed="${i === 0}">
+                <button class="opt" type="button" data-v="${escapar(c)}" aria-pressed="${c === cor}"
+                        ${REGRAS.esgotada(p, c) ? 'disabled data-esgotada="true"' : ''}>
                   <span class="swatch" style="background:${corHex(c)}" aria-hidden="true"></span>${escapar(c)}
+                  ${REGRAS.esgotada(p, c) ? '<small>Esgotado</small>' : ''}
                 </button>`).join('')}
             </div>
           </div>` : ''}
@@ -118,29 +121,33 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="opcao-lista" id="lista-caps" role="group" aria-label="Escolher ${rotuloCap.toLowerCase()}">
               ${p.capacidades.map((c, i) => `
-                <button class="opt" type="button" data-v="${escapar(c)}" aria-pressed="${i === 0}">${escapar(c)}</button>`).join('')}
+                <button class="opt opt--cap" type="button" data-v="${escapar(c)}" aria-pressed="${c === capacidade}"
+                        ${REGRAS.esgotada(p, c) ? 'disabled data-esgotada="true"' : ''}>
+                  <span>${escapar(c)}</span>
+                  <small>${REGRAS.esgotada(p, c) ? 'Esgotado' : brl(REGRAS.precoDe(p, c).final)}</small>
+                </button>`).join('')}
             </div>
           </div>` : ''}
 
           <div class="compra">
+            ${status === 'esgotado' ? `
             <a class="btn btn--grande btn--largo" id="btn-comprar" target="_blank" rel="noopener" href="#">
-              ${ICONE_WA} Comprar pelo WhatsApp
-            </a>
+              ${ICONE_WA} Avise-me quando chegar
+            </a>` : `
+            <button class="btn btn--grande btn--largo" type="button" id="btn-comprar-ja">
+              ${status === 'encomenda' ? 'Encomendar' : 'Comprar'}
+            </button>
             <button class="btn btn--vazio btn--grande btn--largo" type="button" id="btn-sacola">
               Adicionar ao carrinho
             </button>
-            <p class="compra-nota">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              A mensagem já vai escrita com o modelo${temCores ? ', a cor' : ''}${temCaps ? ' e a capacidade' : ''}.
-            </p>
+            <a class="seta compra-duvida" id="btn-comprar" target="_blank" rel="noopener" href="#">Tirar dúvida no WhatsApp</a>`}
 
             <!-- O que a pessoa precisa saber no segundo em que decide,
                  e não três rolagens depois do botão. -->
             <ul class="garantias">
-              <li>Lacrado, aberto por você na entrega</li>
+              <li>Aparelho lacrado de fábrica</li>
               <li>Nota fiscal no seu nome</li>
               <li>Garantia de 12 meses com a ${escapar(CONFIG.nome)}</li>
-              <li>Em SP, você confere antes de pagar</li>
             </ul>
 
             <p class="troca-usado">
@@ -165,21 +172,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Barra fixa de compra (celular) ---- */
   document.querySelector('#barra-nome').textContent = p.nome;
-  document.querySelector('#barra-valor').textContent = brl(p.preco);
+  const caixaPreco = raiz.querySelector('#produto-preco');
+  const pintarPreco = () => {
+    const info = REGRAS.precoDe(p, capacidade);
+    const pct = info.base ? Math.round((info.desconto / info.base) * 100) : 0;
+    const nomeOferta = info.oferta ? (info.oferta.rotulo || (evento && evento.selo) || 'Oferta') : '';
+    caixaPreco.classList.toggle('tem-oferta', !!info.oferta);
+    caixaPreco.innerHTML = `
+      ${info.oferta ? `<span class="selo-oferta">${escapar(nomeOferta)}${pct >= 1 ? ` <b>−${pct}%</b>` : ''}</span>` : ''}
+      ${info.oferta ? `<s class="preco-de">${brl(info.base)}</s>` : ''}
+      <b>${brl(info.final)}</b>
+      <span>${parcela(info.final)} sem juros · à vista com desconto no Pix</span>
+      ${info.oferta && info.oferta.fim ? `<span class="preco-validade">Oferta válida até ${info.oferta.fim.split('-').reverse().join('/')}</span>` : ''}`;
+    document.querySelector('#barra-valor').textContent = brl(info.final);
+    // O número novo "assenta" no lugar quando a capacidade muda.
+    if (caixaPreco.dataset.valor && caixaPreco.dataset.valor !== String(info.final)) {
+      caixaPreco.classList.remove('mudou');
+      void caixaPreco.offsetWidth;
+      caixaPreco.classList.add('mudou');
+    }
+    caixaPreco.dataset.valor = String(info.final);
+  };
+  pintarPreco();
 
   /* ---- Link de compra sempre atualizado ---- */
   const btn = raiz.querySelector('#btn-comprar');
   const btnBarra = document.querySelector('#barra-btn');
 
   const atualizar = () => {
-    const href = waLink(msgProduto(p, cor, capacidade));
+    pintarPreco();
+    const info = REGRAS.precoDe(p, capacidade);
+    const util = (v) => v && v !== 'Único';
+    const detalhe = [capacidade, cor].filter(util).join(', ');
+    const nome = `${p.nome}${detalhe ? ` (${detalhe})` : ''}`;
+    const msg = status === 'esgotado'
+      ? `Olá! O ${nome} aparece esgotado no site da ${CONFIG.nome}. Vocês me avisam quando chegar?`
+      : info.oferta
+        ? `Olá! Tenho interesse no ${nome} na oferta${evento ? ` de ${evento.nome}` : ''}, por ${brl(info.final)}, que vi no site da ${CONFIG.nome}. Ainda está disponível?`
+        : msgProduto(p, cor, capacidade);
+    const href = waLink(msg);
     btn.href = href;
-    if (btnBarra) btnBarra.href = href;
+    if (btnBarra && status === 'esgotado') btnBarra.href = href;
   };
   atualizar();
 
   /* Adicionar ao carrinho. A peça que voa é a vista que está na tela:
      é o que a pessoa estava olhando quando decidiu. */
+  /* Comprar: entra no carrinho e segue direto para o checkout. */
+  const comprarJa = () => {
+    adicionarNaSacola(p, cor, capacidade, null);
+    location.href = 'checkout.html';
+  };
+  raiz.querySelector('#btn-comprar-ja')?.addEventListener('click', comprarJa);
+  if (btnBarra && status !== 'esgotado') {
+    btnBarra.removeAttribute('target');
+    btnBarra.textContent = status === 'encomenda' ? 'Encomendar' : 'Comprar';
+    btnBarra.addEventListener('click', (e) => { e.preventDefault(); comprarJa(); });
+  }
+
   const btnSacola = raiz.querySelector('#btn-sacola');
   btnSacola?.addEventListener('click', () => {
     const peca = raiz.querySelector('.galeria-quadro:not([aria-hidden]) img')
@@ -243,10 +293,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Relacionados ---- */
   const relacionados = raiz.querySelector('#grade-relacionados');
-  let lista = PRODUTOS.filter((o) => o.categoria === p.categoria && o.id !== p.id);
+  const naVitrine = PRODUTOS.filter(REGRAS.visivel);
+  let lista = naVitrine.filter((o) => o.categoria === p.categoria && o.id !== p.id);
   if (lista.length < 3) {
     lista = lista.concat(
-      PRODUTOS.filter((o) => o.id !== p.id && !lista.includes(o) && o.destaque === 'principal')
+      naVitrine.filter((o) => o.id !== p.id && !lista.includes(o) && o.destaque === 'principal')
     );
   }
   relacionados.innerHTML = lista.slice(0, 3)
@@ -259,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (barra && 'IntersectionObserver' in window) {
     new IntersectionObserver(([entrada]) => {
       barra.dataset.visible = String(!entrada.isIntersecting && entrada.boundingClientRect.top < 0);
-    }, { threshold: 0 }).observe(btn);
+    }, { threshold: 0 }).observe(raiz.querySelector('#btn-comprar-ja') || btn);
   }
 
   // O aviso de armazenamento sobe para cima da barra, e para isso o

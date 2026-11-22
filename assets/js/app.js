@@ -91,6 +91,41 @@ const semMovimento = () =>
 
 const linkProduto = (p) => `produto.html?id=${encodeURIComponent(p.id)}`;
 
+/* ---------- Preço, oferta e estoque na vitrine ----------
+   As contas moram em regras.js. Aqui é só como cada uma aparece. */
+
+const vitrine = () => PRODUTOS.filter(REGRAS.visivel);
+
+const temOfertas = () => vitrine().some((p) => REGRAS.ofertaAtiva(p));
+
+/* O selo de oferta leva o nome do evento do dia quando há um
+   (Black Friday, Natal…), e o desconto. */
+function seloOferta(p, info) {
+  const o = info.oferta;
+  if (!o) return '';
+  const evento = window.EVENTO_ATIVO;
+  const nome = o.rotulo || (evento && evento.selo) || 'Oferta';
+  const pct = info.base ? Math.round((info.desconto / info.base) * 100) : 0;
+  return `<span class="selo-oferta">${escapar(nome)}${pct >= 1 ? ` <b>−${pct}%</b>` : ''}</span>`;
+}
+
+function seloStatus(p) {
+  const st = REGRAS.statusDe(p);
+  if (st === 'esgotado') return '<span class="selo-status selo-status--esgotado">Esgotado</span>';
+  if (st === 'encomenda') return `<span class="selo-status">Sob encomenda${p.prazo ? ` · ${escapar(p.prazo)}` : ''}</span>`;
+  return '';
+}
+
+/* O bloco de preço de cartão e de linha do catálogo. */
+function precoVitrineHTML(p, classe = 'card-preco') {
+  const m = REGRAS.precoMinimo(p);
+  const de = m.oferta ? `<s class="preco-de">${brl(m.base)}</s>` : '';
+  return `<p class="${classe}${m.oferta ? ' tem-oferta' : ''}">
+      ${m.varia ? '<span class="preco-apartir">A partir de</span>' : ''}
+      ${de}<b>${brl(m.final)}</b><small>${parcela(m.final)}</small>
+    </p>`;
+}
+
 const ICONE_WA = `<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.97-.15.16-.29.18-.53.06-.25-.13-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.44.13-.15.17-.25.25-.41.09-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.06s.89 2.39 1.01 2.55c.12.17 1.74 2.66 4.22 3.73.59.25 1.05.4 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"/>
 </svg>`;
@@ -234,23 +269,33 @@ function montarWhatsApp() {
    é só leitura: o selo conta o que já está lá dentro e a gaveta abre
    com a lista, venha ela de onde vier. */
 
-function cardHTML(p, classes = 'card--terco card--peq') {
+function cardHTML(p, classes = 'card--terco card--peq', cfg = null) {
+  // O card principal pode ter foto, posição e fundo próprios (painel → Site).
+  const fundo = cfg && REGRAS.fundoDe(cfg.fundo);
+  if (fundo) classes = classes.replace(' card--noite', '') + (fundo.tom === 'escuro' ? ' card--noite' : '');
+  const a = cfg?.ajuste || {};
+  const ajuste = (Number(a.x) || Number(a.y) || (Number(a.escala) || 100) !== 100)
+    ? ` style="transform: translate(${Number(a.x) || 0}%, ${Number(a.y) || 0}%) scale(${(Number(a.escala) || 100) / 100})"` : '';
+  const poco = cfg?.imagem
+    ? `<div class="poco poco--card poco--foto"><img class="foto" src="${escapar(cfg.imagem)}" alt="${escapar(p.nome)}" decoding="async"></div>`
+    : aparelhoHTML(p, p.cores?.[0], 'card');
   return `
-  <article class="card ${classes}" data-reveal>
+  <article class="card ${classes}${REGRAS.ofertaAtiva(p) ? ' card--oferta' : ''}" data-reveal${fundo ? ` style="background:${escapar(fundo.css)}"` : ''}>
     <div class="card-txt">
+      ${seloOferta(p, REGRAS.precoMinimo(p)) || seloStatus(p)}
       ${p.linha ? `<p class="olho">${escapar(p.linha)}</p>` : ''}
       <h3 class="card-nome">
         <a class="card-link" href="${linkProduto(p)}">${escapar(p.nome)}</a>
       </h3>
       ${p.chamada ? `<p class="card-chamada">${escapar(p.chamada)}</p>` : ''}
-      <p class="card-preco">${brl(p.preco)}<small>${parcela(p.preco)}</small></p>
+      ${precoVitrineHTML(p, 'card-preco')}
       <div class="card-acoes">
         <a class="btn" href="${linkProduto(p)}"
            aria-label="Comprar ${escapar(p.nome)}">Comprar</a>
         <span class="seta card-mais" aria-hidden="true">Saiba mais</span>
       </div>
     </div>
-    <div class="card-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
+    <div class="card-poco"><div class="card-ajuste"${ajuste}>${poco}</div></div>
   </article>`;
 }
 
@@ -265,7 +310,8 @@ function bolinhasHTML(p) {
 
 function linhaHTML(p) {
   return `
-  <article class="linha" data-reveal>
+  <article class="linha${REGRAS.ofertaAtiva(p) ? ' linha--oferta' : ''}" data-reveal>
+    <div class="linha-selos">${seloOferta(p, REGRAS.precoMinimo(p))}${seloStatus(p)}</div>
     <div class="linha-poco">${aparelhoHTML(p, p.cores?.[0], 'card')}</div>
     ${bolinhasHTML(p)}
     <div class="linha-txt">
@@ -274,10 +320,7 @@ function linhaHTML(p) {
         <a class="linha-link" href="${linkProduto(p)}">${escapar(p.nome)}</a>
       </h3>
     </div>
-    <p class="linha-preco">
-      <b>${brl(p.preco)}</b>
-      <small>${parcela(p.preco)}</small>
-    </p>
+    ${precoVitrineHTML(p, 'linha-preco')}
     <div class="linha-acoes">
       <a class="btn btn--peq" href="${linkProduto(p)}"
          aria-label="Comprar ${escapar(p.nome)}">Comprar</a>
@@ -291,7 +334,12 @@ function montarDestaques() {
   const grade = document.querySelector('#grade-destaques');
   if (!grade) return;
 
-  const escolhidos = PRODUTOS.filter((p) => p.destaque === 'principal').slice(0, 5);
+  // A ordem dos destaques é a que o dono montou no painel (LOJA.site.destaques).
+  // Sem ela, valem os produtos marcados como destaque, na ordem do catálogo.
+  const ordem = typeof LOJA !== 'undefined' && Array.isArray(LOJA.site?.destaques) ? LOJA.site.destaques : null;
+  const escolhidos = (ordem && ordem.length
+    ? ordem.map((id) => vitrine().find((p) => p.id === id)).filter(Boolean)
+    : vitrine().filter((p) => p.destaque === 'principal')).slice(0, 5);
 
   // Como a capa da Apple: o primeiro ocupa a largura inteira em preto,
   // os outros quatro em pares, em branco.
@@ -304,7 +352,8 @@ function montarDestaques() {
   ];
 
   grade.innerHTML = escolhidos
-    .map((p, i) => cardHTML(p, formas[i] || 'card--metade'))
+    .map((p, i) => cardHTML(p, formas[i] || 'card--metade',
+      i === 0 && typeof LOJA !== 'undefined' ? LOJA.site?.cardPrincipal : null))
     .join('');
 
   grade.querySelectorAll('[data-reveal]').forEach((el, i) =>
@@ -321,8 +370,12 @@ function montarCatalogo() {
   const busca = document.querySelector('#busca');
   const contagem = document.querySelector('#contagem');
 
-  chips.innerHTML = CATEGORIAS.map((c, i) => `
-    <button class="chip" type="button" data-cat="${c.id}" aria-pressed="${i === 0}">
+  // Com oferta no ar, o filtro "Ofertas" entra logo depois de "Tudo".
+  const filtros = temOfertas()
+    ? [CATEGORIAS[0], { id: 'ofertas', nome: window.EVENTO_ATIVO ? `Ofertas ${window.EVENTO_ATIVO.selo}` : 'Ofertas' }, ...CATEGORIAS.slice(1)]
+    : CATEGORIAS;
+  chips.innerHTML = filtros.map((c, i) => `
+    <button class="chip${c.id === 'ofertas' ? ' chip--oferta' : ''}" type="button" data-cat="${c.id}" aria-pressed="${i === 0}">
       ${escapar(c.nome)}
     </button>`).join('');
 
@@ -340,8 +393,9 @@ function montarCatalogo() {
 
   const desenhar = () => {
     const t = termo.trim().toLowerCase();
-    const achados = PRODUTOS.filter((p) => {
-      const bateCat = categoria === 'todos' || p.categoria === categoria;
+    const achados = vitrine().filter((p) => {
+      const bateCat = categoria === 'todos'
+        || (categoria === 'ofertas' ? REGRAS.ofertaAtiva(p) : p.categoria === categoria);
       const bateTermo = !t || [p.nome, p.linha, p.chamada, p.resumo]
         .filter(Boolean).join(' ').toLowerCase().includes(t);
       return bateCat && bateTermo;
@@ -395,6 +449,10 @@ function montarCatalogo() {
       if (i < jaVistas) { el.classList.add('vis'); return; }
       el.style.setProperty('--delay', `${Math.min(i - jaVistas, 6) * 45}ms`);
     });
+    // As linhas novas não estão no observador da rolagem (ele só conhece
+    // as da primeira pintura): entram por conta própria, no quadro seguinte.
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      novos.forEach((el) => el.classList.add('vis'))));
     jaVistas = visiveis.length;
   };
 
@@ -705,6 +763,7 @@ function montarPalco() {
   const pontos = janela.querySelector('.palco-pontos');
   const total = cartazes.length;
   let atual = 0;
+  cartazes.forEach((c, i) => c.setAttribute('aria-label', `${i + 1} de ${total}`));
 
   pontos.innerHTML = cartazes.map((c, i) => `
     <button type="button" aria-label="Cartaz ${i + 1} de ${total}" aria-current="${i === 0}"><span></span></button>`).join('');
@@ -715,9 +774,18 @@ function montarPalco() {
     trilho.scrollTo({ left: cartazes[atual].offsetLeft, behavior: suave && !semMovimento() ? 'smooth' : 'auto' });
   };
 
+  let anterior = -1;
   const marcar = () => {
     const i = Math.round(trilho.scrollLeft / trilho.clientWidth);
     atual = Math.max(0, Math.min(total - 1, i));
+    // O cartaz que chega entra em cena: texto em cascata, foto
+    // assentando. Na primeira pintura quem cuida é a entrada da página.
+    if (anterior !== -1 && anterior !== atual && !semMovimento()) {
+      cartazes.forEach((c) => c.classList.remove('entrou'));
+      void cartazes[atual].offsetWidth;
+      cartazes[atual].classList.add('entrou');
+    }
+    anterior = atual;
     botoes.forEach((b, k) => b.setAttribute('aria-current', String(k === atual)));
     cartazes.forEach((c, k) => {
       const fora = k !== atual;
@@ -746,11 +814,16 @@ function montarPalco() {
   const INTERVALO = 6500;
   let timer = null;
   let parado = semMovimento();
-  const parar = () => { clearInterval(timer); timer = null; };
+  janela.style.setProperty('--intervalo', `${INTERVALO}ms`);
+  const parar = () => { clearInterval(timer); timer = null; janela.dataset.tocando = 'false'; };
   const tocar = () => {
     parar();
     if (parado || document.hidden) return;
     timer = setInterval(() => ir(atual + 1), INTERVALO);
+    // O ponto ativo enche como um relógio até a próxima troca.
+    janela.dataset.tocando = 'false';
+    void janela.offsetWidth;
+    janela.dataset.tocando = 'true';
   };
   const reiniciar = () => { if (timer) tocar(); };
 
@@ -762,6 +835,10 @@ function montarPalco() {
   trilho.addEventListener('touchstart', () => { parado = true; parar(); }, { passive: true });
   document.addEventListener('visibilitychange', () => (document.hidden ? parar() : tocar()));
 
+  // Um cartaz de evento entra antes do primeiro, e o navegador
+  // tenta manter o cartaz que já estava encaixado. Volta para o início.
+  trilho.scrollLeft = 0;
+  requestAnimationFrame(() => { trilho.scrollLeft = 0; marcar(); });
   marcar();
   tocar();
 }

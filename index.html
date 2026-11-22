@@ -24,8 +24,11 @@
     }
   } catch (e) { /* navegador sem sessionStorage: entra sem cortina */ }
 </script>
+<script src="assets/js/loja.js"></script>
+<script src="assets/js/regras.js"></script>
+<script src="assets/js/evento.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="preload" as="image" href="assets/img/iphone-17-pro.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/iphone-18-pro.webp" type="image/webp" fetchpriority="high">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f8f4ee'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23FF6200'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23FF6200'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23FF6200'/></svg>">
 </head>
 <body>
@@ -46,17 +49,15 @@
         <li>Até 12x sem juros no cartão</li>
         <li>Desconto à vista no Pix</li>
         <li>Nota fiscal no seu nome</li>
-        <li>Entrega no mesmo dia em São Paulo</li>
         <li>Garantia de 12 meses</li>
-        <li>Enviamos para todo o Brasil</li>
+        <li>Aparelhos lacrados</li>
       </ul>
       <ul class="faixa-lista" aria-hidden="true">
         <li>Até 12x sem juros no cartão</li>
         <li>Desconto à vista no Pix</li>
         <li>Nota fiscal no seu nome</li>
-        <li>Entrega no mesmo dia em São Paulo</li>
         <li>Garantia de 12 meses</li>
-        <li>Enviamos para todo o Brasil</li>
+        <li>Aparelhos lacrados</li>
       </ul>
     </div>
   </div>
@@ -127,26 +128,56 @@
     <div class="palco-janela">
       <div class="palco-trilho" id="palco-trilho">
 
-        <article class="cartaz cartaz--noite" aria-roledescription="slide" aria-label="1 de 4">
+        <!-- O cartaz de estreia: a foto oficial é recortada sobre preto
+             puro, o mesmo preto do cartaz, então os aparelhos saem do
+             fundo sem moldura nenhuma. -->
+        <article class="cartaz cartaz--estreia" aria-roledescription="slide">
           <div class="cartaz-txt">
-            <p class="cartaz-olho" data-entra>iPhone 17 Pro · originais e lacrados</p>
-            <h1 class="cartaz-titulo" data-entra>Seu próximo iPhone, <em>sem dúvida.</em></h1>
-            <p class="cartaz-sub" data-entra>Nota fiscal no seu nome, garantia de 12 meses e lacre aberto por você.</p>
+            <p class="cartaz-novo" data-entra>Novo</p>
+            <h1 class="cartaz-titulo" data-entra><span class="titulo-metal">iPhone 18 Pro</span></h1>
+            <p class="cartaz-frase" data-entra>Seu próximo iPhone, sem dúvida.</p>
+            <ul class="cartaz-fatos" data-entra>
+              <li>Lacrado</li><li>Nota fiscal no seu nome</li><li>Até 12x sem juros</li>
+            </ul>
             <div class="cartaz-acoes" data-entra>
-              <a class="btn btn--grande" target="_blank" rel="noopener"
-                 data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Comprar no WhatsApp</a>
-              <a class="seta" href="produto.html?id=iphone-17-pro">Ver o iPhone 17 Pro</a>
+              <a class="btn btn--grande btn--claro" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero reservar o iPhone 18 Pro.">Reservar pelo WhatsApp</a>
+              <a class="seta" href="index.html?cat=iphone#catalogo">Ver iPhones</a>
             </div>
             <p class="estado" id="estado-loja" data-entra data-aberta="false">
               <span class="estado-luz" aria-hidden="true"></span>
               <span class="estado-txt"></span>
             </p>
           </div>
-          <figure class="cartaz-foto cartaz-foto--alta">
+          <figure class="cartaz-arte">
             <picture>
-              <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
-              <img src="assets/img/iphone-17-pro.png" width="988" height="1122" fetchpriority="high" decoding="async"
-                   alt="Três iPhone 17 Pro vistos por trás: Prata Profundo, Laranja-cósmico e Azul-profundo.">
+              <source srcset="assets/img/iphone-18-pro.webp" type="image/webp">
+              <img src="assets/img/iphone-18-pro.jpg" width="812" height="738" fetchpriority="high" decoding="async"
+                   alt="Dois iPhone 18 Pro em vinho, um de costas com a câmera tripla e outro de frente com a tela acesa.">
+            </picture>
+          </figure>
+        </article>
+
+        <!-- Sobre o cinza da Apple (#f5f5f7), o mesmo fundo da foto. -->
+        <article class="cartaz cartaz--duo" aria-roledescription="slide">
+          <div class="cartaz-txt">
+            <p class="cartaz-novo">Novo</p>
+            <h2 class="cartaz-titulo"><span class="titulo-perola">iPhone Duo</span></h2>
+            <p class="cartaz-frase">Abre. Dobra. Cabe no bolso.</p>
+            <ul class="cartaz-fatos">
+              <li>Lacrado</li><li>Nota fiscal no seu nome</li><li>Até 12x sem juros</li>
+            </ul>
+            <div class="cartaz-acoes">
+              <a class="btn btn--grande" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero saber do iPhone Duo.">Reservar pelo WhatsApp</a>
+              <a class="seta" href="index.html?cat=iphone#catalogo">Ver iPhones</a>
+            </div>
+          </div>
+          <figure class="cartaz-arte">
+            <picture>
+              <source srcset="assets/img/iphone-duo.webp" type="image/webp">
+              <img src="assets/img/iphone-duo.jpg" width="620" height="492" loading="lazy" decoding="async"
+                   alt="iPhone Duo branco entreaberto: de um lado a câmera dupla, do outro a tela acesa.">
             </picture>
           </figure>
         </article>
@@ -171,7 +202,7 @@
           <div class="cartaz-txt">
             <p class="cartaz-olho">Pagamento</p>
             <h2 class="cartaz-titulo">Até 12x sem juros. <em>Ou desconto no Pix.</em></h2>
-            <p class="cartaz-sub">Em São Paulo você confere o aparelho antes de fechar o pagamento.</p>
+            <p class="cartaz-sub">Parcele no cartão ou pague à vista no Pix com desconto.</p>
             <div class="cartaz-acoes">
               <a class="btn btn--grande btn--tinta" target="_blank" rel="noopener"
                  data-wa="Olá! Vim pelo site da Aliança One e quero saber das condições de pagamento.">Falar com um consultor</a>
@@ -210,7 +241,7 @@
 <!-- ============ Categorias ============ -->
 <section class="vitrines" aria-labelledby="vitrines-titulo">
   <div class="shell shell--larga">
-    <div class="sec-topo" data-reveal>
+    <div class="sec-topo" data-reveal data-secao="vitrines">
       <p class="sec-olho">Nossos produtos</p>
       <h2 class="t-xl" id="vitrines-titulo">Tudo da Apple, <em class="rampa">num lugar só.</em></h2>
     </div>
@@ -253,24 +284,24 @@
   <div class="shell shell--larga">
     <ul class="selos-grade">
       <li data-reveal>
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.8h12v18.4l-2.4-1.6-2.4 1.6-1.2-.8-1.2.8-2.4-1.6L6 21.2Z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M6 2.8h12v18.4l-2.4-1.6-2.4 1.6-1.2-.8-1.2.8-2.4-1.6L6 21.2Z"/><path pathLength="1" d="M9 8h6M9 11.5h6M9 15h3.5"/></svg>
         <h3>Nota fiscal</h3>
         <p>Emitida no seu nome, em toda venda.</p>
       </li>
       <li data-reveal style="--delay:60ms">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 19.5 6v5.6c0 4.6-3.2 8.3-7.5 9.6-4.3-1.3-7.5-5-7.5-9.6V6Z"/><path d="m8.6 12 2.4 2.4 4.4-4.6"/></svg>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M12 2.8 19.5 6v5.6c0 4.6-3.2 8.3-7.5 9.6-4.3-1.3-7.5-5-7.5-9.6V6Z"/><path pathLength="1" d="m8.6 12 2.4 2.4 4.4-4.6"/></svg>
         <h3>Garantia de 12 meses</h3>
         <p>Respondida pela própria Aliança One.</p>
       </li>
       <li data-reveal style="--delay:120ms">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5Z"/><path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9"/></svg>
-        <h3>Lacre conferido</h3>
-        <p>A caixa é aberta por você, na entrega.</p>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5Z"/><path pathLength="1" d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9"/></svg>
+        <h3>Lacrado de fábrica</h3>
+        <p>Aparelho novo, na caixa original.</p>
       </li>
       <li data-reveal style="--delay:180ms">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 6.5h11v9.5h-11ZM13.8 9.5h4l3.4 3.4V16h-7.4"/><circle cx="7" cy="17.6" r="1.8"/><circle cx="17.4" cy="17.6" r="1.8"/></svg>
-        <h3>Entrega no mesmo dia</h3>
-        <p>Em mãos, em São Paulo. Para o Brasil, com rastreio.</p>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M4 5.5h16v10.5H9.5L5 19.5V16H4Z"/><path pathLength="1" d="M8 9.5h8M8 12.5h5"/></svg>
+        <h3>Atendimento no WhatsApp</h3>
+        <p>Fale direto com a loja, do pedido ao pós-venda.</p>
       </li>
     </ul>
   </div>
@@ -279,7 +310,7 @@
 <!-- ============ Destaques ============ -->
 <section class="destaques" id="destaques">
   <div class="shell shell--larga">
-    <div class="sec-topo" data-reveal>
+    <div class="sec-topo" data-reveal data-secao="destaques">
       <p class="sec-olho">Os mais procurados</p>
       <h2 class="t-xl">Os principais. <em class="rampa">Com a confiança da Aliança One.</em></h2>
     </div>
@@ -291,7 +322,7 @@
 <!-- ============ Catálogo ============ -->
 <section class="catalogo" id="catalogo">
   <div class="shell shell--larga">
-    <div class="sec-topo" data-reveal>
+    <div class="sec-topo" data-reveal data-secao="catalogo">
       <p class="sec-olho">Em até 12x sem juros</p>
       <h2 class="t-xl">Toda a loja. <em class="rampa">Escolha o seu.</em></h2>
     </div>
@@ -313,7 +344,7 @@
 <!-- ============ Perguntas ============ -->
 <section class="perguntas" id="perguntas">
   <div class="shell">
-    <div class="sec-topo" data-reveal>
+    <div class="sec-topo" data-reveal data-secao="perguntas">
       <p class="sec-olho">Dúvidas</p>
       <h2 class="t-xl">Antes de <em class="rampa">mandar mensagem.</em></h2>
     </div>
@@ -367,12 +398,12 @@
       <div data-reveal style="--delay:80ms">
         <span class="n" aria-hidden="true">02</span>
         <h3>Confirmamos estoque e pagamento.</h3>
-        <p>Pix com desconto, cartão em até 12x ou na loja.</p>
+        <p>Pix com desconto ou cartão em até 12x.</p>
       </div>
       <div data-reveal style="--delay:160ms">
         <span class="n" aria-hidden="true">03</span>
-        <h3>Recebe no mesmo dia em São Paulo.</h3>
-        <p>Em mãos, com o lacre conferido por você na hora da entrega.</p>
+        <h3>Combinamos a entrega com você.</h3>
+        <p>Prazo e forma de entrega acertados na conversa.</p>
       </div>
     </div>
 
@@ -461,10 +492,9 @@
         <b id="carrinho-total"></b>
       </div>
       <p class="carrinho-parcelado" id="carrinho-parcelado"></p>
-      <a class="btn btn--grande btn--largo" id="carrinho-enviar" target="_blank" rel="noopener" href="#">
-        Fechar pedido no WhatsApp
+      <a class="btn btn--grande btn--largo" id="carrinho-enviar" href="checkout.html">
+        Finalizar compra
       </a>
-      <p class="carrinho-nota">A lista inteira já vai escrita na mensagem, com cor e capacidade.</p>
     </footer>
   </aside>
 </div>
@@ -496,6 +526,7 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/catalogo.js"></script>
+<script src="assets/js/site.js"></script>
 <script src="assets/js/aparelho.js"></script>
 <script src="assets/js/gesto.js"></script>
 <script src="assets/js/transicao.js"></script>

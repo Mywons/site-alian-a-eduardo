@@ -13,7 +13,7 @@ const CONFIG = {
   instagram: 'https://instagram.com/',
   arroba: '@aliancaone',
   cnpj: '',                       // só dígitos ou formatado; vazio = não aparece
-  atende: 'São Paulo e todo o Brasil',
+  atende: '',
   horario: 'Segunda a sábado, 10h às 19h',
   parcelas: 12,
 
@@ -53,14 +53,12 @@ const CONFIG = {
 const PERGUNTAS = [
   {
     p: 'Onde vocês ficam?',
-    r: 'Somos de São Paulo e trabalhamos por WhatsApp e entrega, sem loja de rua. '
-     + 'Na capital a entrega é em mãos, no mesmo dia, e você confere o lacre na hora. '
-     + 'Para o resto do Brasil enviamos com rastreio.'
+    r: 'Somos de São Paulo e atendemos pelo WhatsApp. Prazo e forma de entrega '
+     + 'são combinados com você na conversa, antes do pagamento.'
   },
   {
     p: 'O aparelho é original e lacrado?',
-    r: 'Sim. Aparelho lacrado, de fábrica, com a caixa aberta por você na entrega. '
-     + 'Se o lacre não estiver íntegro, a compra não acontece.'
+    r: 'Sim. Aparelho original, novo e lacrado de fábrica.'
   },
   {
     p: 'Vem nota fiscal?',
@@ -69,23 +67,17 @@ const PERGUNTAS = [
   },
   {
     p: 'Como funciona a garantia de 12 meses?',
-    r: 'São 12 meses respondidos pela Aliança One, contados da entrega. Deu problema '
+    r: 'São 12 meses respondidos pela Aliança One, contados da compra. Deu problema '
      + 'de fábrica, você fala com a gente pelo mesmo WhatsApp da compra.'
   },
   {
     p: 'Como eu pago?',
-    r: 'Pix, com desconto à vista; cartão em até 12x; ou dinheiro na entrega, '
-     + 'combinado antes. Em São Paulo dá para pagar só depois de conferir o aparelho.'
+    r: 'Pix, com desconto à vista, ou cartão de crédito em até 12x.'
   },
   {
     p: 'Vocês aceitam meu usado na troca?',
     r: 'Avaliamos caso a caso. Mande o modelo, a capacidade e o estado do seu '
      + 'aparelho que a gente responde com o valor de abatimento.'
-  },
-  {
-    p: 'Entregam fora de São Paulo?',
-    r: 'Sim, para todo o Brasil, com rastreio e embalagem reforçada. Em São Paulo '
-     + 'a entrega sai no mesmo dia; fora, o prazo depende do destino.'
   }
 ];
 
