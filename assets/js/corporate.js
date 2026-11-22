@@ -81,7 +81,7 @@
   };
 
   const catalogo = () => (typeof PRODUTOS !== 'undefined' && Array.isArray(PRODUTOS))
-    ? PRODUTOS : [];
+    ? PRODUTOS.filter((p) => !p.oculto) : [];
 
   const acharProduto = (id) => catalogo().find((p) => p.id === id);
 

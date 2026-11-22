@@ -3044,7 +3044,7 @@ body { background: var(--papel); }
 .nav-destaque { background: none; padding: 0; margin: 0; font-weight: 400; opacity: 0.8; }
 .nav-destaque:hover { background: none; }
 .nav-corp { min-height: 30px; padding: 0 13px; font-size: 0.75rem; font-weight: 500; }
-.marca .simbolo { fill: var(--marca); width: 17px; }
+.marca .simbolo { fill: var(--logo); width: 17px; }
 .marca { font-weight: 600; }
 
 /* -- Botões: a pílula da Apple, mais baixa e mais leve -- */
@@ -3182,10 +3182,10 @@ body { background: var(--papel); }
 
 /* A telha preta: a dos modelos Pro na capa da Apple. */
 .card--noite { background: #000; color: #f5f5f7; }
-.card--noite .olho { color: var(--marca); }
+.card--noite .olho { color: var(--marca-noite); }
 .card--noite .card-preco small { color: #a1a1a6; }
-.card--noite .seta { color: var(--marca); }
-.card--noite :focus-visible { outline-color: var(--marca); }
+.card--noite .seta { color: var(--marca-noite); }
+.card--noite :focus-visible { outline-color: var(--marca-noite); }
 
 /* "Também na loja", na página do produto: três telhas iguais. */
 .relacionados .card, .card--terco { grid-column: span 1; }
@@ -3268,7 +3268,7 @@ body { background: var(--papel); }
    da Apple, em cartões brancos sobre o cinza. -- */
 .compromissos { background: var(--chao); color: var(--tinta); }
 .compromissos-grade div { background: var(--papel); border-radius: 18px; padding: clamp(28px, 3vw, 40px) 24px; }
-.compromissos-grade .n { color: var(--marca); font-size: 2rem; font-weight: 600; }
+.compromissos-grade .n { color: var(--acao); font-size: 2rem; font-weight: 600; }
 .compromissos-grade p { color: var(--suave); }
 .compromissos .btn { background: var(--marca); color: var(--forte-tinta); }
 .compromissos .btn:hover { background: var(--marca-funda); }
@@ -3277,7 +3277,7 @@ body { background: var(--papel); }
 /* -- Rodapé: o rodapé miúdo e cinza da Apple -- */
 .rodape { background: var(--chao); border-top: 0; font-size: 0.75rem; color: var(--suave); padding-top: 32px; }
 .rodape-marca { border-bottom-color: rgb(0 0 0 / 0.12); }
-.rodape-marca .simbolo { fill: var(--marca); width: 20px; }
+.rodape-marca .simbolo { fill: var(--logo); width: 20px; }
 .rodape-cols { border-bottom-color: rgb(0 0 0 / 0.12); }
 .rodape h4 { font-size: 0.75rem; }
 .rodape ul { gap: 8px; }
@@ -3303,15 +3303,20 @@ body { background: var(--papel); }
    e rodapé preto — vestida com a voz da Aliança: o cinza e o branco
    da Apple, um laranja só e nenhuma urgência inventada. */
 
-:root { --faixa: 34px; --nav: calc(48px + var(--faixa)); }
+:root {
+  --faixa: 34px; --nav: calc(48px + var(--faixa));
+  --logo: #FF6200;          /* o logo não muda com evento nenhum */
+  --marca-noite: var(--marca);  /* o laranja escrito sobre fundo escuro */
+  --faixa-fundo: #1d1d1f; --faixa-tinta: #f5f5f7; --faixa-ponto: var(--marca);
+}
 .nav-inner { min-height: 48px; }
 
 /* -- Faixa de condições -- */
 .faixa {
   height: var(--faixa);
   overflow: hidden;
-  background: var(--tinta);
-  color: #f5f5f7;
+  background: var(--faixa-fundo);
+  color: var(--faixa-tinta);
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -3322,7 +3327,7 @@ body { background: var(--papel); }
 .faixa-lista li { display: flex; align-items: center; white-space: nowrap; padding-right: 30px; }
 .faixa-lista li::before {
   content: ''; width: 5px; height: 5px; border-radius: 50%;
-  background: var(--marca); margin-right: 30px; flex: none;
+  background: var(--faixa-ponto); margin-right: 30px; flex: none;
 }
 @keyframes faixa { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
@@ -3400,10 +3405,10 @@ body { background: var(--papel); }
     #0b0b0c;
   color: #f5f5f7;
 }
-.cartaz--noite .cartaz-olho { color: var(--marca); }
-.cartaz--noite .cartaz-titulo em { color: var(--marca); }
+.cartaz--noite .cartaz-olho { color: var(--marca-noite); }
+.cartaz--noite .cartaz-titulo em { color: var(--marca-noite); }
 .cartaz--noite .cartaz-sub, .cartaz--noite .estado { color: #a1a1a6; }
-.cartaz--noite .seta, .cartaz--corp .seta { color: var(--marca); }
+.cartaz--noite .seta, .cartaz--corp .seta { color: var(--marca-noite); }
 
 .cartaz--claro { background: var(--chao); color: var(--tinta); }
 
@@ -3419,7 +3424,7 @@ body { background: var(--papel); }
 .cartaz--corp .cartaz-titulo em { color: #a1a1a6; }
 .cartaz--corp .cartaz-sub { color: #a1a1a6; }
 
-.cartaz--noite :focus-visible, .cartaz--corp :focus-visible { outline-color: var(--marca); }
+.cartaz--noite :focus-visible, .cartaz--corp :focus-visible { outline-color: var(--marca-noite); }
 
 /* Setas e pontos */
 .palco-seta {
@@ -3576,13 +3581,215 @@ body { background: var(--papel); }
 
 /* -- Rodapé preto -- */
 .rodape { background: #0b0b0c; color: #a1a1a6; padding-top: clamp(40px, 5vw, 64px); }
-.rodape h4 { color: var(--marca); font-size: 0.8125rem; }
+.rodape h4 { color: var(--marca-noite); font-size: 0.8125rem; }
 .rodape a:hover { color: #fff; }
 .rodape-marca, .rodape-cols { border-bottom-color: rgb(255 255 255 / 0.12); }
 .rodape-marca p { color: #d2d2d7; font-size: 0.875rem; }
 .rodape-marca .simbolo { width: 28px; }
 .rodape-corp::before { background: var(--corp-laranja); }
-.rodape :focus-visible { outline-color: var(--marca); }
+.rodape :focus-visible { outline-color: var(--marca-noite); }
+
+/* ---------- 24d. Ofertas, estoque e eventos ----------
+   O selo de oferta, o "de/por", os avisos de estoque e os doze temas
+   de evento. Um tema só troca tokens: a cor que preenche o botão
+   (--marca) e a tinta por cima dela (--forte-tinta), a cor que se
+   escreve sobre o branco (--acao), a faixa do topo e o cartaz do
+   evento. Cada par foi medido: tinta sobre preenchimento e --acao
+   sobre #fff/#f5f5f7 passam de 4,5:1 em todos. O logo não muda. */
+
+/* -- Selos -- */
+.selo-oferta, .selo-status {
+  display: inline-flex; align-items: center; gap: 6px;
+  width: max-content;
+  padding: 4px 10px;
+  border-radius: 980px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+.selo-oferta { background: var(--selo-fundo, var(--marca)); color: var(--selo-tinta, var(--forte-tinta)); }
+.selo-oferta b { font-weight: 800; }
+.selo-status { background: var(--fundo); color: var(--tinta); }
+.selo-status--esgotado { background: var(--tinta); color: #fff; }
+.card .selo-oferta, .card .selo-status { margin-bottom: 10px; }
+.linha-selos { display: flex; flex-wrap: wrap; gap: 6px; min-height: 0; margin-bottom: 4px; }
+.linha-selos:empty { display: none; }
+
+/* -- De / por -- */
+.preco-apartir { display: block; font-size: 0.75rem; color: var(--suave); font-weight: 400; margin-bottom: 1px; }
+.preco-de { color: var(--suave); font-weight: 400; margin-right: 6px; font-size: 0.875em; }
+.tem-oferta > b { color: var(--acao); font-weight: 600; }
+.card--noite .tem-oferta > b { color: var(--marca-noite); }
+.card--noite .preco-de, .card--noite .preco-apartir { color: #a1a1a6; }
+.card-preco .preco-apartir { display: inline; margin: 0 4px 0 0; }
+
+.produto-preco .selo-oferta {
+  display: inline-flex; margin: 0 auto 10px; font-size: 0.8125rem;
+  color: var(--selo-tinta, var(--forte-tinta)); letter-spacing: 0.01em;
+}
+.produto-preco .selo-oferta b { font-size: inherit; font-weight: 800; letter-spacing: 0; color: inherit; }
+.produto-preco .preco-de { display: block; font-size: 1.0625rem; margin: 0 0 2px; }
+.preco-validade { display: block; margin-top: 4px; font-size: 0.8125rem; color: var(--acao); font-weight: 500; }
+.produto-status {
+  display: inline-block; margin: 14px auto 0; padding: 6px 14px; border-radius: 980px;
+  background: var(--fundo); font-size: 0.875rem; font-weight: 500;
+}
+.produto-status--esgotado { background: var(--tinta); color: #fff; }
+
+/* Opção esgotada e o preço de cada capacidade */
+.opt--cap { justify-content: space-between; }
+.opt small { margin-left: auto; font-size: 0.8125rem; font-weight: 400; color: var(--suave); }
+.opt:disabled { cursor: not-allowed; opacity: 0.5; }
+.opt:disabled span:not(.swatch) { text-decoration: line-through; }
+.opt:disabled:hover { background: var(--chao-2); border-color: var(--linha); }
+
+.chip--oferta { color: var(--acao); font-weight: 600; }
+.chip--oferta[aria-pressed='true'] { background: var(--marca); color: var(--forte-tinta); }
+
+/* Aviso de pré-visualização (só aparece com ?evento=) */
+.previa-evento {
+  position: fixed; left: 50%; bottom: 18px; z-index: 400; transform: translateX(-50%);
+  padding: 10px 18px; border-radius: 980px;
+  background: #1d1d1f; color: #fff; font-size: 0.8125rem; font-weight: 500; white-space: nowrap;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.25);
+}
+
+/* -- O cartaz do evento -- */
+.cartaz--evento {
+  background: var(--ev-fundo, #0b0b0c);
+  color: var(--ev-tinta, #f5f5f7);
+}
+.cartaz--evento .cartaz-olho { color: var(--ev-olho, var(--marca-noite)); }
+.cartaz--evento .cartaz-titulo { max-width: 14ch; }
+.cartaz--evento .cartaz-sub { color: var(--ev-sub, #a1a1a6); }
+.cartaz--evento .seta { color: var(--ev-olho, var(--marca-noite)); }
+.cartaz--evento :focus-visible { outline-color: var(--ev-olho, var(--marca-noite)); }
+.cartaz-enfeite { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: var(--ev-enfeite, none); }
+.cartaz--evento .cartaz-foto { position: relative; z-index: 1; }
+/* O enfeite some atrás do texto: um véu da cor do fundo do lado esquerdo. */
+.cartaz--evento .cartaz-enfeite {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0 38%, #000 70%);
+          mask-image: linear-gradient(90deg, transparent 0 38%, #000 70%);
+}
+@media (max-width: 760px) {
+  .cartaz--evento .cartaz-enfeite {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0 45%, #000 75%);
+            mask-image: linear-gradient(180deg, transparent 0 45%, #000 75%);
+  }
+}
+
+/* -- Os temas -- */
+:root[data-evento='black-friday'] {
+  --marca: #ffd60a; --marca-funda: #f0c800; --forte-tinta: #000;
+  --acao: #7a5c00; --acao-funda: #5e4700; --marca-noite: #ffd60a;
+  --faixa-fundo: #000; --faixa-tinta: #ffd60a; --faixa-ponto: #fff;
+  --selo-fundo: #000; --selo-tinta: #ffd60a;
+  --ev-fundo: #000; --ev-olho: #ffd60a;
+  --ev-enfeite: repeating-linear-gradient(-45deg, transparent 0 22px, rgb(255 214 10 / 0.07) 22px 44px);
+}
+:root[data-evento='black-friday'] .cartaz--evento .cartaz-titulo { text-transform: uppercase; letter-spacing: -0.02em; }
+
+:root[data-evento='cyber-monday'] {
+  --marca: #00d9f5; --marca-funda: #00c3dc; --forte-tinta: #000;
+  --acao: #00687a; --acao-funda: #004f5d; --marca-noite: #00d9f5;
+  --faixa-fundo: #0a0a23; --faixa-tinta: #00d9f5; --faixa-ponto: #ff3df2;
+  --selo-fundo: #0a0a23; --selo-tinta: #00d9f5;
+  --ev-fundo: #0a0a23; --ev-olho: #00d9f5;
+  --ev-enfeite: linear-gradient(rgb(0 217 245 / 0.08) 1px, transparent 1px) 0 0 / 32px 32px,
+                linear-gradient(90deg, rgb(0 217 245 / 0.08) 1px, transparent 1px) 0 0 / 32px 32px;
+}
+
+:root[data-evento='natal'] {
+  --marca: #c8102e; --marca-funda: #a80d26; --forte-tinta: #fff;
+  --acao: #b00e28; --acao-funda: #8c0b20; --marca-noite: #ff6b7d;
+  --faixa-fundo: #0d3b2a; --faixa-tinta: #fff; --faixa-ponto: #e8c26a;
+  --selo-fundo: #c8102e; --selo-tinta: #fff;
+  --ev-fundo: radial-gradient(70% 90% at 80% 60%, #14553c, #0b2e21 70%);
+  --ev-olho: #e8c26a; --ev-sub: #cfe3d8;
+  --ev-enfeite: radial-gradient(circle, rgb(255 255 255 / 0.5) 1.5px, transparent 2px) 0 0 / 46px 46px,
+                radial-gradient(circle, rgb(255 255 255 / 0.3) 1px, transparent 1.5px) 23px 23px / 46px 46px;
+}
+
+:root[data-evento='ano-novo'] {
+  --marca: #d4af37; --marca-funda: #c19c26; --forte-tinta: #000;
+  --acao: #7a5f12; --acao-funda: #5e490d; --marca-noite: #e8c766;
+  --faixa-fundo: #000; --faixa-tinta: #e8c766; --faixa-ponto: #fff;
+  --selo-fundo: #000; --selo-tinta: #e8c766;
+  --ev-fundo: radial-gradient(60% 80% at 75% 40%, #2a2210, #000 70%); --ev-olho: #e8c766;
+  --ev-enfeite: radial-gradient(circle, rgb(232 199 102 / 0.55) 1.2px, transparent 1.8px) 0 0 / 38px 38px;
+}
+
+:root[data-evento='volta-as-aulas'] {
+  --marca: #2563eb; --marca-funda: #1d4ed8; --forte-tinta: #fff;
+  --acao: #1d4ed8; --acao-funda: #1e40af; --marca-noite: #7aa5ff;
+  --faixa-fundo: #1e3a8a; --faixa-tinta: #fff; --faixa-ponto: #facc15;
+  --selo-fundo: #facc15; --selo-tinta: #000;
+  --ev-fundo: #eaf1ff; --ev-tinta: #0f1c3f; --ev-sub: #3b4a6b; --ev-olho: #1d4ed8;
+  --ev-enfeite: linear-gradient(transparent 31px, rgb(37 99 235 / 0.12) 32px) 0 0 / 100% 32px;
+}
+
+:root[data-evento='consumidor'] {
+  --marca: #15803d; --marca-funda: #116632; --forte-tinta: #fff;
+  --acao: #15803d; --acao-funda: #116632; --marca-noite: #4ade80;
+  --faixa-fundo: #052e16; --faixa-tinta: #fff; --faixa-ponto: #4ade80;
+  --selo-fundo: #15803d; --selo-tinta: #fff;
+  --ev-fundo: #ecfdf3; --ev-tinta: #052e16; --ev-sub: #2f5a3f; --ev-olho: #15803d;
+}
+
+:root[data-evento='maes'] {
+  --marca: #c0266d; --marca-funda: #a51f5d; --forte-tinta: #fff;
+  --acao: #b0215f; --acao-funda: #8f1a4c; --marca-noite: #ff7ab6;
+  --faixa-fundo: #5c0f33; --faixa-tinta: #fff; --faixa-ponto: #ffb3d4;
+  --selo-fundo: #c0266d; --selo-tinta: #fff;
+  --ev-fundo: linear-gradient(135deg, #fff0f6, #fde2ee); --ev-tinta: #3d0a22; --ev-sub: #7a3a57; --ev-olho: #b0215f;
+}
+
+:root[data-evento='namorados'] {
+  --marca: #d61f45; --marca-funda: #b8193a; --forte-tinta: #fff;
+  --acao: #be123c; --acao-funda: #9f1239; --marca-noite: #ff6b88;
+  --faixa-fundo: #4c0519; --faixa-tinta: #fff; --faixa-ponto: #ff8fa6;
+  --selo-fundo: #d61f45; --selo-tinta: #fff;
+  --ev-fundo: radial-gradient(70% 90% at 80% 50%, #7a0c2a, #3a0413 70%); --ev-olho: #ff8fa6; --ev-sub: #f3c2cd;
+}
+
+:root[data-evento='pais'] {
+  --marca: #1e3a8a; --marca-funda: #172e6e; --forte-tinta: #fff;
+  --acao: #1e40af; --acao-funda: #1e3a8a; --marca-noite: #8fb0ff;
+  --faixa-fundo: #0f172a; --faixa-tinta: #fff; --faixa-ponto: #8fb0ff;
+  --selo-fundo: #1e3a8a; --selo-tinta: #fff;
+  --ev-fundo: linear-gradient(150deg, #1b2b5a, #0b1226 70%); --ev-olho: #8fb0ff; --ev-sub: #b9c6e6;
+}
+
+:root[data-evento='lancamento'] {
+  --marca: #1d1d1f; --marca-funda: #000; --forte-tinta: #fff;
+  --acao: #0066cc; --acao-funda: #004f9e; --marca-noite: #2997ff;
+  --faixa-fundo: #000; --faixa-tinta: #fff; --faixa-ponto: #2997ff;
+  --selo-fundo: #0066cc; --selo-tinta: #fff;
+  --ev-fundo: radial-gradient(60% 80% at 75% 55%, rgb(41 151 255 / 0.35), #000 70%); --ev-olho: #2997ff;
+}
+:root[data-evento='lancamento'] .cartaz--evento .btn { background: #fff; color: #1d1d1f; }
+
+:root[data-evento='criancas'] {
+  --marca: #ffb020; --marca-funda: #f29e00; --forte-tinta: #000;
+  --acao: #8a4b00; --acao-funda: #6b3a00; --marca-noite: #ffb020;
+  --faixa-fundo: #6d28d9; --faixa-tinta: #fff; --faixa-ponto: #ffb020;
+  --selo-fundo: #6d28d9; --selo-tinta: #fff;
+  --ev-fundo: #fff6dc; --ev-tinta: #2b1700; --ev-sub: #6b4a1f; --ev-olho: #6d28d9;
+  --ev-enfeite: radial-gradient(circle, #ff5d8f 3px, transparent 3.5px) 0 0 / 70px 70px,
+                radial-gradient(circle, #3bb3ff 3px, transparent 3.5px) 35px 20px / 70px 70px,
+                radial-gradient(circle, #6d28d9 2.5px, transparent 3px) 15px 45px / 70px 70px;
+}
+
+:root[data-evento='aniversario'] {
+  --faixa-fundo: #FF6200; --faixa-tinta: #1d1d1f; --faixa-ponto: #1d1d1f;
+  --selo-fundo: #1d1d1f; --selo-tinta: #FF6200;
+  --ev-fundo: linear-gradient(135deg, #ff7a26, #FF6200 60%, #e85900); --ev-tinta: #1d1d1f; --ev-sub: #1d1d1f; --ev-olho: #1d1d1f;
+  --ev-enfeite: radial-gradient(circle, rgb(255 255 255 / 0.5) 3px, transparent 3.5px) 0 0 / 60px 60px;
+}
+:root[data-evento='aniversario'] .cartaz--evento .btn { background: #1d1d1f; color: #fff; }
+
+/* Cartaz de fundo claro: as setas e o ponto da navegação do palco
+   continuam legíveis, e o botão escuro do "Toda a loja" idem. */
+:root:is([data-evento='volta-as-aulas'], [data-evento='consumidor'], [data-evento='maes'], [data-evento='criancas']) .cartaz--evento .seta { color: var(--ev-olho); }
 
 /* ---------- 25. Preferências do usuário ---------- */
 

@@ -91,53 +91,182 @@
   </header>
 
   <main class="conteudo">
-    <div class="cabeca">
-      <div>
-        <h1>Produtos</h1>
-        <p class="cabeca-sub" id="cabeca-sub"></p>
-      </div>
-      <button class="btn btn--cheio" type="button" id="btn-novo">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
-        Novo produto
-      </button>
-    </div>
+    <nav class="abas" role="tablist" aria-label="Seções do painel">
+      <button role="tab" type="button" data-aba="produtos" aria-selected="true">Produtos</button>
+      <button role="tab" type="button" data-aba="ofertas" aria-selected="false">Ofertas e eventos</button>
+      <button role="tab" type="button" data-aba="precos" aria-selected="false">Preço automático</button>
+    </nav>
 
-    <section class="numeros" id="numeros" aria-label="Resumo do catálogo"></section>
-
-    <section class="caixa">
-      <div class="ferramentas">
-        <div class="segmentos" id="filtro-cat" role="group" aria-label="Categoria"></div>
-        <div class="ferramentas-dir">
-          <label class="busca">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-            <span class="sr-only">Procurar</span>
-            <input id="busca" type="search" placeholder="Procurar produto">
-          </label>
-          <button class="btn" type="button" id="btn-reajuste">Reajustar preços</button>
+    <!-- ============ Produtos ============ -->
+    <section class="aba" id="aba-produtos" role="tabpanel">
+      <div class="cabeca">
+        <div>
+          <h1>Produtos</h1>
+          <p class="cabeca-sub" id="cabeca-sub"></p>
+        </div>
+        <div class="cabeca-acoes">
+          <button class="btn" type="button" id="btn-biblioteca">Adicionar da biblioteca</button>
+          <button class="btn btn--cheio" type="button" id="btn-novo">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+            Novo produto
+          </button>
         </div>
       </div>
 
-      <div class="tabela-rolo">
-        <table class="tabela">
-          <thead>
-            <tr>
-              <th class="c-ordem"><span class="sr-only">Ordem</span></th>
-              <th>Produto</th>
-              <th class="c-cat">Categoria</th>
-              <th class="c-preco">Preço (R$)</th>
-              <th class="c-preco">Preço oficial (R$)</th>
-              <th class="c-dest">Destaque</th>
-              <th class="c-acoes"><span class="sr-only">Ações</span></th>
-            </tr>
-          </thead>
-          <tbody id="linhas"></tbody>
-        </table>
-      </div>
-      <p class="vazio" id="vazio" hidden>Nenhum produto encontrado.</p>
+      <section class="numeros" id="numeros" aria-label="Resumo do catálogo"></section>
+
+      <section class="caixa">
+        <div class="ferramentas">
+          <div class="segmentos" id="filtro-cat" role="group" aria-label="Categoria"></div>
+          <div class="ferramentas-dir">
+            <label class="busca">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <span class="sr-only">Procurar</span>
+              <input id="busca" type="search" placeholder="Procurar produto">
+            </label>
+            <button class="btn" type="button" id="btn-reajuste">Reajustar preços</button>
+          </div>
+        </div>
+
+        <div class="tabela-rolo">
+          <table class="tabela">
+            <thead>
+              <tr>
+                <th class="c-ordem"><span class="sr-only">Ordem</span></th>
+                <th>Produto</th>
+                <th class="c-cat">Categoria</th>
+                <th class="c-preco">Preço (R$)</th>
+                <th class="c-oferta">Oferta</th>
+                <th class="c-dest">No site</th>
+                <th class="c-dest">Destaque</th>
+                <th class="c-acoes"><span class="sr-only">Ações</span></th>
+              </tr>
+            </thead>
+            <tbody id="linhas"></tbody>
+          </table>
+        </div>
+        <p class="vazio" id="vazio" hidden>Nenhum produto encontrado.</p>
+      </section>
+
+      <p class="rodape-nota">“No site” desligado esconde o produto sem apagar. “Destaque” coloca o produto em
+        <b>Os principais</b> na capa (os cinco primeiros marcados, na ordem da lista).</p>
     </section>
 
-    <p class="rodape-nota">“Destaque” coloca o produto em <b>Os principais</b> na capa — aparecem os cinco primeiros
-      marcados, na ordem da lista. Use as setas para mudar a ordem.</p>
+    <!-- ============ Ofertas e eventos ============ -->
+    <section class="aba" id="aba-ofertas" role="tabpanel" hidden>
+      <div class="cabeca">
+        <div>
+          <h1>Ofertas e eventos</h1>
+          <p class="cabeca-sub">O evento muda as cores do site, a faixa do topo e abre a capa com um cartaz próprio.
+            As ofertas ganham o selo do evento.</p>
+        </div>
+      </div>
+
+      <div class="no-ar" id="no-ar"></div>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Eventos</h2>
+          <button class="btn btn--cheio" type="button" id="btn-novo-evento">+ Novo evento</button>
+        </div>
+        <p class="dica">Fica no ar o primeiro evento <b>ligado</b> cujas datas incluem o dia de hoje. Dá para deixar
+          o ano inteiro programado.</p>
+        <div class="eventos" id="eventos"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Oferta em lote</h2></div>
+        <p class="dica">Aplica o mesmo desconto a vários produtos de uma vez. Para um produto só, use “Editar”.</p>
+        <form class="lote" id="form-lote">
+          <label class="campo"><span>Produtos</span>
+            <select name="escopo" id="lote-escopo"></select></label>
+          <label class="campo"><span>Desconto</span>
+            <span class="junto">
+              <input name="valor" type="number" min="0" step="1" value="10" required>
+              <select name="tipo"><option value="%">%</option><option value="R$">R$</option></select>
+            </span></label>
+          <label class="campo"><span>De</span><input name="inicio" type="date"></label>
+          <label class="campo"><span>Até</span><input name="fim" type="date"></label>
+          <div class="lote-acoes">
+            <button class="btn btn--cheio" type="submit">Aplicar oferta</button>
+            <button class="btn" type="button" id="btn-tirar-ofertas">Tirar ofertas</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Em oferta</h2></div>
+        <div id="lista-ofertas"></div>
+      </section>
+    </section>
+
+    <!-- ============ Preço automático ============ -->
+    <section class="aba" id="aba-precos" role="tabpanel" hidden>
+      <div class="cabeca">
+        <div>
+          <h1>Preço automático</h1>
+          <p class="cabeca-sub">Todo dia de manhã um robô pega o dólar, recalcula o preço de quem tem custo cadastrado
+            e publica. Você só mexe quando o custo do fornecedor muda.</p>
+        </div>
+      </div>
+
+      <section class="bloco">
+        <label class="linha-chave">
+          <span>
+            <b>Atualizar os preços todo dia</b>
+            <small id="robo-info"></small>
+          </span>
+          <span class="chave"><input type="checkbox" id="pc-automatico"><span></span></span>
+        </label>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>A regra</h2></div>
+        <p class="formula" id="formula"></p>
+        <div class="grade-regra">
+          <label class="campo"><span>Dólar (R$)</span>
+            <span class="junto">
+              <input id="pc-dolar" type="number" min="0" step="0.01">
+              <button class="btn btn--leve" type="button" id="btn-cotacao">Buscar hoje</button>
+            </span>
+            <small class="dica" id="pc-dolar-em"></small></label>
+          <label class="campo"><span>Ajuste no dólar (R$)</span>
+            <input id="pc-ajuste" type="number" step="0.01">
+            <small class="dica">Ex.: 0,15 se o fornecedor cobra acima da cotação.</small></label>
+          <label class="campo"><span>Frete, impostos e taxas (%)</span>
+            <input id="pc-extras" type="number" min="0" step="0.5"></label>
+          <label class="campo"><span>Margem padrão</span>
+            <span class="junto">
+              <input id="pc-margem" type="number" min="0" step="0.5">
+              <select id="pc-margem-tipo"><option value="%">%</option><option value="R$">R$</option></select>
+            </span></label>
+          <label class="campo"><span>Arredondar para</span>
+            <select id="pc-arred">
+              <option value="99">terminar em 99 (9.999)</option>
+              <option value="90">terminar em 90 (9.990)</option>
+              <option value="9">terminar em 9 (9.989)</option>
+              <option value="0">não arredondar</option>
+            </select></label>
+          <label class="campo"><span>Trava de segurança (%)</span>
+            <input id="pc-limite" type="number" min="0" step="1">
+            <small class="dica">Se um preço mudar mais que isso num dia, o robô não aplica e avisa aqui.</small></label>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Simular agora</h2>
+          <button class="btn btn--cheio" type="button" id="btn-simular">Simular com esta regra</button>
+        </div>
+        <p class="dica" id="sem-custo"></p>
+        <div id="simulacao"></div>
+      </section>
+
+      <section class="bloco" id="bloco-alertas" hidden>
+        <div class="bloco-topo"><h2>Avisos do robô</h2></div>
+        <div id="alertas-robo"></div>
+      </section>
+    </section>
   </main>
 
   <!-- Barra de salvar -->
@@ -183,23 +312,78 @@
         </label>
       </fieldset>
 
-      <fieldset class="grupo">
-        <legend>Preço</legend>
+      <fieldset class="grupo" id="grupo-preco">
+        <legend>Preço e custo</legend>
         <div class="grade-2">
           <label class="campo">
-            <span>Preço à vista (R$)</span>
-            <input name="preco" type="number" min="0" step="1" required inputmode="numeric">
+            <span>Custo do fornecedor em</span>
+            <select name="moedaCusto"><option value="USD">Dólar (US$)</option><option value="BRL">Real (R$)</option></select>
           </label>
           <label class="campo">
-            <span>Preço no varejo oficial <small>(opcional)</small></span>
-            <input name="precoOficial" type="number" min="0" step="1" inputmode="numeric">
-            <small class="dica">Mostra “você economiza” na página do produto.</small>
+            <span>Margem deste produto <small>(vazio = padrão da loja)</small></span>
+            <span class="junto">
+              <input name="margemValor" type="number" min="0" step="0.5" placeholder="padrão">
+              <select name="margemTipo"><option value="%">%</option><option value="R$">R$</option></select>
+            </span>
           </label>
         </div>
+        <div class="precos" id="ed-precos"></div>
+        <label class="check">
+          <input name="precoManual" type="checkbox">
+          <span>Preço manual: o robô diário <b>não</b> mexe neste produto</span>
+        </label>
+        <label class="campo">
+          <span>Preço no varejo oficial <small>(opcional, mostra “você economiza”)</small></span>
+          <input name="precoOficial" type="number" min="0" step="1" inputmode="numeric">
+        </label>
         <label class="check">
           <input name="destaque" type="checkbox">
           <span>Mostrar em <b>Os principais</b>, na capa</span>
         </label>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Oferta</legend>
+        <div class="grade-2">
+          <label class="campo">
+            <span>Desconto</span>
+            <span class="junto">
+              <input name="ofertaValor" type="number" min="0" step="1" placeholder="0">
+              <select name="ofertaTipo"><option value="%">%</option><option value="R$">R$</option></select>
+            </span>
+          </label>
+          <label class="campo">
+            <span>Nome no selo <small>(opcional)</small></span>
+            <input name="ofertaRotulo" type="text" placeholder="usa o nome do evento">
+          </label>
+          <label class="campo"><span>De</span><input name="ofertaInicio" type="date"></label>
+          <label class="campo"><span>Até</span><input name="ofertaFim" type="date"></label>
+        </div>
+        <p class="dica" id="ed-oferta-previa"></p>
+      </fieldset>
+
+      <fieldset class="grupo">
+        <legend>Disponibilidade</legend>
+        <label class="check">
+          <input name="visivel" type="checkbox" checked>
+          <span>Aparece no site</span>
+        </label>
+        <div class="grade-2">
+          <label class="campo">
+            <span>Situação</span>
+            <select name="status">
+              <option value="disponivel">Em estoque</option>
+              <option value="encomenda">Sob encomenda</option>
+              <option value="esgotado">Esgotado</option>
+            </select>
+          </label>
+          <label class="campo" id="campo-prazo">
+            <span>Prazo da encomenda</span>
+            <input name="prazo" type="text" placeholder="7 dias úteis">
+          </label>
+        </div>
+        <p class="dica">Toque nas opções que acabaram. Elas aparecem riscadas e não dá para escolher.</p>
+        <div class="fichas fichas--toque" id="ed-esgotadas"></div>
       </fieldset>
 
       <fieldset class="grupo">
@@ -244,6 +428,30 @@
   </form>
 </dialog>
 
+<!-- ============ Biblioteca ============ -->
+<dialog class="mini mini--larga" id="biblioteca" aria-labelledby="bib-titulo">
+  <form method="dialog">
+    <h2 id="bib-titulo">Adicionar da biblioteca</h2>
+    <p class="dica">Modelos Apple com especificações, cores e capacidades prontas. Escolha, depois ponha preço e estoque.</p>
+    <label class="busca busca--cheia">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="bib-busca" type="search" placeholder="Procurar modelo">
+    </label>
+    <div class="bib-lista" id="bib-lista"></div>
+    <div class="mini-acoes"><button class="btn" value="cancelar">Fechar</button></div>
+  </form>
+</dialog>
+
+<!-- ============ Novo evento ============ -->
+<dialog class="mini mini--larga" id="temas" aria-labelledby="temas-titulo">
+  <form method="dialog">
+    <h2 id="temas-titulo">Novo evento</h2>
+    <p class="dica">Escolha o tema. As datas e os textos vêm sugeridos e você ajusta depois.</p>
+    <div class="temas" id="temas-lista"></div>
+    <div class="mini-acoes"><button class="btn" value="cancelar">Fechar</button></div>
+  </form>
+</dialog>
+
 <!-- ============ Reajuste ============ -->
 <dialog class="mini" id="reajuste" aria-labelledby="reajuste-titulo">
   <form method="dialog">
@@ -268,6 +476,9 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/catalogo.js"></script>
+<script src="assets/js/loja.js"></script>
+<script src="assets/js/regras.js"></script>
+<script src="assets/js/biblioteca.js"></script>
 <script src="assets/js/admin.js"></script>
 </body>
 </html>

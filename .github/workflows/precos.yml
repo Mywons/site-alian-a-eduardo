@@ -1,0 +1,38 @@
+# Robô de preços: todo dia de manhã busca o dólar e recalcula os
+# preços dos produtos com custo cadastrado. Só faz algo se o
+# "Preço automático" estiver ligado no painel (admin.html).
+name: Preços do dia
+
+on:
+  schedule:
+    - cron: '17 10 * * *'   # 07:17 em Brasília
+  workflow_dispatch: {}      # botão "Run workflow" para rodar na hora
+
+permissions:
+  contents: write
+
+concurrency:
+  group: precos
+  cancel-in-progress: false
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Recalcular preços
+        run: node scripts/atualizar-precos.mjs
+      - name: Publicar
+        run: |
+          if git diff --quiet; then
+            echo "Nada mudou."
+            exit 0
+          fi
+          git config user.name "robo-de-precos"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/js/catalogo.js assets/js/loja.js
+          git commit -m "Preços do dia: dólar atualizado"
+          git push
