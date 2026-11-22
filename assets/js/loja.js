@@ -35,8 +35,8 @@ const LOJA = {
       "id": "natal-2026",
       "tema": "natal",
       "titulo": "O presente certo é Apple.",
-      "subtitulo": "Entrega no mesmo dia em São Paulo, a tempo da ceia.",
-      "faixa": "Feliz Natal|Entrega no mesmo dia em SP|Até 12x sem juros",
+      "subtitulo": "Presentes Apple para quem você ama, em até 12x sem juros.",
+      "faixa": "Feliz Natal|Nota fiscal no seu nome|Até 12x sem juros",
       "inicio": "2026-12-01",
       "fim": "2026-12-25",
       "ativo": false
@@ -47,9 +47,8 @@ const LOJA = {
       "Até 12x sem juros no cartão",
       "Desconto à vista no Pix",
       "Nota fiscal no seu nome",
-      "Entrega no mesmo dia em São Paulo",
       "Garantia de 12 meses",
-      "Enviamos para todo o Brasil"
+      "Aparelhos lacrados"
     ],
     "cartazes": [
       {
@@ -125,7 +124,7 @@ const LOJA = {
         "olho": "Pagamento",
         "titulo": "Até 12x sem juros.",
         "fecho": "Ou desconto no Pix.",
-        "frase": "Em São Paulo você confere o aparelho antes de fechar o pagamento.",
+        "frase": "Parcele no cartão ou pague à vista no Pix com desconto.",
         "fatos": "",
         "botao": {
           "texto": "Falar com um consultor",
@@ -202,12 +201,12 @@ const LOJA = {
         "texto": "Respondida pela própria Aliança One."
       },
       {
-        "titulo": "Lacre conferido",
-        "texto": "A caixa é aberta por você, na entrega."
+        "titulo": "Lacrado de fábrica",
+        "texto": "Aparelho novo, na caixa original."
       },
       {
-        "titulo": "Entrega no mesmo dia",
-        "texto": "Em mãos, em São Paulo. Para o Brasil, com rastreio."
+        "titulo": "Atendimento no WhatsApp",
+        "texto": "Fale direto com a loja, do pedido ao pós-venda."
       }
     ],
     "perguntas": [],

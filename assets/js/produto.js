@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ${galeriaHTML(p, cor) || `
         <div class="produto-mockup cena3d" id="mockup">
           ${aparelhoHTML(p, cor, 'mockup')}
-          <p class="mockup-nota">Desenho esquemático, na cor escolhida. Não é foto do aparelho.</p>
         </div>`}
       </header>
 
@@ -94,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <li><span class="k">${escapar(k)}</span><span class="v">${escapar(v)}</span></li>`).join('')}
             <li><span class="k">Garantia</span><span class="v">12 meses</span></li>
             <li><span class="k">Nota fiscal</span><span class="v">Emitida em todo aparelho</span></li>
-            <li><span class="k">Entrega</span><span class="v">Mesmo dia em São Paulo</span></li>
           </ul>
         </div>
 
@@ -139,18 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
             <button class="btn btn--vazio btn--grande btn--largo" type="button" id="btn-sacola">
               Adicionar ao carrinho
             </button>`}
-            <p class="compra-nota">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-              A mensagem já vai escrita com o modelo${temCores ? ', a cor' : ''}${temCaps ? ' e a capacidade' : ''}.
-            </p>
 
             <!-- O que a pessoa precisa saber no segundo em que decide,
                  e não três rolagens depois do botão. -->
             <ul class="garantias">
-              <li>Lacrado, aberto por você na entrega</li>
+              <li>Aparelho lacrado de fábrica</li>
               <li>Nota fiscal no seu nome</li>
               <li>Garantia de 12 meses com a ${escapar(CONFIG.nome)}</li>
-              <li>Em SP, você confere antes de pagar</li>
             </ul>
 
             <p class="troca-usado">

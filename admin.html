@@ -23,7 +23,6 @@
       <path d="M50.5 44 L38.75 44 L44 58 L57 58 Z"/>
     </svg>
     <h1>Painel da loja</h1>
-    <p class="entrada-sub">Preços, produtos e fotos. Tudo que você salvar aqui vai para o site.</p>
 
     <form id="form-entrada" autocomplete="off">
       <label class="campo">
@@ -150,8 +149,6 @@
         <p class="vazio" id="vazio" hidden>Nenhum produto encontrado.</p>
       </section>
 
-      <p class="rodape-nota">“No site” desligado esconde o produto sem apagar. “Destaque” coloca o produto em
-        <b>Os principais</b> na capa (os cinco primeiros marcados, na ordem da lista).</p>
     </section>
 
     <!-- ============ Ofertas e eventos ============ -->
@@ -159,8 +156,6 @@
       <div class="cabeca">
         <div>
           <h1>Ofertas e eventos</h1>
-          <p class="cabeca-sub">O evento muda as cores do site, a faixa do topo e abre a capa com um cartaz próprio.
-            As ofertas ganham o selo do evento.</p>
         </div>
       </div>
 
@@ -171,14 +166,11 @@
           <h2>Eventos</h2>
           <button class="btn btn--cheio" type="button" id="btn-novo-evento">+ Novo evento</button>
         </div>
-        <p class="dica">Fica no ar o primeiro evento <b>ligado</b> cujas datas incluem o dia de hoje. Dá para deixar
-          o ano inteiro programado.</p>
         <div class="eventos" id="eventos"></div>
       </section>
 
       <section class="bloco">
         <div class="bloco-topo"><h2>Oferta em lote</h2></div>
-        <p class="dica">Aplica o mesmo desconto a vários produtos de uma vez. Para um produto só, use “Editar”.</p>
         <form class="lote" id="form-lote">
           <label class="campo"><span>Produtos</span>
             <select name="escopo" id="lote-escopo"></select></label>
@@ -207,7 +199,6 @@
       <div class="cabeca">
         <div>
           <h1>Site</h1>
-          <p class="cabeca-sub">Banners da capa, destaques, títulos, selos, perguntas e contato. Tudo vai para o site ao publicar.</p>
         </div>
         <a class="btn" href="index.html" target="_blank" rel="noopener">Abrir o site</a>
       </div>
@@ -217,7 +208,6 @@
           <h2>Banners da capa</h2>
           <button class="btn btn--cheio" type="button" id="btn-novo-banner">+ Novo banner</button>
         </div>
-        <p class="dica">Passam sozinhos na capa, nesta ordem. O primeiro é o que aparece ao abrir o site.</p>
         <div class="banners" id="banners"></div>
       </section>
 
@@ -226,7 +216,6 @@
           <h2>Destaques da capa</h2>
           <span class="dica" id="dest-conta"></span>
         </div>
-        <p class="dica">Os produtos de “Os favoritos”, na ordem em que aparecem. O primeiro ocupa a largura toda. Até 5.</p>
         <ol class="destaques-lista" id="destaques-lista"></ol>
         <div class="linha-add">
           <select id="dest-add" aria-label="Produto para destacar"></select>
@@ -236,13 +225,12 @@
 
       <section class="bloco">
         <div class="bloco-topo"><h2>Títulos das seções</h2></div>
-        <p class="dica">O título fica em preto e o complemento em cinza, na mesma linha.</p>
         <div class="secoes" id="secoes"></div>
       </section>
 
       <section class="bloco">
         <div class="bloco-topo"><h2>Faixa do topo</h2></div>
-        <label class="campo"><span>Frases que passam no topo <small>(uma por linha)</small></span>
+        <label class="campo"><span>Frases que passam no topo</span>
           <textarea id="site-faixa" rows="5"></textarea></label>
       </section>
 
@@ -262,12 +250,12 @@
       <section class="bloco">
         <div class="bloco-topo"><h2>Contato</h2></div>
         <div class="grade-regra" id="contato-ed">
-          <label class="campo"><span>WhatsApp <small>(só números, com DDI e DDD)</small></span><input data-ct="whatsapp" inputmode="numeric" placeholder="5511987654321"></label>
+          <label class="campo"><span>WhatsApp</span><input data-ct="whatsapp" inputmode="numeric" placeholder="5511987654321"></label>
           <label class="campo"><span>E-mail</span><input data-ct="email" type="email"></label>
           <label class="campo"><span>Horário de atendimento</span><input data-ct="horario"></label>
           <label class="campo"><span>Instagram (link)</span><input data-ct="instagram" placeholder="https://instagram.com/aliancaone"></label>
           <label class="campo"><span>Instagram (@)</span><input data-ct="arroba" placeholder="@aliancaone"></label>
-          <label class="campo"><span>CNPJ <small>(vazio = não aparece)</small></span><input data-ct="cnpj"></label>
+          <label class="campo"><span>CNPJ</span><input data-ct="cnpj"></label>
         </div>
       </section>
     </section>
@@ -277,8 +265,6 @@
       <div class="cabeca">
         <div>
           <h1>Preço automático</h1>
-          <p class="cabeca-sub">Todo dia de manhã um robô pega o dólar, recalcula o preço de quem tem custo cadastrado
-            e publica. Você só mexe quando o custo do fornecedor muda.</p>
         </div>
       </div>
 
@@ -303,8 +289,7 @@
             </span>
             <small class="dica" id="pc-dolar-em"></small></label>
           <label class="campo"><span>Ajuste no dólar (R$)</span>
-            <input id="pc-ajuste" type="number" step="0.01">
-            <small class="dica">Ex.: 0,15 se o fornecedor cobra acima da cotação.</small></label>
+            <input id="pc-ajuste" type="number" step="0.01"></label>
           <label class="campo"><span>Frete, impostos e taxas (%)</span>
             <input id="pc-extras" type="number" min="0" step="0.5"></label>
           <label class="campo"><span>Margem padrão</span>
@@ -320,8 +305,7 @@
               <option value="0">não arredondar</option>
             </select></label>
           <label class="campo"><span>Trava de segurança (%)</span>
-            <input id="pc-limite" type="number" min="0" step="1">
-            <small class="dica">Se um preço mudar mais que isso num dia, o robô não aplica e avisa aqui.</small></label>
+            <input id="pc-limite" type="number" min="0" step="1"></label>
         </div>
       </section>
 
@@ -375,11 +359,10 @@
           <label class="campo">
             <span>Endereço da página</span>
             <input name="id" type="text" required pattern="[a-z0-9-]+" placeholder="iphone-17-pro" spellcheck="false">
-            <small class="dica">produto.html?id=<b data-id-preview>…</b></small>
           </label>
         </div>
         <label class="campo">
-          <span>Linha de cima <small>(2 a 3 palavras, opcional)</small></span>
+          <span>Linha de cima</span>
           <input name="linha" type="text" placeholder="Cosmic Orange">
         </label>
       </fieldset>
@@ -392,7 +375,7 @@
             <select name="moedaCusto"><option value="USD">Dólar (US$)</option><option value="BRL">Real (R$)</option></select>
           </label>
           <label class="campo">
-            <span>Margem deste produto <small>(vazio = padrão da loja)</small></span>
+            <span>Margem deste produto</span>
             <span class="junto">
               <input name="margemValor" type="number" min="0" step="0.5" placeholder="padrão">
               <select name="margemTipo"><option value="%">%</option><option value="R$">R$</option></select>
@@ -405,7 +388,7 @@
           <span>Preço manual: o robô diário <b>não</b> mexe neste produto</span>
         </label>
         <label class="campo">
-          <span>Preço no varejo oficial <small>(opcional, mostra “você economiza”)</small></span>
+          <span>Preço no varejo oficial</span>
           <input name="precoOficial" type="number" min="0" step="1" inputmode="numeric">
         </label>
         <label class="check">
@@ -425,7 +408,7 @@
             </span>
           </label>
           <label class="campo">
-            <span>Nome no selo <small>(opcional)</small></span>
+            <span>Nome no selo</span>
             <input name="ofertaRotulo" type="text" placeholder="usa o nome do evento">
           </label>
           <label class="campo"><span>De</span><input name="ofertaInicio" type="date"></label>
@@ -454,14 +437,13 @@
             <input name="prazo" type="text" placeholder="7 dias úteis">
           </label>
         </div>
-        <p class="dica">Toque nas opções que acabaram. Elas aparecem riscadas e não dá para escolher.</p>
         <div class="fichas fichas--toque" id="ed-esgotadas"></div>
       </fieldset>
 
       <fieldset class="grupo">
         <legend>Texto</legend>
         <label class="campo">
-          <span>Chamada <small>(uma frase)</small></span>
+          <span>Chamada</span>
           <input name="chamada" type="text" placeholder="A peça central da vitrine.">
         </label>
         <label class="campo">
@@ -472,8 +454,6 @@
 
       <fieldset class="grupo">
         <legend>Cores e fotos</legend>
-        <p class="dica">Uma foto por cor, de preferência com fundo transparente ou branco. Se não houver foto, o site
-          desenha o aparelho na cor escolhida.</p>
         <div class="cores" id="ed-cores"></div>
         <button class="btn btn--leve" type="button" id="ed-add-cor">+ Adicionar cor</button>
       </fieldset>
@@ -504,7 +484,6 @@
 <dialog class="mini mini--larga" id="biblioteca" aria-labelledby="bib-titulo">
   <form method="dialog">
     <h2 id="bib-titulo">Adicionar da biblioteca</h2>
-    <p class="dica">Modelos Apple com especificações, cores e capacidades prontas. Escolha, depois ponha preço e estoque.</p>
     <label class="busca busca--cheia">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="bib-busca" type="search" placeholder="Procurar modelo">
@@ -518,7 +497,6 @@
 <dialog class="mini mini--larga" id="temas" aria-labelledby="temas-titulo">
   <form method="dialog">
     <h2 id="temas-titulo">Novo evento</h2>
-    <p class="dica">Escolha o tema. As datas e os textos vêm sugeridos e você ajusta depois.</p>
     <div class="temas" id="temas-lista"></div>
     <div class="mini-acoes"><button class="btn" value="cancelar">Fechar</button></div>
   </form>

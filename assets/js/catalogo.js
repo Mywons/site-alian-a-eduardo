@@ -16,39 +16,67 @@ const PRODUTOS = [
     "precos": {
       "256GB": 11999,
       "512GB": 13499,
-      "1TB": 15499
+      "1TB": 15499,
+      "2TB": 18499
     },
     "status": "encomenda",
-    "destaque": "principal",
-    "chamada": "O novo topo de linha. Reserve o seu.",
-    "resumo": "O lançamento da Apple, lacrado e com nota fiscal no seu nome. Garanta o seu com até 12x sem juros e entrega em mãos em São Paulo.",
+    "chamada": "Chip A20 Pro e câmera de 48 MP com abertura variável.",
+    "resumo": "Tela de 6,3\" a 120 Hz, chip A20 Pro e sistema de câmera Fusion Pro de 48 MP. Quatro cores, de 256 GB a 2 TB. Lacrado, com nota fiscal e até 12x sem juros.",
     "cores": [
-      "Vinho"
+      "Bordô",
+      "Preto",
+      "Prateado",
+      "Glacial"
     ],
     "coresHex": {
-      "Vinho": "#6b2a35"
+      "Bordô": "#6b2a35",
+      "Preto": "#2b2b2d",
+      "Prateado": "#d9d9d6",
+      "Glacial": "#a9c3dc"
     },
     "imagens": {
-      "Vinho": "assets/img/produtos/iphone-18-pro/vinho.webp"
+      "Bordô": "assets/img/produtos/iphone-18-pro/bordo.webp",
+      "Preto": "assets/img/produtos/iphone-18-pro/preto.webp",
+      "Prateado": "assets/img/produtos/iphone-18-pro/prateado.webp",
+      "Glacial": "assets/img/produtos/iphone-18-pro/glacial.webp"
     },
     "capacidades": [
       "256GB",
       "512GB",
-      "1TB"
+      "1TB",
+      "2TB"
     ],
     "specs": [
       [
+        "Tela",
+        "6,3\" Super Retina XDR · ProMotion até 120 Hz"
+      ],
+      [
+        "Chip",
+        "A20 Pro"
+      ],
+      [
         "Câmeras",
-        "Tripla traseira"
+        "Fusion Pro de 48 MP · abertura variável"
       ],
       [
-        "Conector",
-        "USB-C"
+        "Bateria",
+        "Até 34h de reprodução de vídeo"
       ],
       [
-        "Situação",
-        "Lançamento, lacrado"
+        "Estrutura",
+        "Alumínio unibody · Ceramic Shield 2"
+      ],
+      [
+        "Resistência",
+        "IP68"
       ]
+    ],
+    "vistas": [
+      {
+        "src": "assets/img/produtos/iphone-18-pro/frente-e-verso.webp",
+        "legenda": "Frente e verso"
+      }
     ]
   },
   {
@@ -59,35 +87,78 @@ const PRODUTOS = [
     "preco": 15999,
     "precos": {
       "256GB": 15999,
-      "512GB": 17999
+      "512GB": 17499,
+      "1TB": 19499,
+      "2TB": 22499
     },
     "status": "encomenda",
-    "destaque": "principal",
-    "chamada": "O primeiro iPhone que dobra.",
-    "resumo": "Abre para virar tela grande e fecha para caber no bolso. Lacrado, com nota fiscal no seu nome e até 12x sem juros.",
+    "chamada": "O primeiro iPhone dobrável. Tela de 7,6\" que cabe no bolso.",
+    "resumo": "Aberto, uma tela de 7,6\"; fechado, um iPhone de 5,4\". Chip A20 Pro, câmera dupla de 48 MP e estrutura em titânio. Lacrado, com nota fiscal e até 12x sem juros.",
     "cores": [
-      "Branco"
+      "Branco-estrela",
+      "Céu noturno"
     ],
+    "coresHex": {
+      "Branco-estrela": "#ecebe6",
+      "Céu noturno": "#2f3b52"
+    },
     "imagens": {
-      "Branco": "assets/img/produtos/iphone-duo/branco.webp"
+      "Branco-estrela": "assets/img/produtos/iphone-duo/branco-estrela.webp",
+      "Céu noturno": "assets/img/produtos/iphone-duo/ceu-noturno.webp"
     },
     "capacidades": [
       "256GB",
-      "512GB"
+      "512GB",
+      "1TB",
+      "2TB"
     ],
     "specs": [
       [
-        "Formato",
-        "Dobrável"
+        "Telas",
+        "Interna 7,6\" dobrável · externa 5,4\""
+      ],
+      [
+        "Chip",
+        "A20 Pro"
       ],
       [
         "Câmeras",
-        "Dupla traseira"
+        "Dupla Fusion de 48 MP"
       ],
       [
-        "Situação",
-        "Lançamento, lacrado"
+        "Bateria",
+        "Até 44h de vídeo na tela externa"
+      ],
+      [
+        "Estrutura",
+        "Titânio · 5,2 mm aberto"
+      ],
+      [
+        "Resistência",
+        "IP68"
       ]
+    ],
+    "vistas": [
+      {
+        "src": "assets/img/produtos/iphone-duo/fechado.webp",
+        "legenda": "Fechado"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/retrato.webp",
+        "legenda": "Aberto"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/notebook.webp",
+        "legenda": "Modo notebook"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/tenda.webp",
+        "legenda": "Modo tenda"
+      },
+      {
+        "src": "assets/img/produtos/iphone-duo/paisagem.webp",
+        "legenda": "Duas telas"
+      }
     ]
   },
   {

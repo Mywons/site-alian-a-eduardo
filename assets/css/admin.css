@@ -830,3 +830,5 @@ dialog.fechando::backdrop { animation: veu-sai 180ms ease-in both; }
   .secao-ed input[data-sc="olho"] { grid-column: 1 / -1; }
   .selos-ed { grid-template-columns: 1fr; }
 }
+
+.vazio-mini { margin: 8px 0 12px; font-size: 13px; color: var(--terceiro); }

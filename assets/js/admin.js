@@ -617,7 +617,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
         <small>${esc(m.cores.length)} cor${m.cores.length === 1 ? '' : 'es'} · ${esc(m.capacidades.join(', '))}</small>
         <span class="bib-add">Adicionar</span>
       </button>`).join('')
-      : '<p class="dica">Todos os modelos da biblioteca já estão no catálogo. Para outro, use “Novo produto”.</p>';
+      : '<p class="vazio-mini">Todos os modelos já estão no catálogo.</p>';
   }
 
   $('#btn-biblioteca').addEventListener('click', () => {
@@ -679,7 +679,6 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     fed.prazo.value = editando.prazo || '';
     fed.chamada.value = editando.chamada || '';
     fed.resumo.value = editando.resumo || '';
-    $('[data-id-preview]').textContent = editando.id || '…';
 
     desenharPrecosEditor();
     desenharCores();
@@ -699,13 +698,11 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   fed.nome.addEventListener('input', () => {
     if (!idManual && !fed.id.readOnly) {
       fed.id.value = slug(fed.nome.value);
-      $('[data-id-preview]').textContent = fed.id.value || '…';
     }
   });
   fed.id.addEventListener('input', () => {
     idManual = true;
     fed.id.value = slug(fed.id.value) + (fed.id.value.endsWith('-') ? '-' : '');
-    $('[data-id-preview]').textContent = fed.id.value || '…';
   });
   fed.status.addEventListener('change', () => { $('#campo-prazo').hidden = fed.status.value !== 'encomenda'; });
 
@@ -820,7 +817,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const esg = new Set(editando.esgotadas || []);
     $('#ed-esgotadas').innerHTML = opcoes.length ? opcoes.map((o) => `
       <button type="button" class="ficha ficha--toque" data-opcao="${esc(o)}" aria-pressed="${esg.has(o)}">${esc(o)}</button>`).join('')
-      : '<p class="dica">Sem cores ou capacidades.</p>';
+      : '';
   }
   $('#ed-esgotadas').addEventListener('click', (e) => {
     const b = e.target.closest('[data-opcao]');
@@ -855,7 +852,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
         <button class="x" type="button" data-remover-cor aria-label="Remover a cor ${esc(c)}">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>`;
-    }).join('') : '<p class="dica">Nenhuma cor ainda.</p>';
+    }).join('') : '<p class="vazio-mini">Nenhuma cor.</p>';
   }
 
   $('#ed-add-cor').addEventListener('click', () => {
@@ -950,7 +947,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       <span class="ficha">${esc(c)}
         <button type="button" data-i="${i}" aria-label="Remover ${esc(c)}">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-      </span>`).join('') || '<p class="dica">Nenhuma ainda. Sem capacidade, o produto tem um preço só.</p>';
+      </span>`).join('') || '<p class="vazio-mini">Nenhuma.</p>';
   }
 
   const capsMudaram = () => {
@@ -993,7 +990,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
         <input type="text" value="${esc(v)}" data-k="1" placeholder='6,3" Super Retina XDR' aria-label="Valor">
         <button class="x" type="button" data-remover-spec aria-label="Remover linha">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-      </div>`).join('') || '<p class="dica">Nenhuma ainda.</p>';
+      </div>`).join('') || '<p class="vazio-mini">Nenhuma.</p>';
   }
 
   $('#ed-add-spec').addEventListener('click', () => {
@@ -1147,7 +1144,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
         <div class="evento-corpo">
           <label class="campo"><span>Título do cartaz</span><input data-ev="titulo" value="${esc(e.titulo || '')}" placeholder="${esc(tema?.titulo || '')}"></label>
           <label class="campo"><span>Frase do cartaz</span><input data-ev="subtitulo" value="${esc(e.subtitulo || '')}" placeholder="${esc(tema?.subtitulo || '')}"></label>
-          <label class="campo"><span>Frases da faixa do topo <small>(uma por linha)</small></span>
+          <label class="campo"><span>Frases da faixa do topo</span>
             <textarea data-ev="faixa" rows="3">${esc(String(e.faixa || '').split('|').join('\n'))}</textarea></label>
           <div class="grade-2">
             <label class="campo"><span>Começa</span><input type="date" data-ev="inicio" value="${esc(e.inicio || '')}"></label>
@@ -1159,7 +1156,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
           <button class="btn btn--perigo btn--peq" type="button" data-ev-apagar>Apagar</button>
         </footer>
       </article>`;
-    }).join('') : '<p class="dica">Nenhum evento ainda. Crie um em “Novo evento”.</p>';
+    }).join('') : '<p class="vazio-mini">Nenhum evento.</p>';
 
     $('#lote-escopo').innerHTML = [
       ['todos', 'Todos os produtos do site'],
@@ -1180,7 +1177,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
           <span>de <s>${brl(info.base)}</s> por <b>${brl(info.final)}</b></span>
           <small>${R.ofertaAtiva(p) ? 'no ar' : p.oferta.inicio && p.oferta.inicio > R.hoje() ? `começa ${dataBR(p.oferta.inicio)}` : 'encerrada'}${p.oferta.fim ? ` · até ${dataBR(p.oferta.fim)}` : ''}</small></button>
       </li>`;
-    }).join('')}</ul>` : '<p class="dica">Nenhum produto em oferta.</p>';
+    }).join('')}</ul>` : '<p class="vazio-mini">Nenhum produto em oferta.</p>';
   }
 
   $('#eventos').addEventListener('input', (e) => {
@@ -1309,8 +1306,8 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const semCusto = estado.produtos.filter((p) => R.visivel(p) && !p.precoManual
       && !R.capacidadesDe(p).some((cap) => R.custoEmReais(p, cap, 1) != null));
     $('#sem-custo').textContent = semCusto.length
-      ? `${semCusto.length} produtos do site ainda não têm custo cadastrado e ficam com o preço atual: ${semCusto.slice(0, 6).map((p) => p.nome).join(', ')}${semCusto.length > 6 ? '…' : ''}. Cadastre o custo em “Editar → Preço e custo”.`
-      : 'Todos os produtos do site têm custo cadastrado ou preço manual.';
+      ? `Sem custo cadastrado (${semCusto.length}): ${semCusto.slice(0, 6).map((p) => p.nome).join(', ')}${semCusto.length > 6 ? '…' : ''}`
+      : '';
     const al = c.alertas || [];
     $('#bloco-alertas').hidden = !al.length;
     $('#alertas-robo').innerHTML = al.length ? tabelaMudancas(al, true) : '';
@@ -1355,7 +1352,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     simulado = R.recalcular(estado.produtos, regraLoja(), dolarEfetivo());
     const { mudancas: m, alertas: a } = simulado;
     $('#simulacao').innerHTML = !m.length && !a.length
-      ? '<p class="dica">Nenhum preço muda com esta regra.</p>'
+      ? '<p class="vazio-mini">Nenhum preço muda.</p>'
       : `${m.length ? `<h3 class="sub-h">${m.length} preço${m.length === 1 ? '' : 's'} mudariam</h3>${tabelaMudancas(m)}` : ''}
          ${a.length ? `<h3 class="sub-h">${a.length} passariam da trava de ${regraLoja().limiteVariacao}% e ficariam de fora</h3>${tabelaMudancas(a, true)}` : ''}
          <div class="mini-acoes">
@@ -1371,7 +1368,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       estado.produtos = R.recalcular(estado.produtos, { ...regraLoja(), limiteVariacao: 0 }, dolarEfetivo()).produtos;
     } else return;
     simulado = null;
-    $('#simulacao').innerHTML = '<p class="dica">Preços aplicados. Publique para valer no site.</p>';
+    $('#simulacao').innerHTML = '<p class="vazio-mini">Preços aplicados.</p>';
     desenhar();
   });
 
@@ -1483,13 +1480,13 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
           </div>
           <div class="grade-2">
             <label class="campo"><span>Texto pequeno de cima</span><input data-b="olho" value="${esc(c.olho || '')}" placeholder="Novo"></label>
-            <label class="campo"><span>Linha de fatos <small>(separe com |)</small></span><input data-b="fatos" value="${esc(c.fatos || '')}" placeholder="Lacrado|Até 12x sem juros"></label>
+            <label class="campo"><span>Linha de fatos</span><input data-b="fatos" value="${esc(c.fatos || '')}" placeholder="Lacrado|Até 12x sem juros"></label>
             <label class="campo"><span>Título</span><input data-b="titulo" value="${esc(c.titulo || '')}"></label>
             <label class="campo"><span>Complemento do título</span><input data-b="fecho" value="${esc(c.fecho || '')}"></label>
           </div>
           <label class="campo"><span>Frase</span><input data-b="frase" value="${esc(c.frase || '')}"></label>
           ${acaoCampos(c, 'botao', 'Botão principal')}
-          ${acaoCampos(c, 'link', 'Link ao lado <small>(opcional)</small>')}
+          ${acaoCampos(c, 'link', 'Link ao lado')}
           <div class="banner-img">
             <label class="campo"><span>Imagem</span>
               <select data-b="imagem">
@@ -1502,7 +1499,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
             <button class="btn btn--perigo btn--peq" type="button" data-apagar-banner>Apagar banner</button>
           </div>
         </div>
-      </article>`).join('') : '<p class="dica">Nenhum banner. A capa mostra o conteúdo padrão do site.</p>')
+      </article>`).join('') : '<p class="vazio-mini">Nenhum banner.</p>')
       + `<datalist id="paginas">
           <option value="index.html#catalogo">Catálogo</option>
           <option value="corporate.html">Corporate</option>
@@ -1522,7 +1519,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       return `<li data-id="${esc(id)}">
         <span class="dest-n">${i + 1}</span>
         <span class="miniatura">${foto ? `<img src="${esc(foto)}" alt="" onerror="this.remove()">` : ''}</span>
-        <span class="dest-nome"><b>${esc(p.nome)}</b><small>${i === 0 ? 'Largura toda, fundo preto' : 'Metade da largura'}${p.oculto ? ' · escondido do site' : ''}</small></span>
+        <span class="dest-nome"><b>${esc(p.nome)}</b><small>${p.oculto ? 'Escondido do site' : ''}</small></span>
         <button class="seta" type="button" data-mover-dest="-1" aria-label="Subir" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
         <button class="seta" type="button" data-mover-dest="1" aria-label="Descer" ${i === lista.length - 1 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
         <button class="x" type="button" data-tirar-dest aria-label="Tirar ${esc(p.nome)}"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
@@ -1549,7 +1546,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       </div>`;
     }).join('');
     $('#site-faixa').value = (S.faixa || []).join('\n');
-    const nomesSelo = ['Nota fiscal', 'Garantia', 'Lacre', 'Entrega'];
+    const nomesSelo = ['Nota fiscal', 'Garantia', 'Lacre', 'Conversa'];
     $('#selos-ed').innerHTML = S.selos.map((s, i) => `
       <div class="selo-ed" data-i="${i}">
         <span class="etiqueta">Ícone: ${nomesSelo[i]}</span>
@@ -1571,7 +1568,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
           <button class="x" type="button" data-tirar-pq aria-label="Apagar pergunta"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         </div>
         <textarea data-pq="r" rows="2" placeholder="Resposta" aria-label="Resposta ${i + 1}">${esc(q.r)}</textarea>
-      </div>`).join('') || '<p class="dica">Nenhuma pergunta.</p>';
+      </div>`).join('') || '<p class="vazio-mini">Nenhuma pergunta.</p>';
   }
 
   const mudouSite = () => atualizarBarra();
