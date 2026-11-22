@@ -37,6 +37,29 @@
 
 <!-- ============ Navegação ============ -->
 <nav class="nav-topo" aria-label="Navegação principal">
+  <!-- A faixa de avisos: o que a loja sempre oferece, nunca uma
+       urgência inventada. Passa sozinha; quem pede menos movimento
+       recebe a lista parada. -->
+  <div class="faixa" aria-label="Condições da loja">
+    <div class="faixa-trilho">
+      <ul class="faixa-lista">
+        <li>Até 12x sem juros no cartão</li>
+        <li>Desconto à vista no Pix</li>
+        <li>Nota fiscal no seu nome</li>
+        <li>Entrega no mesmo dia em São Paulo</li>
+        <li>Garantia de 12 meses</li>
+        <li>Enviamos para todo o Brasil</li>
+      </ul>
+      <ul class="faixa-lista" aria-hidden="true">
+        <li>Até 12x sem juros no cartão</li>
+        <li>Desconto à vista no Pix</li>
+        <li>Nota fiscal no seu nome</li>
+        <li>Entrega no mesmo dia em São Paulo</li>
+        <li>Garantia de 12 meses</li>
+        <li>Enviamos para todo o Brasil</li>
+      </ul>
+    </div>
+  </div>
   <div class="shell shell--larga nav-inner">
     <a class="marca" href="index.html" aria-label="Aliança One, página inicial">
       <svg class="simbolo" viewBox="4 2 56 58" aria-hidden="true" focusable="false">
@@ -95,60 +118,161 @@
 <main id="conteudo">
 
 <!-- ============ Capa ============ -->
-<!-- No idioma de uma página de produto da Apple: o nome do aparelho,
-     uma frase, as duas ações e a foto grande embaixo, tudo centrado.
-     O laranja aparece no olho e no botão — e na própria foto. -->
-<section class="heroi">
-  <div class="shell heroi-txt">
-    <p class="heroi-olho" data-entra>Originais e lacrados</p>
-    <h1 class="heroi-titulo" data-entra>iPhone 17 Pro</h1>
-    <p class="heroi-sub" data-entra>Seu próximo iPhone, <em>sem dúvida.</em></p>
-
-    <div class="heroi-acoes" data-entra>
-      <a class="btn btn--grande" target="_blank" rel="noopener"
-         data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Comprar no WhatsApp</a>
-      <a class="btn btn--grande btn--vazio" href="produto.html?id=iphone-17-pro">Saiba mais</a>
-    </div>
-
-    <p class="estado" id="estado-loja" data-entra data-aberta="false">
-      <span class="estado-luz" aria-hidden="true"></span>
-      <span class="estado-txt"></span>
-    </p>
-  </div>
-
-  <figure class="heroi-foto" data-entra>
-    <picture>
-      <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
-      <img src="assets/img/iphone-17-pro.png" width="988" height="1122"
-           fetchpriority="high" decoding="async"
-           alt="Três iPhone 17 Pro vistos por trás, lado a lado: Prata Profundo, Laranja-cósmico e Azul-profundo.">
-    </picture>
-  </figure>
-</section>
-
-<!-- Os quatro fatos que respondem "e se for golpe?". -->
-<section class="fatos" aria-label="Por que comprar aqui">
-  <dl class="shell shell--larga fatos-grade">
-    <div data-cnpj-bloco><dt>CNPJ</dt><dd data-cnpj></dd></div>
-    <div><dt>Nota fiscal</dt><dd>No seu nome, sempre.</dd></div>
-    <div><dt>Garantia de 12 meses</dt><dd>Respondida por nós.</dd></div>
-    <div><dt>Lacre conferido</dt><dd>Aberto por você na entrega.</dd></div>
-  </dl>
-</section>
-
-<!-- ============ Trilho de categorias ============ -->
-<!-- Como a vitrine da Apple Store: uma foto pequena de cada família
-     em cima do nome. -->
-<section class="trilho" aria-label="Comprar por categoria">
+<!-- Um palco que gira entre quatro cartazes, cada um com um trabalho:
+     o iPhone da temporada, o Mac, as condições de pagamento e a porta
+     para o Corporate. Sem autoplay para quem pede menos movimento;
+     no celular, o dedo passa os cartazes. -->
+<section class="palco" aria-roledescription="carrossel" aria-label="Destaques da loja">
   <div class="shell shell--larga">
-    <div class="trilho-lista">
-      <a href="index.html?cat=iphone#catalogo"><img src="assets/img/produtos/iphone-17/preto.webp" alt="" loading="lazy" width="80" height="80"><span>iPhone</span></a>
-      <a href="index.html?cat=mac#catalogo"><img src="assets/img/produtos/macbook-air-13-m4/azul-ceu.webp" alt="" loading="lazy" width="80" height="80"><span>Mac</span></a>
-      <a href="index.html?cat=ipad#catalogo"><img src="assets/img/produtos/ipad-air-11-m3/azul.webp" alt="" loading="lazy" width="80" height="80"><span>iPad</span></a>
-      <a href="index.html?cat=watch#catalogo"><img src="assets/img/produtos/watch-ultra-3/titanio-natural.webp" alt="" loading="lazy" width="80" height="80"><span>Apple Watch</span></a>
-      <a href="index.html?cat=audio#catalogo"><img src="assets/img/produtos/airpods-pro-3/branco.webp" alt="" loading="lazy" width="80" height="80"><span>AirPods</span></a>
-      <a href="index.html?cat=acessorios#catalogo"><img src="assets/img/produtos/magsafe-charger/branco.webp" alt="" loading="lazy" width="80" height="80"><span>Acessórios</span></a>
+    <div class="palco-janela">
+      <div class="palco-trilho" id="palco-trilho">
+
+        <article class="cartaz cartaz--noite" aria-roledescription="slide" aria-label="1 de 4">
+          <div class="cartaz-txt">
+            <p class="cartaz-olho" data-entra>iPhone 17 Pro · originais e lacrados</p>
+            <h1 class="cartaz-titulo" data-entra>Seu próximo iPhone, <em>sem dúvida.</em></h1>
+            <p class="cartaz-sub" data-entra>Nota fiscal no seu nome, garantia de 12 meses e lacre aberto por você.</p>
+            <div class="cartaz-acoes" data-entra>
+              <a class="btn btn--grande" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Comprar no WhatsApp</a>
+              <a class="seta" href="produto.html?id=iphone-17-pro">Ver o iPhone 17 Pro</a>
+            </div>
+            <p class="estado" id="estado-loja" data-entra data-aberta="false">
+              <span class="estado-luz" aria-hidden="true"></span>
+              <span class="estado-txt"></span>
+            </p>
+          </div>
+          <figure class="cartaz-foto cartaz-foto--alta">
+            <picture>
+              <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
+              <img src="assets/img/iphone-17-pro.png" width="988" height="1122" fetchpriority="high" decoding="async"
+                   alt="Três iPhone 17 Pro vistos por trás: Prata Profundo, Laranja-cósmico e Azul-profundo.">
+            </picture>
+          </figure>
+        </article>
+
+        <article class="cartaz cartaz--claro" aria-roledescription="slide" aria-label="2 de 4">
+          <div class="cartaz-txt">
+            <p class="cartaz-olho">MacBook Air 13" M4</p>
+            <h2 class="cartaz-titulo">Leve na mochila. <em>Pesado no trabalho.</em></h2>
+            <p class="cartaz-sub">Sem ventoinha, bateria para o dia inteiro e quatro cores.</p>
+            <div class="cartaz-acoes">
+              <a class="btn btn--grande" href="produto.html?id=macbook-air-13-m4">Ver o MacBook Air</a>
+              <a class="seta" href="index.html?cat=mac#catalogo">Todos os Mac</a>
+            </div>
+          </div>
+          <figure class="cartaz-foto">
+            <img src="assets/img/produtos/macbook-air-13-m4/azul-ceu.webp" width="480" height="291" loading="lazy" decoding="async"
+                 alt="MacBook Air 13 polegadas na cor Azul-céu, aberto.">
+          </figure>
+        </article>
+
+        <article class="cartaz cartaz--laranja" aria-roledescription="slide" aria-label="3 de 4">
+          <div class="cartaz-txt">
+            <p class="cartaz-olho">Pagamento</p>
+            <h2 class="cartaz-titulo">Até 12x sem juros. <em>Ou desconto no Pix.</em></h2>
+            <p class="cartaz-sub">Em São Paulo você confere o aparelho antes de fechar o pagamento.</p>
+            <div class="cartaz-acoes">
+              <a class="btn btn--grande btn--tinta" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero saber das condições de pagamento.">Falar com um consultor</a>
+            </div>
+          </div>
+          <figure class="cartaz-foto cartaz-foto--alta">
+            <img src="assets/img/produtos/airpods-max/laranja.webp" width="433" height="480" loading="lazy" decoding="async"
+                 alt="AirPods Max na cor laranja.">
+          </figure>
+        </article>
+
+        <article class="cartaz cartaz--corp" aria-roledescription="slide" aria-label="4 de 4">
+          <div class="cartaz-txt">
+            <p class="cartaz-olho">Aliança Corporate</p>
+            <h2 class="cartaz-titulo">Mac para a sua equipe, <em>no CNPJ.</em></h2>
+            <p class="cartaz-sub">Lotes, nota fiscal da empresa e um consultor só para a conta.</p>
+            <div class="cartaz-acoes">
+              <a class="btn btn--grande" href="corporate.html" data-troca="#000000">Conhecer o Corporate</a>
+            </div>
+          </div>
+          <figure class="cartaz-foto">
+            <img src="assets/img/corporate-macbook-pro.webp" width="1800" height="1087" loading="lazy" decoding="async"
+                 alt="MacBook Pro aberto, visto de frente.">
+          </figure>
+        </article>
+
+      </div>
+
+      <button class="palco-seta palco-seta--ant" type="button" aria-controls="palco-trilho" aria-label="Cartaz anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="palco-seta palco-seta--prox" type="button" aria-controls="palco-trilho" aria-label="Próximo cartaz"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      <div class="palco-pontos" role="group" aria-label="Escolher cartaz"></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ Categorias ============ -->
+<section class="vitrines" aria-labelledby="vitrines-titulo">
+  <div class="shell shell--larga">
+    <div class="sec-topo" data-reveal>
+      <p class="sec-olho">Nossos produtos</p>
+      <h2 class="t-xl" id="vitrines-titulo">Tudo da Apple, <em class="rampa">num lugar só.</em></h2>
+    </div>
+
+    <div class="vitrines-grade">
+      <a class="vitrine" href="index.html?cat=iphone#catalogo" data-reveal>
+        <span class="vitrine-nome">iPhone</span>
+        <img src="assets/img/produtos/iphone-17/lavanda.webp" alt="" loading="lazy" width="232" height="480">
+      </a>
+      <a class="vitrine" href="index.html?cat=mac#catalogo" data-reveal style="--delay:60ms">
+        <span class="vitrine-nome">Mac</span>
+        <img class="vitrine-img--larga" src="assets/img/produtos/macbook-air-13-m4/estelar.webp" alt="" loading="lazy" width="480" height="291">
+      </a>
+      <a class="vitrine" href="index.html?cat=ipad#catalogo" data-reveal style="--delay:120ms">
+        <span class="vitrine-nome">iPad</span>
+        <img src="assets/img/produtos/ipad-pro-13-m5/prateado.webp" alt="" loading="lazy" width="368" height="480">
+      </a>
+      <a class="vitrine" href="index.html?cat=watch#catalogo" data-reveal style="--delay:180ms">
+        <span class="vitrine-nome">Apple Watch</span>
+        <img src="assets/img/produtos/watch-ultra-3/titanio-natural.webp" alt="" loading="lazy" width="293" height="480">
+      </a>
+      <a class="vitrine vitrine--larga vitrine--laranja" href="index.html?cat=audio#catalogo" data-reveal>
+        <span class="vitrine-nome">AirPods e áudio</span>
+        <span class="vitrine-sub">Cancelamento de ruído, do Pro ao Max.</span>
+        <img src="assets/img/produtos/airpods-max/meia-noite.webp" alt="" loading="lazy" width="433" height="480">
+      </a>
+      <a class="vitrine vitrine--larga vitrine--noite" href="index.html?cat=acessorios#catalogo" data-reveal style="--delay:60ms">
+        <span class="vitrine-nome">Acessórios</span>
+        <span class="vitrine-sub">Originais Apple, lacrados.</span>
+        <img src="assets/img/produtos/magic-keyboard-ipad/preto.webp" alt="" loading="lazy">
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Selos ============ -->
+<!-- Os quatro fatos que respondem "e se for golpe?", em cartões
+     brancos sobre o chão escuro. -->
+<section class="selos" aria-label="Por que comprar aqui">
+  <div class="shell shell--larga">
+    <ul class="selos-grade">
+      <li data-reveal>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2.8h12v18.4l-2.4-1.6-2.4 1.6-1.2-.8-1.2.8-2.4-1.6L6 21.2Z"/><path d="M9 8h6M9 11.5h6M9 15h3.5"/></svg>
+        <h3>Nota fiscal</h3>
+        <p>Emitida no seu nome, em toda venda.</p>
+      </li>
+      <li data-reveal style="--delay:60ms">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 19.5 6v5.6c0 4.6-3.2 8.3-7.5 9.6-4.3-1.3-7.5-5-7.5-9.6V6Z"/><path d="m8.6 12 2.4 2.4 4.4-4.6"/></svg>
+        <h3>Garantia de 12 meses</h3>
+        <p>Respondida pela própria Aliança One.</p>
+      </li>
+      <li data-reveal style="--delay:120ms">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5Z"/><path d="m3.5 7.5 8.5 4.5 8.5-4.5M12 12v9"/></svg>
+        <h3>Lacre conferido</h3>
+        <p>A caixa é aberta por você, na entrega.</p>
+      </li>
+      <li data-reveal style="--delay:180ms">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 6.5h11v9.5h-11ZM13.8 9.5h4l3.4 3.4V16h-7.4"/><circle cx="7" cy="17.6" r="1.8"/><circle cx="17.4" cy="17.6" r="1.8"/></svg>
+        <h3>Entrega no mesmo dia</h3>
+        <p>Em mãos, em São Paulo. Para o Brasil, com rastreio.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -156,6 +280,7 @@
 <section class="destaques" id="destaques">
   <div class="shell shell--larga">
     <div class="sec-topo" data-reveal>
+      <p class="sec-olho">Os mais procurados</p>
       <h2 class="t-xl">Os principais. <em class="rampa">Com a confiança da Aliança One.</em></h2>
     </div>
 
@@ -167,6 +292,7 @@
 <section class="catalogo" id="catalogo">
   <div class="shell shell--larga">
     <div class="sec-topo" data-reveal>
+      <p class="sec-olho">Em até 12x sem juros</p>
       <h2 class="t-xl">Toda a loja. <em class="rampa">Escolha o seu.</em></h2>
     </div>
 
@@ -188,6 +314,7 @@
 <section class="perguntas" id="perguntas">
   <div class="shell">
     <div class="sec-topo" data-reveal>
+      <p class="sec-olho">Dúvidas</p>
       <h2 class="t-xl">Antes de <em class="rampa">mandar mensagem.</em></h2>
     </div>
 

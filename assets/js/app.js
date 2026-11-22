@@ -691,6 +691,81 @@ function montarGerais() {
   document.querySelectorAll('[data-telefone]').forEach((el) => el.textContent = legivel);
 }
 
+/* ---------- O palco da capa ----------
+   Um trilho com scroll-snap: o dedo passa os cartazes de graça, e o
+   JS só cuida dos pontos, das setas e da troca automática. A troca
+   para quando a pessoa encosta (mouse, foco, toque), quando a aba some
+   e de vez para quem pede menos movimento. */
+
+function montarPalco() {
+  const trilho = document.querySelector('#palco-trilho');
+  if (!trilho) return;
+  const janela = trilho.closest('.palco-janela');
+  const cartazes = [...trilho.children];
+  const pontos = janela.querySelector('.palco-pontos');
+  const total = cartazes.length;
+  let atual = 0;
+
+  pontos.innerHTML = cartazes.map((c, i) => `
+    <button type="button" aria-label="Cartaz ${i + 1} de ${total}" aria-current="${i === 0}"><span></span></button>`).join('');
+  const botoes = [...pontos.children];
+
+  const ir = (i, suave = true) => {
+    atual = (i + total) % total;
+    trilho.scrollTo({ left: cartazes[atual].offsetLeft, behavior: suave && !semMovimento() ? 'smooth' : 'auto' });
+  };
+
+  const marcar = () => {
+    const i = Math.round(trilho.scrollLeft / trilho.clientWidth);
+    atual = Math.max(0, Math.min(total - 1, i));
+    botoes.forEach((b, k) => b.setAttribute('aria-current', String(k === atual)));
+    cartazes.forEach((c, k) => {
+      const fora = k !== atual;
+      c.setAttribute('aria-hidden', String(fora));
+      c.querySelectorAll('a, button').forEach((el) => { el.tabIndex = fora ? -1 : 0; });
+    });
+    janela.dataset.atual = String(atual);
+  };
+
+  let quadro = 0;
+  trilho.addEventListener('scroll', () => {
+    cancelAnimationFrame(quadro);
+    quadro = requestAnimationFrame(marcar);
+  }, { passive: true });
+
+  botoes.forEach((b, i) => b.addEventListener('click', () => { ir(i); reiniciar(); }));
+  janela.querySelector('.palco-seta--ant')?.addEventListener('click', () => { ir(atual - 1); reiniciar(); });
+  janela.querySelector('.palco-seta--prox')?.addEventListener('click', () => { ir(atual + 1); reiniciar(); });
+  trilho.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { e.preventDefault(); ir(atual + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); ir(atual - 1); }
+  });
+  window.addEventListener('resize', () => ir(atual, false));
+
+  /* Troca automática */
+  const INTERVALO = 6500;
+  let timer = null;
+  let parado = semMovimento();
+  const parar = () => { clearInterval(timer); timer = null; };
+  const tocar = () => {
+    parar();
+    if (parado || document.hidden) return;
+    timer = setInterval(() => ir(atual + 1), INTERVALO);
+  };
+  const reiniciar = () => { if (timer) tocar(); };
+
+  janela.addEventListener('mouseenter', parar);
+  janela.addEventListener('mouseleave', tocar);
+  janela.addEventListener('focusin', parar);
+  janela.addEventListener('focusout', (e) => { if (!janela.contains(e.relatedTarget)) tocar(); });
+  // Quem tocou para passar com o dedo assumiu o controle: não volta a girar sozinho.
+  trilho.addEventListener('touchstart', () => { parado = true; parar(); }, { passive: true });
+  document.addEventListener('visibilitychange', () => (document.hidden ? parar() : tocar()));
+
+  marcar();
+  tocar();
+}
+
 /* ---------- Início ---------- */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -698,6 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
   montarNav();
   montarNavRolagem();
   montarAparelhosSoltos();
+  montarPalco();
   montarDestaques();
   montarCatalogo();
   montarPerguntas();

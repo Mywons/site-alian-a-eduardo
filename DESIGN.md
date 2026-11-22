@@ -17,6 +17,25 @@ O varejo foi redesenhado no idioma de apple.com, por cima da folha que já exist
   continua escrevendo link e olho. As notas abaixo sobre papel off-white descrevem a
   versão anterior e valem como histórico.
 
+## A camada vitrine
+
+Por cima da camada Apple veio a estrutura de uma loja de eletrônicos que vende bem
+(seção **24c** de `style.css`), sem levar a voz junto:
+
+- **Faixa de condições** preta no topo de toda página do varejo, passando sozinha:
+  12x, Pix, nota fiscal, entrega, garantia. Só o que a loja sempre oferece — nada de
+  "Black Friday" ou "últimas unidades". Para com `prefers-reduced-motion`.
+- **Palco** na capa: quatro cartazes de 28px de raio (iPhone escuro com brilho laranja,
+  Mac claro, pagamento em laranja, Corporate preto), com scroll-snap, pontos, setas no
+  desktop e troca a cada 6,5s que para no toque, no foco, no hover e com movimento reduzido.
+- **Vitrines por categoria**: quatro cartões cinza com etiqueta branca e a foto vazando
+  pela borda, e dois largos — Áudio em laranja, Acessórios em preto.
+- **Selos** em cartões brancos sobre faixa escura, com ícone de traço laranja.
+- **Olho** em caixa alta acima de cada título de seção, e **rodapé preto** com os
+  títulos em laranja.
+- Ficou de fora a seção de avaliações: sem avaliação real para mostrar, ela seria
+  depoimento inventado (ver PRODUCT.md).
+
 ## Duas marcas, duas folhas
 
 O projeto tem **dois ramos**, e cada um tem folha de estilo própria:
