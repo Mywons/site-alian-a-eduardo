@@ -95,6 +95,7 @@
       <span class="abas-indicador" aria-hidden="true"></span>
       <button role="tab" type="button" data-aba="produtos" aria-selected="true">Produtos</button>
       <button role="tab" type="button" data-aba="ofertas" aria-selected="false">Ofertas e eventos</button>
+      <button role="tab" type="button" data-aba="site" aria-selected="false">Site</button>
       <button role="tab" type="button" data-aba="precos" aria-selected="false">Preço automático</button>
     </nav>
 
@@ -198,6 +199,76 @@
       <section class="bloco">
         <div class="bloco-topo"><h2>Em oferta</h2></div>
         <div id="lista-ofertas"></div>
+      </section>
+    </section>
+
+    <!-- ============ Site ============ -->
+    <section class="aba" id="aba-site" role="tabpanel" hidden>
+      <div class="cabeca">
+        <div>
+          <h1>Site</h1>
+          <p class="cabeca-sub">Banners da capa, destaques, títulos, selos, perguntas e contato. Tudo vai para o site ao publicar.</p>
+        </div>
+        <a class="btn" href="index.html" target="_blank" rel="noopener">Abrir o site</a>
+      </div>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Banners da capa</h2>
+          <button class="btn btn--cheio" type="button" id="btn-novo-banner">+ Novo banner</button>
+        </div>
+        <p class="dica">Passam sozinhos na capa, nesta ordem. O primeiro é o que aparece ao abrir o site.</p>
+        <div class="banners" id="banners"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Destaques da capa</h2>
+          <span class="dica" id="dest-conta"></span>
+        </div>
+        <p class="dica">Os produtos de “Os favoritos”, na ordem em que aparecem. O primeiro ocupa a largura toda. Até 5.</p>
+        <ol class="destaques-lista" id="destaques-lista"></ol>
+        <div class="linha-add">
+          <select id="dest-add" aria-label="Produto para destacar"></select>
+          <button class="btn btn--leve" type="button" id="btn-dest-add">Adicionar</button>
+        </div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Títulos das seções</h2></div>
+        <p class="dica">O título fica em preto e o complemento em cinza, na mesma linha.</p>
+        <div class="secoes" id="secoes"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Faixa do topo</h2></div>
+        <label class="campo"><span>Frases que passam no topo <small>(uma por linha)</small></span>
+          <textarea id="site-faixa" rows="5"></textarea></label>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Selos de garantia</h2></div>
+        <div class="selos-ed" id="selos-ed"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo">
+          <h2>Perguntas frequentes</h2>
+          <button class="btn btn--leve" type="button" id="btn-nova-pergunta">+ Pergunta</button>
+        </div>
+        <div class="perguntas-ed" id="perguntas-ed"></div>
+      </section>
+
+      <section class="bloco">
+        <div class="bloco-topo"><h2>Contato</h2></div>
+        <div class="grade-regra" id="contato-ed">
+          <label class="campo"><span>WhatsApp <small>(só números, com DDI e DDD)</small></span><input data-ct="whatsapp" inputmode="numeric" placeholder="5511987654321"></label>
+          <label class="campo"><span>E-mail</span><input data-ct="email" type="email"></label>
+          <label class="campo"><span>Horário de atendimento</span><input data-ct="horario"></label>
+          <label class="campo"><span>Instagram (link)</span><input data-ct="instagram" placeholder="https://instagram.com/aliancaone"></label>
+          <label class="campo"><span>Instagram (@)</span><input data-ct="arroba" placeholder="@aliancaone"></label>
+          <label class="campo"><span>CNPJ <small>(vazio = não aparece)</small></span><input data-ct="cnpj"></label>
+        </div>
       </section>
     </section>
 

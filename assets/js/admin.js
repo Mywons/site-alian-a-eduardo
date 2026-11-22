@@ -204,7 +204,13 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
       method: 'POST', body: JSON.stringify({ content: conteudo, encoding: 'base64' })
     })).sha;
 
-    const usadas = new Set(estado.produtos.flatMap((p) => Object.values(p.imagens || {})));
+    const usadas = new Set([
+      ...estado.produtos.flatMap((p) => Object.values(p.imagens || {})),
+      ...(estado.loja.site?.cartazes || []).map((c) => c.imagem)
+    ]);
+    // A marca `destaque` no catálogo acompanha a lista da capa (a página
+    // de produto ainda usa a marca para sugerir relacionados).
+    estado.produtos.forEach((p) => { if (ehDestaque(p.id)) p.destaque = 'principal'; else delete p.destaque; });
     const arvore = [];
     for (const [caminho, foto] of estado.fotos) {
       if (!usadas.has(caminho) || foto.enviada) continue;
@@ -290,6 +296,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   function abrirPainel(lista, loja) {
     const lj = { ...clone(LOJA_PADRAO), ...loja };
     lj.precificacao = { ...LOJA_PADRAO.precificacao, ...(loja.precificacao || {}) };
+    lj.site = completarSite(lj.site, lista);
     estado.original = clone(lista);
     estado.produtos = clone(lista);
     estado.lojaOriginal = clone(lj);
@@ -333,6 +340,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (estado.aba === 'produtos') desenharLinhas(true);
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
+    if (estado.aba === 'site') desenharSite();
   }));
 
   /* ---------- Diferenças ---------- */
@@ -395,7 +403,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const noSite = ps.filter(R.visivel);
     const ofertas = noSite.filter((p) => R.ofertaAtiva(p)).length;
     const esgot = noSite.filter((p) => R.statusDe(p) === 'esgotado').length;
-    const dest = noSite.filter((p) => p.destaque === 'principal').length;
+    const dest = noSite.filter((p) => ehDestaque(p.id)).length;
     $('#cabeca-sub').textContent = `${noSite.length} no site · ${ps.length - noSite.length} escondidos`;
     const dados = [
       ['No site', noSite.length, ` de ${ps.length}`],
@@ -497,7 +505,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
                  aria-label="${esc(p.nome)} aparece no site"><span></span></label>
         </td>
         <td class="c-dest" data-rotulo="Destaque">
-          <label class="chave"><input type="checkbox" data-campo="destaque" ${p.destaque === 'principal' ? 'checked' : ''}
+          <label class="chave"><input type="checkbox" data-campo="destaque" ${ehDestaque(p.id) ? 'checked' : ''}
                  aria-label="${esc(p.nome)} em destaque"><span></span></label>
         </td>
         <td class="c-acoes">
@@ -527,7 +535,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const p = produtoDaLinha(e.target);
     if (!campo || !p) return;
     if (campo === 'destaque') {
-      if (e.target.checked) p.destaque = 'principal'; else delete p.destaque;
+      if (!alternarDestaque(p.id, e.target.checked)) { e.target.checked = false; return; }
     } else if (campo === 'visivel') {
       if (e.target.checked) delete p.oculto; else p.oculto = true;
     } else if (campo === 'preco') {
@@ -659,7 +667,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     fed.margemTipo.value = editando.margem?.tipo || '%';
     fed.precoManual.checked = !!editando.precoManual;
     fed.precoOficial.value = editando.precoOficial || '';
-    fed.destaque.checked = editando.destaque === 'principal';
+    fed.destaque.checked = ehDestaque(editando.id);
     const o = editando.oferta || {};
     fed.ofertaValor.value = o.valor || '';
     fed.ofertaTipo.value = o.tipo || '%';
@@ -1045,7 +1053,10 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     if (fed.precoManual.checked) p.precoManual = true; else delete p.precoManual;
     const oficial = Math.round(Number(fed.precoOficial.value));
     if (oficial) p.precoOficial = oficial; else delete p.precoOficial;
-    if (fed.destaque.checked) p.destaque = 'principal'; else delete p.destaque;
+    const eraId = alvo ? alvo.id : null;
+    if (eraId && eraId !== p.id) estado.loja.site.destaques = estado.loja.site.destaques.map((x) => (x === eraId ? p.id : x));
+    alternarDestaque(p.id, fed.destaque.checked, true);
+    delete p.destaque;
     const oferta = lerOferta();
     if (oferta) p.oferta = oferta; else delete p.oferta;
     if (fed.visivel.checked) delete p.oculto; else p.oculto = true;
@@ -1249,7 +1260,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
   function alvoDoLote(escopo) {
     const noSite = estado.produtos.filter(R.visivel);
     if (escopo === 'todos') return noSite;
-    if (escopo === 'destaques') return noSite.filter((p) => p.destaque === 'principal');
+    if (escopo === 'destaques') return noSite.filter((p) => ehDestaque(p.id));
     return noSite.filter((p) => p.categoria === escopo);
   }
   $('#lista-ofertas').addEventListener('click', (e) => {
@@ -1364,6 +1375,305 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     desenhar();
   });
 
+  /* ---------- Site: banners, destaques, títulos, selos, perguntas, contato ---------- */
+
+  const SITE_PADRAO = () => (typeof LOJA !== 'undefined' && LOJA.site ? clone(LOJA.site) : {});
+
+  function completarSite(site, produtos) {
+    const s = { ...SITE_PADRAO(), ...(site || {}) };
+    s.faixa = Array.isArray(s.faixa) ? s.faixa : [];
+    s.cartazes = Array.isArray(s.cartazes) ? s.cartazes : [];
+    s.secoes = s.secoes || {};
+    ['vitrines', 'destaques', 'catalogo', 'perguntas'].forEach((k) => { s.secoes[k] = s.secoes[k] || { olho: '', titulo: '', fecho: '' }; });
+    s.selos = Array.isArray(s.selos) && s.selos.length === 4 ? s.selos
+      : [0, 1, 2, 3].map((i) => (s.selos || [])[i] || { titulo: '', texto: '' });
+    if (!Array.isArray(s.destaques) || !s.destaques.length) {
+      s.destaques = produtos.filter((p) => p.destaque === 'principal').map((p) => p.id).slice(0, 5);
+    }
+    if (!Array.isArray(s.perguntas) || !s.perguntas.length) {
+      s.perguntas = clone(typeof PERGUNTAS !== 'undefined' ? PERGUNTAS : []);
+    }
+    const c = typeof CONFIG !== 'undefined' ? CONFIG : {};
+    s.contato = {
+      whatsapp: c.whatsapp || '', email: c.email || '', horario: c.horario || '',
+      instagram: c.instagram || '', arroba: c.arroba || '', cnpj: c.cnpj || '',
+      ...(s.contato || {})
+    };
+    return s;
+  }
+
+  const ehDestaque = (id) => (estado.loja.site?.destaques || []).includes(id);
+
+  function alternarDestaque(id, ligar, silencioso) {
+    const lista = estado.loja.site.destaques;
+    const i = lista.indexOf(id);
+    if (ligar && i < 0) {
+      if (lista.length >= 5) {
+        if (!silencioso) toast('A capa mostra até 5 destaques. Tire um em “Site → Destaques da capa”.', 'erro');
+        return false;
+      }
+      lista.push(id);
+    }
+    if (!ligar && i >= 0) lista.splice(i, 1);
+    return true;
+  }
+
+  const ESTILOS = [
+    ['estreia', 'Estreia · fundo preto, nome metálico'],
+    ['perola', 'Pérola · fundo cinza, nome grafite'],
+    ['claro', 'Claro · fundo cinza'],
+    ['laranja', 'Laranja · cor da marca'],
+    ['escuro', 'Escuro · degradê preto']
+  ];
+
+  /* Imagens que dá para escolher sem enviar nada: as artes da capa e a
+     primeira foto de cada produto. */
+  function galeria() {
+    const base = [
+      ['assets/img/iphone-18-pro.webp', 'Arte · iPhone 18 Pro'],
+      ['assets/img/iphone-duo.webp', 'Arte · iPhone Duo'],
+      ['assets/img/iphone-17-pro.webp', 'Arte · iPhone 17 Pro'],
+      ['assets/img/corporate-macbook-pro.webp', 'Arte · MacBook Pro']
+    ];
+    estado.produtos.forEach((p) => {
+      const u = urlFoto(p, p.cores?.[0]);
+      if (u && !u.startsWith('blob:')) base.push([p.imagens?.[p.cores?.[0]] || u, `Produto · ${p.nome}`]);
+    });
+    (estado.loja.site.cartazes || []).forEach((c) => {
+      if (c.imagem && !base.some(([u]) => u === c.imagem)) base.push([c.imagem, 'Imagem enviada']);
+    });
+    return base;
+  }
+  const verImagem = (caminho) => (estado.fotos.has(caminho) ? estado.fotos.get(caminho).url : caminho);
+
+  const acaoCampos = (c, k, rotulo) => {
+    const a = c[k] || { texto: '', tipo: 'link', valor: '' };
+    return `
+      <div class="acao-ed">
+        <label class="campo"><span>${rotulo}</span><input data-b="${k}.texto" value="${esc(a.texto)}" placeholder="Texto do botão"></label>
+        <label class="campo"><span>Leva para</span>
+          <select data-b="${k}.tipo">
+            <option value="link" ${a.tipo !== 'whatsapp' ? 'selected' : ''}>Página / link</option>
+            <option value="whatsapp" ${a.tipo === 'whatsapp' ? 'selected' : ''}>WhatsApp com mensagem</option>
+          </select></label>
+        <label class="campo acao-valor"><span>${a.tipo === 'whatsapp' ? 'Mensagem' : 'Endereço'}</span>
+          <input data-b="${k}.valor" value="${esc(a.valor)}" list="paginas" placeholder="${a.tipo === 'whatsapp' ? 'Olá! Quero…' : 'produto.html?id=…'}"></label>
+      </div>`;
+  };
+
+  function desenharBanners() {
+    const lista = estado.loja.site.cartazes;
+    const imgs = galeria();
+    $('#banners').innerHTML = (lista.length ? lista.map((c, i) => `
+      <article class="banner banner--${esc(c.estilo || 'claro')}${c.ativo === false ? ' banner--off' : ''}" data-i="${i}">
+        <div class="banner-previa">
+          ${c.imagem ? `<img src="${esc(verImagem(c.imagem))}" alt="" loading="lazy">` : ''}
+          <div class="banner-previa-txt">
+            <small>${esc(c.olho || '')}</small>
+            <b>${esc(c.titulo || 'Sem título')} <em>${esc(c.fecho || '')}</em></b>
+          </div>
+          <span class="banner-num">${i + 1}</span>
+        </div>
+        <div class="banner-corpo">
+          <div class="banner-topo">
+            <select data-b="estilo" aria-label="Estilo">${ESTILOS.map(([v, n]) => `<option value="${v}" ${c.estilo === v ? 'selected' : ''}>${n}</option>`).join('')}</select>
+            <button class="seta" type="button" data-mover-banner="-1" aria-label="Subir" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
+            <button class="seta" type="button" data-mover-banner="1" aria-label="Descer" ${i === lista.length - 1 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+            <label class="chave" title="No ar"><input type="checkbox" data-b="ativo" ${c.ativo !== false ? 'checked' : ''} aria-label="Banner no ar"><span></span></label>
+          </div>
+          <div class="grade-2">
+            <label class="campo"><span>Texto pequeno de cima</span><input data-b="olho" value="${esc(c.olho || '')}" placeholder="Novo"></label>
+            <label class="campo"><span>Linha de fatos <small>(separe com |)</small></span><input data-b="fatos" value="${esc(c.fatos || '')}" placeholder="Lacrado|Até 12x sem juros"></label>
+            <label class="campo"><span>Título</span><input data-b="titulo" value="${esc(c.titulo || '')}"></label>
+            <label class="campo"><span>Complemento do título</span><input data-b="fecho" value="${esc(c.fecho || '')}"></label>
+          </div>
+          <label class="campo"><span>Frase</span><input data-b="frase" value="${esc(c.frase || '')}"></label>
+          ${acaoCampos(c, 'botao', 'Botão principal')}
+          ${acaoCampos(c, 'link', 'Link ao lado <small>(opcional)</small>')}
+          <div class="banner-img">
+            <label class="campo"><span>Imagem</span>
+              <select data-b="imagem">
+                <option value="">Sem imagem</option>
+                ${imgs.map(([u, n]) => `<option value="${esc(u)}" ${c.imagem === u ? 'selected' : ''}>${esc(n)}</option>`).join('')}
+              </select></label>
+            <label class="btn btn--leve btn--peq banner-enviar">Enviar imagem<input type="file" accept="image/png,image/jpeg,image/webp" data-banner-foto hidden></label>
+          </div>
+          <div class="banner-acoes">
+            <button class="btn btn--perigo btn--peq" type="button" data-apagar-banner>Apagar banner</button>
+          </div>
+        </div>
+      </article>`).join('') : '<p class="dica">Nenhum banner. A capa mostra o conteúdo padrão do site.</p>')
+      + `<datalist id="paginas">
+          <option value="index.html#catalogo">Catálogo</option>
+          <option value="corporate.html">Corporate</option>
+          <option value="sobre.html">Atendimento</option>
+          ${estado.produtos.map((p) => `<option value="produto.html?id=${esc(p.id)}">${esc(p.nome)}</option>`).join('')}
+        </datalist>`;
+  }
+
+  function desenharDestaques() {
+    const lista = estado.loja.site.destaques;
+    const prod = (id) => estado.produtos.find((p) => p.id === id);
+    $('#dest-conta').textContent = `${lista.length} de 5`;
+    $('#destaques-lista').innerHTML = lista.map((id, i) => {
+      const p = prod(id);
+      if (!p) return '';
+      const foto = urlFoto(p, p.cores?.[0]);
+      return `<li data-id="${esc(id)}">
+        <span class="dest-n">${i + 1}</span>
+        <span class="miniatura">${foto ? `<img src="${esc(foto)}" alt="" onerror="this.remove()">` : ''}</span>
+        <span class="dest-nome"><b>${esc(p.nome)}</b><small>${i === 0 ? 'Largura toda, fundo preto' : 'Metade da largura'}${p.oculto ? ' · escondido do site' : ''}</small></span>
+        <button class="seta" type="button" data-mover-dest="-1" aria-label="Subir" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
+        <button class="seta" type="button" data-mover-dest="1" aria-label="Descer" ${i === lista.length - 1 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        <button class="x" type="button" data-tirar-dest aria-label="Tirar ${esc(p.nome)}"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </li>`;
+    }).join('');
+    const fora = estado.produtos.filter((p) => !lista.includes(p.id) && !p.oculto);
+    $('#dest-add').innerHTML = fora.map((p) => `<option value="${esc(p.id)}">${esc(p.nome)}</option>`).join('');
+    $('#btn-dest-add').disabled = lista.length >= 5 || !fora.length;
+  }
+
+  const NOMES_SECAO = { vitrines: 'Categorias', destaques: 'Destaques', catalogo: 'Catálogo', perguntas: 'Perguntas' };
+
+  function desenharSite() {
+    const S = estado.loja.site;
+    desenharBanners();
+    desenharDestaques();
+    $('#secoes').innerHTML = Object.entries(NOMES_SECAO).map(([k, n]) => {
+      const t = S.secoes[k] || {};
+      return `<div class="secao-ed" data-secao="${k}">
+        <b>${n}</b>
+        <input data-sc="olho" value="${esc(t.olho || '')}" placeholder="Texto pequeno" aria-label="${n}: texto pequeno">
+        <input data-sc="titulo" value="${esc(t.titulo || '')}" placeholder="Título" aria-label="${n}: título">
+        <input data-sc="fecho" value="${esc(t.fecho || '')}" placeholder="Complemento" aria-label="${n}: complemento">
+      </div>`;
+    }).join('');
+    $('#site-faixa').value = (S.faixa || []).join('\n');
+    const nomesSelo = ['Nota fiscal', 'Garantia', 'Lacre', 'Entrega'];
+    $('#selos-ed').innerHTML = S.selos.map((s, i) => `
+      <div class="selo-ed" data-i="${i}">
+        <span class="etiqueta">Ícone: ${nomesSelo[i]}</span>
+        <input data-sl="titulo" value="${esc(s.titulo)}" aria-label="Título do selo ${i + 1}">
+        <input data-sl="texto" value="${esc(s.texto)}" aria-label="Texto do selo ${i + 1}">
+      </div>`).join('');
+    desenharPerguntas();
+    $$('#contato-ed [data-ct]').forEach((inp) => { inp.value = S.contato[inp.dataset.ct] || ''; });
+  }
+
+  function desenharPerguntas() {
+    const lista = estado.loja.site.perguntas;
+    $('#perguntas-ed').innerHTML = lista.map((q, i) => `
+      <div class="pergunta-ed" data-i="${i}">
+        <div class="pergunta-ed-topo">
+          <input data-pq="p" value="${esc(q.p)}" placeholder="Pergunta" aria-label="Pergunta ${i + 1}">
+          <button class="seta" type="button" data-mover-pq="-1" aria-label="Subir" ${i === 0 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
+          <button class="seta" type="button" data-mover-pq="1" aria-label="Descer" ${i === lista.length - 1 ? 'disabled' : ''}><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="x" type="button" data-tirar-pq aria-label="Apagar pergunta"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+        <textarea data-pq="r" rows="2" placeholder="Resposta" aria-label="Resposta ${i + 1}">${esc(q.r)}</textarea>
+      </div>`).join('') || '<p class="dica">Nenhuma pergunta.</p>';
+  }
+
+  const mudouSite = () => atualizarBarra();
+  const trocar = (lista, i, d) => { const j = i + d; if (j < 0 || j >= lista.length) return false; [lista[i], lista[j]] = [lista[j], lista[i]]; return true; };
+
+  // Banners
+  $('#banners').addEventListener('input', (e) => {
+    const card = e.target.closest('.banner'); const k = e.target.dataset.b;
+    if (!card || !k) return;
+    const c = estado.loja.site.cartazes[+card.dataset.i];
+    if (k === 'ativo') c.ativo = e.target.checked;
+    else if (k.includes('.')) { const [o, campo] = k.split('.'); c[o] = c[o] || { texto: '', tipo: 'link', valor: '' }; c[o][campo] = e.target.value; }
+    else c[k] = e.target.value;
+    const t = card.querySelector('.banner-previa-txt');
+    t.querySelector('small').textContent = c.olho || '';
+    t.querySelector('b').innerHTML = `${esc(c.titulo || 'Sem título')} <em>${esc(c.fecho || '')}</em>`;
+    mudouSite();
+  });
+  $('#banners').addEventListener('change', async (e) => {
+    const k = e.target.dataset.b;
+    if (k === 'estilo' || k === 'imagem' || k === 'ativo' || (k && k.endsWith('.tipo'))) desenharBanners();
+    if (e.target.matches('[data-banner-foto]') && e.target.files[0]) {
+      const c = estado.loja.site.cartazes[+e.target.closest('.banner').dataset.i];
+      try {
+        const blob = await prepararFoto(e.target.files[0]);
+        const ext = blob.type === 'image/webp' ? 'webp' : blob.type === 'image/png' ? 'png' : 'jpg';
+        const caminho = `assets/img/banners/${slug(c.titulo || 'banner')}-${Date.now().toString(36)}.${ext}`;
+        estado.fotos.set(caminho, { blob, url: URL.createObjectURL(blob) });
+        c.imagem = caminho;
+        desenharBanners();
+        mudouSite();
+      } catch { toast('Não consegui ler essa imagem. Tente PNG, JPG ou WEBP.', 'erro'); }
+    }
+  });
+  $('#banners').addEventListener('click', (e) => {
+    const card = e.target.closest('.banner'); if (!card) return;
+    const lista = estado.loja.site.cartazes; const i = +card.dataset.i;
+    const m = e.target.closest('[data-mover-banner]');
+    if (m && trocar(lista, i, +m.dataset.moverBanner)) { desenharBanners(); mudouSite(); }
+    if (e.target.closest('[data-apagar-banner]') && confirm('Apagar este banner?')) { lista.splice(i, 1); desenharBanners(); mudouSite(); }
+  });
+  $('#btn-novo-banner').addEventListener('click', () => {
+    estado.loja.site.cartazes.push({
+      id: `banner-${Date.now().toString(36)}`, ativo: true, estilo: 'claro', olho: 'Novidade', titulo: 'Título do banner', fecho: '',
+      frase: '', fatos: '', botao: { texto: 'Falar no WhatsApp', tipo: 'whatsapp', valor: 'Olá! Vim pelo site da Aliança One.' },
+      link: { texto: '', tipo: 'link', valor: '' }, imagem: ''
+    });
+    desenharBanners(); mudouSite();
+    const novo = $$('#banners .banner').at(-1);
+    if (novo) { novo.classList.add('novo'); novo.scrollIntoView({ block: 'center', behavior: 'smooth' }); novo.querySelector('[data-b="titulo"]').select(); }
+  });
+
+  // Destaques
+  $('#destaques-lista').addEventListener('click', (e) => {
+    const li = e.target.closest('li'); if (!li) return;
+    const lista = estado.loja.site.destaques; const i = lista.indexOf(li.dataset.id);
+    const m = e.target.closest('[data-mover-dest]');
+    if (m && trocar(lista, i, +m.dataset.moverDest)) { desenharDestaques(); desenharLinhas(); mudouSite(); }
+    if (e.target.closest('[data-tirar-dest]')) { lista.splice(i, 1); desenharDestaques(); desenharNumeros(); desenharLinhas(); mudouSite(); }
+  });
+  $('#btn-dest-add').addEventListener('click', () => {
+    const id = $('#dest-add').value;
+    if (id && alternarDestaque(id, true)) { desenharDestaques(); desenharNumeros(); desenharLinhas(); mudouSite(); }
+  });
+
+  // Seções, faixa, selos, perguntas, contato
+  $('#secoes').addEventListener('input', (e) => {
+    const k = e.target.dataset.sc; const box = e.target.closest('[data-secao]');
+    if (!k || !box) return;
+    estado.loja.site.secoes[box.dataset.secao][k] = e.target.value; mudouSite();
+  });
+  $('#site-faixa').addEventListener('input', (e) => {
+    estado.loja.site.faixa = e.target.value.split('\n').map((x) => x.trim()).filter(Boolean); mudouSite();
+  });
+  $('#selos-ed').addEventListener('input', (e) => {
+    const k = e.target.dataset.sl; const box = e.target.closest('[data-i]');
+    if (!k || !box) return;
+    estado.loja.site.selos[+box.dataset.i][k] = e.target.value; mudouSite();
+  });
+  $('#perguntas-ed').addEventListener('input', (e) => {
+    const k = e.target.dataset.pq; const box = e.target.closest('[data-i]');
+    if (!k || !box) return;
+    estado.loja.site.perguntas[+box.dataset.i][k] = e.target.value; mudouSite();
+  });
+  $('#perguntas-ed').addEventListener('click', (e) => {
+    const box = e.target.closest('[data-i]'); if (!box) return;
+    const lista = estado.loja.site.perguntas; const i = +box.dataset.i;
+    const m = e.target.closest('[data-mover-pq]');
+    if (m && trocar(lista, i, +m.dataset.moverPq)) { desenharPerguntas(); mudouSite(); }
+    if (e.target.closest('[data-tirar-pq]') && confirm('Apagar esta pergunta?')) { lista.splice(i, 1); desenharPerguntas(); mudouSite(); }
+  });
+  $('#btn-nova-pergunta').addEventListener('click', () => {
+    estado.loja.site.perguntas.push({ p: '', r: '' });
+    desenharPerguntas(); mudouSite();
+    $$('#perguntas-ed [data-pq="p"]').at(-1)?.focus();
+  });
+  $('#contato-ed').addEventListener('input', (e) => {
+    const k = e.target.dataset.ct; if (!k) return;
+    estado.loja.site.contato[k] = k === 'whatsapp' ? e.target.value.replace(/\D/g, '') : e.target.value;
+    mudouSite();
+  });
+
   /* ---------- Salvar / descartar ---------- */
 
   $('#btn-descartar').addEventListener('click', () => {
@@ -1374,6 +1684,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     desenhar(true);
     if (estado.aba === 'ofertas') desenharOfertas();
     if (estado.aba === 'precos') desenharPrecos();
+    if (estado.aba === 'site') desenharSite();
   });
 
   const baixar = (nome, texto) => {
@@ -1388,6 +1699,7 @@ const LOJA = ${JSON.stringify(loja, null, 2)};
     const botao = $('#btn-salvar');
 
     if (estado.modo !== 'github') {
+      estado.produtos.forEach((p) => { if (ehDestaque(p.id)) p.destaque = 'principal'; else delete p.destaque; });
       baixar('catalogo.js', escreverCatalogo(estado.produtos));
       setTimeout(() => baixar('loja.js', escreverLoja(estado.loja)), 300);
       toast(estado.fotos.size

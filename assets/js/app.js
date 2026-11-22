@@ -325,7 +325,12 @@ function montarDestaques() {
   const grade = document.querySelector('#grade-destaques');
   if (!grade) return;
 
-  const escolhidos = vitrine().filter((p) => p.destaque === 'principal').slice(0, 5);
+  // A ordem dos destaques é a que o dono montou no painel (LOJA.site.destaques).
+  // Sem ela, valem os produtos marcados como destaque, na ordem do catálogo.
+  const ordem = typeof LOJA !== 'undefined' && Array.isArray(LOJA.site?.destaques) ? LOJA.site.destaques : null;
+  const escolhidos = (ordem && ordem.length
+    ? ordem.map((id) => vitrine().find((p) => p.id === id)).filter(Boolean)
+    : vitrine().filter((p) => p.destaque === 'principal')).slice(0, 5);
 
   // Como a capa da Apple: o primeiro ocupa a largura inteira em preto,
   // os outros quatro em pares, em branco.
@@ -434,6 +439,10 @@ function montarCatalogo() {
       if (i < jaVistas) { el.classList.add('vis'); return; }
       el.style.setProperty('--delay', `${Math.min(i - jaVistas, 6) * 45}ms`);
     });
+    // As linhas novas não estão no observador da rolagem (ele só conhece
+    // as da primeira pintura): entram por conta própria, no quadro seguinte.
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      novos.forEach((el) => el.classList.add('vis'))));
     jaVistas = visiveis.length;
   };
 
