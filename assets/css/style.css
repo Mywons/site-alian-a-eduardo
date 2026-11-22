@@ -3791,6 +3791,133 @@ body { background: var(--papel); }
    continuam legíveis, e o botão escuro do "Toda a loja" idem. */
 :root:is([data-evento='volta-as-aulas'], [data-evento='consumidor'], [data-evento='maes'], [data-evento='criancas']) .cartaz--evento .seta { color: var(--ev-olho); }
 
+/* ---------- 24e. Os cartazes de estreia ----------
+   O idioma das artes de lançamento: fundo da própria foto oficial
+   (preto puro no 18 Pro, #f5f5f7 no Duo), então o aparelho nasce do
+   cartaz sem borda; o nome em degradê metálico tirado do acabamento;
+   "Novo" em laranja, como a Apple escreve; e a foto encostada no pé
+   do cartaz, grande, cortada pela borda. */
+
+.cartaz--estreia, .cartaz--duo {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+  align-items: stretch;
+  padding-bottom: 0;
+  min-height: clamp(500px, 44vw, 620px);
+}
+.cartaz--estreia .cartaz-txt, .cartaz--duo .cartaz-txt {
+  align-self: center;
+  padding-bottom: clamp(36px, 5vw, 72px);
+}
+
+.cartaz-novo {
+  margin: 0 0 6px;
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--marca-noite);
+}
+.cartaz--duo .cartaz-novo { color: var(--acao); }
+
+.cartaz--estreia .cartaz-titulo, .cartaz--duo .cartaz-titulo {
+  max-width: none;
+  font-size: clamp(2.8rem, 6.2vw, 5.6rem);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  padding-bottom: 0.06em; /* o degradê recortado não come a perna do "p" */
+}
+.titulo-metal, .titulo-perola {
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* O vinho do próprio 18 Pro, do brilho da borda à sombra do corpo. */
+.titulo-metal { background-image: linear-gradient(175deg, #fbe9ec 0%, #e2a9b4 38%, #b5606f 70%, #7c3343 100%); }
+/* O branco perolado do Duo: tinta escura descendo para o prata. */
+.titulo-perola { background-image: linear-gradient(175deg, #1d1d1f 0%, #3a3a3d 45%, #8e8e93 100%); }
+
+.cartaz-frase {
+  margin: 14px 0 0;
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.cartaz--estreia .cartaz-frase { color: #f5f5f7; }
+
+.cartaz-fatos {
+  display: flex; flex-wrap: wrap; gap: 6px 0;
+  margin: 18px 0 0; padding: 0; list-style: none;
+  font-size: 0.875rem; color: #a1a1a6;
+}
+.cartaz--duo .cartaz-fatos { color: var(--suave); }
+.cartaz-fatos li + li::before { content: '·'; margin: 0 9px; opacity: 0.7; }
+
+.cartaz--estreia {
+  background:
+    radial-gradient(42% 60% at 70% 78%, rgb(150 52 70 / 0.42), transparent 72%),
+    radial-gradient(30% 40% at 82% 30%, rgb(255 98 0 / 0.10), transparent 70%),
+    #000;
+  color: #f5f5f7;
+}
+.cartaz--estreia .estado { color: #86868b; }
+.cartaz--estreia .seta { color: var(--marca-noite); }
+.cartaz--estreia :focus-visible { outline-color: var(--marca-noite); }
+
+.cartaz--duo { background: #f5f5f7; color: var(--tinta); }
+
+/* O botão claro dos cartazes escuros, como o "Comprar" da Apple
+   sobre preto. Em evento, o tema não mexe nele. */
+.btn--claro { background: #f5f5f7; color: #1d1d1f; }
+.btn--claro:hover { background: #fff; }
+
+/* A foto: encostada no pé, grande, sem moldura. */
+.cartaz-arte {
+  margin: 0;
+  align-self: end;
+  justify-self: center;
+  width: 100%;
+  display: flex; justify-content: center; align-items: flex-end;
+}
+.cartaz-arte picture { display: block; width: 100%; }
+.cartaz-arte img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: clamp(380px, 40vw, 580px);
+  object-fit: contain;
+  object-position: center bottom;
+  transform-origin: 50% 100%;
+  transition: transform 900ms var(--ease);
+}
+.palco-janela:hover .cartaz-arte img { transform: scale(1.02); }
+.cartaz--duo .cartaz-arte img { max-height: clamp(320px, 34vw, 480px); }
+/* O fundo da foto some no fundo do cartaz: o preto do 18 Pro clareia
+   para o brilho vinho de trás (lighten), o cinza do Duo escurece para
+   o cinza do cartaz (darken). Nenhuma borda de retângulo aparece. */
+.cartaz--estreia .cartaz-arte img { mix-blend-mode: lighten; }
+.cartaz--duo .cartaz-arte img { mix-blend-mode: darken; }
+
+@media (max-width: 760px) {
+  .cartaz--estreia, .cartaz--duo {
+    grid-template-columns: 1fr;
+    min-height: 640px;
+    padding: 34px 20px 0;
+  }
+  .cartaz--estreia .cartaz-txt, .cartaz--duo .cartaz-txt { padding-bottom: 8px; }
+  .cartaz--estreia .cartaz-titulo, .cartaz--duo .cartaz-titulo { font-size: clamp(2.8rem, 13vw, 3.6rem); }
+  .cartaz--estreia, .cartaz--duo { grid-template-rows: auto 1fr; }
+  .cartaz-fatos { justify-content: center; gap: 4px 14px; font-size: 0.8125rem; }
+  .cartaz-fatos li + li::before { content: none; }
+  .cartaz-arte img { max-height: 300px; }
+  .cartaz--duo .cartaz-arte img { max-height: 260px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .palco-janela:hover .cartaz-arte img { transform: none; }
+}
+
 /* ---------- 25. Preferências do usuário ---------- */
 
 @media (prefers-reduced-motion: reduce) {

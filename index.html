@@ -28,7 +28,7 @@
 <script src="assets/js/regras.js"></script>
 <script src="assets/js/evento.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="preload" as="image" href="assets/img/iphone-17-pro.webp" type="image/webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/iphone-18-pro.webp" type="image/webp" fetchpriority="high">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f8f4ee'/><path d='M32 4 48.67 40 37.25 40 32 26 26.75 40 15.33 40Z' fill='%23FF6200'/><path d='M13.5 44 25.25 44 20 58 7 58Z' fill='%23FF6200'/><path d='M50.5 44 38.75 44 44 58 57 58Z' fill='%23FF6200'/></svg>">
 </head>
 <body>
@@ -130,26 +130,56 @@
     <div class="palco-janela">
       <div class="palco-trilho" id="palco-trilho">
 
-        <article class="cartaz cartaz--noite" aria-roledescription="slide" aria-label="1 de 4">
+        <!-- O cartaz de estreia: a foto oficial é recortada sobre preto
+             puro, o mesmo preto do cartaz, então os aparelhos saem do
+             fundo sem moldura nenhuma. -->
+        <article class="cartaz cartaz--estreia" aria-roledescription="slide">
           <div class="cartaz-txt">
-            <p class="cartaz-olho" data-entra>iPhone 17 Pro · originais e lacrados</p>
-            <h1 class="cartaz-titulo" data-entra>Seu próximo iPhone, <em>sem dúvida.</em></h1>
-            <p class="cartaz-sub" data-entra>Nota fiscal no seu nome, garantia de 12 meses e lacre aberto por você.</p>
+            <p class="cartaz-novo" data-entra>Novo</p>
+            <h1 class="cartaz-titulo" data-entra><span class="titulo-metal">iPhone 18 Pro</span></h1>
+            <p class="cartaz-frase" data-entra>Seu próximo iPhone, sem dúvida.</p>
+            <ul class="cartaz-fatos" data-entra>
+              <li>Lacrado</li><li>Nota fiscal no seu nome</li><li>Até 12x sem juros</li>
+            </ul>
             <div class="cartaz-acoes" data-entra>
-              <a class="btn btn--grande" target="_blank" rel="noopener"
-                 data-wa="Olá! Vim pelo site da Aliança One e quero ver as ofertas de iPhone.">Comprar no WhatsApp</a>
-              <a class="seta" href="produto.html?id=iphone-17-pro">Ver o iPhone 17 Pro</a>
+              <a class="btn btn--grande btn--claro" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero reservar o iPhone 18 Pro.">Reservar pelo WhatsApp</a>
+              <a class="seta" href="index.html?cat=iphone#catalogo">Ver iPhones</a>
             </div>
             <p class="estado" id="estado-loja" data-entra data-aberta="false">
               <span class="estado-luz" aria-hidden="true"></span>
               <span class="estado-txt"></span>
             </p>
           </div>
-          <figure class="cartaz-foto cartaz-foto--alta">
+          <figure class="cartaz-arte">
             <picture>
-              <source srcset="assets/img/iphone-17-pro.webp" type="image/webp">
-              <img src="assets/img/iphone-17-pro.png" width="988" height="1122" fetchpriority="high" decoding="async"
-                   alt="Três iPhone 17 Pro vistos por trás: Prata Profundo, Laranja-cósmico e Azul-profundo.">
+              <source srcset="assets/img/iphone-18-pro.webp" type="image/webp">
+              <img src="assets/img/iphone-18-pro.jpg" width="812" height="738" fetchpriority="high" decoding="async"
+                   alt="Dois iPhone 18 Pro em vinho, um de costas com a câmera tripla e outro de frente com a tela acesa.">
+            </picture>
+          </figure>
+        </article>
+
+        <!-- Sobre o cinza da Apple (#f5f5f7), o mesmo fundo da foto. -->
+        <article class="cartaz cartaz--duo" aria-roledescription="slide">
+          <div class="cartaz-txt">
+            <p class="cartaz-novo">Novo</p>
+            <h2 class="cartaz-titulo"><span class="titulo-perola">iPhone Duo</span></h2>
+            <p class="cartaz-frase">Abre. Dobra. Cabe no bolso.</p>
+            <ul class="cartaz-fatos">
+              <li>Lacrado</li><li>Nota fiscal no seu nome</li><li>Até 12x sem juros</li>
+            </ul>
+            <div class="cartaz-acoes">
+              <a class="btn btn--grande" target="_blank" rel="noopener"
+                 data-wa="Olá! Vim pelo site da Aliança One e quero saber do iPhone Duo.">Reservar pelo WhatsApp</a>
+              <a class="seta" href="index.html?cat=iphone#catalogo">Ver iPhones</a>
+            </div>
+          </div>
+          <figure class="cartaz-arte">
+            <picture>
+              <source srcset="assets/img/iphone-duo.webp" type="image/webp">
+              <img src="assets/img/iphone-duo.jpg" width="620" height="492" loading="lazy" decoding="async"
+                   alt="iPhone Duo branco entreaberto: de um lado a câmera dupla, do outro a tela acesa.">
             </picture>
           </figure>
         </article>
